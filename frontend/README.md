@@ -6,7 +6,7 @@ Para generar el contenedor:
 
       docker-compose up --build --no-recreate -d
 
-   - Cualquiera otra iteración:
+   - Cualquier otra iteración:
 
          docker-compose up -d
 
