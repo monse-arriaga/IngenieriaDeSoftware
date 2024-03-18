@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping("/create/")
     public void createUser(@RequestBody User user){
-        if(!userServices.createUser(user))
+        if (!userServices.createUser(user))
             throw new IllegalArgumentException("El email ya esta usado.");
     }
 

@@ -2,16 +2,21 @@ package unam.ciencias.ids.playbit.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="User")
+@Table(name="userapp")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userid")
     private int id;
 
+    @Column(name = "username")
     private String name;
 
+    @Column(name = "mail")
     private String email;
 
+
+    @Column(name = "userpassword")
     private String password;
 
 

@@ -10,6 +10,6 @@ import unam.ciencias.ids.playbit.models.User;
 
 
 public interface UserRepository extends CrudRepository<User,Integer> {
-    @Query(nativeQuery = true , value = "SELECT * FROM userapp WHERE mail = :emailparam")
+    @Query(nativeQuery = true , value = "SELECT * FROM userswe WHERE mail = :emailparam")
     public List<User> getUserByEmail(@Param("emailparam") String email);
 }
