@@ -25,11 +25,11 @@
     </div>
   
     <button @click="showLoginRegistro" class="login-button">
-        Regístrate
+        {{status}}
     </button>
   
-    <Registro v-if="showRegistro"  @closeRegistro="closeRegistro" @showLogInInicio="showLogInInicio"/>
-    <InicioSesion v-if="showInicio"  @closeInicio="closeInicio"/>
+    <Registro v-if="showRegistro" @registrado="registrado"  @closeRegistro="closeRegistro" @showLogInInicio="showLogInInicio"/>
+    <InicioSesion v-if="showInicio" @closeInicio="closeInicio" @sesionIniciada="sesionIniciada"/>
   
       <router-view /> <!-- Esto es importante para que vue-router renderice los componentes correspondientes -->
   
@@ -52,6 +52,7 @@
   
   const showRegistro = ref(false);
   const showInicio = ref(false);
+  const status = ref('Registro')
 
   const showLoginRegistro = () => {
     showRegistro.value = true;
@@ -70,6 +71,18 @@
     showInicio.value = false;
   }
 
+  const sesionIniciada = () => {
+    showRegistro.value = false;
+    showInicio.value = false;
+    status.value = "Salir"
+
+  }
+
+  const registrado = () => {
+    showRegistro.value = false;
+    status.value = "Salir"
+  }
+  
   </script>
   
   

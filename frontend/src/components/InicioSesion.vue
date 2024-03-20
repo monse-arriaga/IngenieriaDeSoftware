@@ -13,8 +13,10 @@
           <div class="input-wrapper">
             <input type="password" placeholder="Contraseña" v-model="password" required>
           </div>
-          <!-- Input para la fecha de nacimiento -->
           <button type="submit">Iniciar Sesion</button>
+          <div v-if="popupMessage" class="popup">
+            {{ popupMessage }}
+          </div> 
         </form>
       </div>
     </div>
@@ -22,15 +24,23 @@
   
   <script setup>
   import { ref, defineEmits } from 'vue';
+  import axios from 'axios';
   
-  const emits = defineEmits(['closeInicio']);
+  const emits = defineEmits(['closeInicio', 'sesionIniciada']);
   const email = ref('');
-  const username = ref('');
   const password = ref('');
-  const fechaNacimiento = ref('');
+  const popupMessage = ref('');
   
-  const handleSubmit = () => {
-    //  Por implementar
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/user/login/', {
+        "email": email.value,
+        "password": password.value
+      });
+      emits('sesionIniciada')
+    } catch (error) {
+      popupMessage.value = "Error correo o contraseña incorrectas";
+    }
    };
   
   const closeForm = () => {
@@ -84,6 +94,13 @@
     z-index: 1;
   }
   
+  .popup {
+    background-color: red; 
+    color: white;
+    padding: 10px;
+    margin-top: 20px; /* Adjust as needed */
+  }  
+
   .close-button:hover {
     color: red;
   } 

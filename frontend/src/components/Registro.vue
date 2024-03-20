@@ -17,8 +17,10 @@
         <div class="input-wrapper">
           <input type="password" placeholder="Contraseña" v-model="password" required>
         </div>
-        <!-- Input para la fecha de nacimiento -->
         <button type="submit">Regístrate</button>
+        <div v-if="popupMessage" class="popup">
+          {{ popupMessage }}
+        </div>
         <p style="color: white;">¿Ya tienes una cuenta? <a href="#" @click="showLogin">Inicia sesión</a></p>
       </form>
     </div>
@@ -27,15 +29,27 @@
 
 <script setup>
 import { ref, defineEmits } from 'vue';
+import axios from 'axios';
 
-const emits = defineEmits(['closeRegistro', 'showLogInInicio']);
+const emits = defineEmits(['closeRegistro', 'showLogInInicio', 'registrado']);
 const email = ref('');
 const username = ref('');
 const password = ref('');
-const fechaNacimiento = ref('');
+const popupMessage = ref('');
 
-const handleSubmit = () => {
-  //Por implementar
+const handleSubmit = async () => {
+  try {
+    const response = await axios.post('http://localhost:8080/user/create/', {
+      "bio": "not yet",
+      "bornDate": "1968-12-18",
+      "email": email.value,
+      "name": username.value,
+      "password": password.value
+    });
+    emits('registrado')
+  } catch (error) {
+    popupMessage.value = "Error al registrar usuario";
+  }
 };
 
 const closeForm = () => {
@@ -96,5 +110,13 @@ const showLogin = () => {
 .close-button:hover {
   color: red;
 } 
+
+.popup {
+  background-color: red; 
+  color: white;
+  padding: 10px;
+  margin-top: 20px; /* Adjust as needed */
+}
+
 /* Ajusta los estilos según sea necesario */
 </style>
