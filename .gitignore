@@ -1,0 +1,9 @@
+docker-compose.override.yml
+.dockerignore
+.env
+.docker/*
+.vscode/*
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
