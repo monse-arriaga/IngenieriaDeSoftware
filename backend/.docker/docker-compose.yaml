@@ -1,0 +1,13 @@
+version: '3'
+services:
+  springbootapp:
+    image: openjdk:11-jdk-slim
+    container_name: springbootapp
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    command: ["mvn", "spring-boot:run"]
+    environment:
+      MAVEN_OPTS: "-Dmaven.repo.local=/app/.m2/repository"
