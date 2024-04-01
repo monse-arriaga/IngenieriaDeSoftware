@@ -25,7 +25,6 @@ public class UserController {
         return "hola";
     }
 
-
     @PostMapping("/create/")
     public void createUser(@RequestBody User user){
         if (!userServices.createUser(user))
