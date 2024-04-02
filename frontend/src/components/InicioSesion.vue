@@ -33,7 +33,7 @@
   
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/user/login/', {
+      const response = await axios.post('http://backend:8080/user/login/', {
         "email": email.value,
         "password": password.value
       });

@@ -39,7 +39,7 @@ const popupMessage = ref('');
 
 const handleSubmit = async () => {
   try {
-    const response = await axios.post('http://localhost:8080/user/create/', {
+    const response = await axios.post('http://backend:8080/user/create/', {
       "bio": "not yet",
       "bornDate": "1968-12-18",
       "email": email.value,
