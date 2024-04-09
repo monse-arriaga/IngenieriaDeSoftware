@@ -1,52 +1,75 @@
 <template>
     <div class="modal">
       <div class="modal-content">
-        <!-- Contenido del formulario de inicio de sesión -->
-        <button class="close-button" @click="closeForm">x</button>
-        <h2 class="title">Inicia Sesion:</h2>
-        <form @submit.prevent="handleSubmit">
-          <!-- Campo de correo -->
-          <div class="input-wrapper">
-            <input type="text" placeholder="Correo" v-model="email" required>
-          </div>
-          <!-- Campo de contraseña -->
-          <div class="input-wrapper">
-            <input type="password" placeholder="Contraseña" v-model="password" required>
-          </div>
-          <button type="submit">Iniciar Sesion</button>
-          <div v-if="popupMessage" class="popup">
-            {{ popupMessage }}
-          </div> 
-        </form>
-      </div>
+      <!-- Contenido del formulario de inicio de sesión -->
+      <button class="close-button" @click="cancelLogIn">x</button>
+      <h2 class="title">Inicia Sesion:</h2>
+      <form @submit.prevent="submitForm">
+        <!-- Campo de correo -->
+        <div class="input-wrapper">
+          <input type="text" placeholder="Correo" v-model="userToLogIn.email" required>
+        </div>
+        <!-- Campo de contraseña -->
+        <div class="input-wrapper">
+          <input type="password" placeholder="Contraseña" v-model="userToLogIn.password" required>
+        </div>
+        <div v-if="showPopup" class="popup">
+          <p>
+          Contraseña o usuario equivocados.
+          <br>
+          Vuelva a intentar.  
+          </p>
+        </div>
+        <button type="submit">Iniciar Sesion</button>
+      </form>
+      <p style="color: white;">¿No tienes una cuenta? <a href="#" @click="showRegister">Registrate</a></p>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, defineEmits } from 'vue';
-  import axios from 'axios';
-  
-  const emits = defineEmits(['closeInicio', 'sesionIniciada']);
-  const email = ref('');
-  const password = ref('');
-  const popupMessage = ref('');
-  
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post('http://backend:8080/user/login/', {
-        "email": email.value,
-        "password": password.value
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import UserService from '../services/UserService';
+import { useRouter } from 'vue-router';
+
+export default defineComponent({
+  name: "LoginUserView",
+  setup() {
+    const userToLogIn = {
+      password: "",
+      email: ""
+    };
+    const router = useRouter();
+    const showPopup = ref(false);
+
+    const submitForm = () => {
+      UserService.getUser(userToLogIn.password, userToLogIn.email).then(() => {
+        router.push({name: "pagina-de-inicio"});
+      }).catch(() => {
+        showPopup.value = true;
       });
-      emits('sesionIniciada')
-    } catch (error) {
-      popupMessage.value = "Error correo o contraseña incorrectas";
-    }
-   };
-  
-  const closeForm = () => {
-    emits('closeInicio');
-  }
-  </script>
+      window.location.reload;
+    };
+
+    const cancelLogIn = () => {
+      router.push({name: "pagina-de-inicio"});
+    };
+
+    const showRegister = () => {
+      router.push({name: "registro"});
+    };
+
+    return {
+      userToLogIn,
+      cancelLogIn,
+      submitForm,
+      showRegister,
+      showPopup
+    };
+  },
+});
+</script>
+
   
   <style scoped>
   .modal {
@@ -106,4 +129,71 @@
   } 
   /* Ajusta los estilos según sea necesario */
   </style>
+  
+  
+<style scoped>
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(4, 1, 19, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: rgb(36, 28, 46);
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+}
+
+ .title {
+  color: white; /* Cambia el color del texto a blanco */
+}
+
+.input-wrapper {
+  margin-bottom: 10px; /* Espacio entre los campos de entrada */
+}
+
+.separator {
+  margin: 20px 0; /* Espacio entre la fecha de nacimiento y los otros datos */
+  border: none;
+  border-top: 1px solid #ccc;
+}
+ 
+.close-button {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.close-button:hover {
+  color: red;
+} 
+
+.popup {
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  text-align: center;
+}  
+
+.popup p {
+  margin: 0;
+}
+/* Ajusta los estilos según sea necesario */
+</style>
   
