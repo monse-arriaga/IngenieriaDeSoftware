@@ -35,6 +35,34 @@ public class Tournament {
     @Column(name = "fecha")
     private LocalDate date;
 
+    @Column(name="precio")
+    private int prize;
+
+
+    public Tournament(
+        int id,
+        String name,
+        int players,
+        String description,
+        String state,
+        String tournamentType,
+        String playerType,
+        LocalDate date,
+        int prize){
+
+
+        this.id = id;
+        this.name = name;
+        this.players = players;
+        this.description = description;
+        this.state = state;
+        this.tournamentType = tournamentType;
+        this.playerType = playerType;
+        this.date = date;
+        this.prize = prize;
+        
+    }
+
     public int getID() {
         return this.id;
 
@@ -67,6 +95,10 @@ public class Tournament {
     
     public LocalDate getDate() {
         return this.date;
+    }
+
+    public int getPrize(){
+        return this.prize;
     }
 
 
