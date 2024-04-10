@@ -1,5 +1,6 @@
 package unam.ciencias.ids.playbit.payload.request;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import jakarta.validation.constraints.*;
@@ -19,6 +20,8 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+    private LocalDate bornDate;
 
     public String getUsername() {
         return username;
@@ -42,6 +45,14 @@ public class SignupRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setBornDate(LocalDate bornDate) {
+        this.bornDate = bornDate;
+    }
+
+    public LocalDate getBornDate() {
+        return bornDate;
     }
 
     public Set<String> getRole() {

@@ -4,7 +4,10 @@ interface Tournament {
     about: string,
     status: string,
     tournamentType: string,
-    playerType: string
+    playerType: string,
+    inPlayers: number,
+    date: Date,
+    prize: number
 }
 
 export default Tournament;

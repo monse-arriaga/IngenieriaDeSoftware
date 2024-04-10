@@ -7,7 +7,7 @@
       <form @submit.prevent="submitForm">
         <!-- Campo de correo -->
         <div class="input-wrapper">
-          <input type="text" placeholder="Correo" v-model="userToLogIn.email" required>
+          <input type="text" placeholder="Nombre de Usuario" v-model="userToLogIn.username" required>
         </div>
         <!-- Campo de contraseña -->
         <div class="input-wrapper">
@@ -29,21 +29,21 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import UserService from '../services/UserService';
 import { useRouter } from 'vue-router';
+import AuthService from '../services/AuthService';
 
 export default defineComponent({
   name: "LoginUserView",
   setup() {
-    const userToLogIn = {
-      password: "",
-      email: ""
-    };
+    const userToLogIn = ref({
+      password: '',
+      username: ''
+    });
     const router = useRouter();
     const showPopup = ref(false);
 
     const submitForm = () => {
-      UserService.getUser(userToLogIn.password, userToLogIn.email).then(() => {
+      AuthService.login(userToLogIn.value.username, userToLogIn.value.password).then(() => {
         router.push({name: "pagina-de-inicio"});
       }).catch(() => {
         showPopup.value = true;
@@ -129,71 +129,4 @@ export default defineComponent({
   } 
   /* Ajusta los estilos según sea necesario */
   </style>
-  
-  
-<style scoped>
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(4, 1, 19, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: rgb(36, 28, 46);
-  padding: 20px;
-  border-radius: 8px;
-  position: relative;
-}
-
- .title {
-  color: white; /* Cambia el color del texto a blanco */
-}
-
-.input-wrapper {
-  margin-bottom: 10px; /* Espacio entre los campos de entrada */
-}
-
-.separator {
-  margin: 20px 0; /* Espacio entre la fecha de nacimiento y los otros datos */
-  border: none;
-  border-top: 1px solid #ccc;
-}
- 
-.close-button {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.close-button:hover {
-  color: red;
-} 
-
-.popup {
-  background-color: rgba(255, 0, 0, 0.8);
-  color: white;
-  padding: 10px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  text-align: center;
-}  
-
-.popup p {
-  margin: 0;
-}
-/* Ajusta los estilos según sea necesario */
-</style>
   

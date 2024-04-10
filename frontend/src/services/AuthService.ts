@@ -1,12 +1,13 @@
 import axios from 'axios';
+import User from '../types/User';
 
 const API_URL = 'http://localhost:8080';
 
 class AuthService {
   login(username: string, password: string) {
     return axios
-      .post(API_URL + 'signin', {
-        username,
+      .post(API_URL + '/user/login/', {
+        username, 
         password
       })
       .then(response => {
@@ -22,12 +23,8 @@ class AuthService {
     localStorage.removeItem('user');
   }
 
-  register(username: string, email: string, password: string) {
-    return axios.post(API_URL + 'signup', {
-      username,
-      email,
-      password
-    });
+  register(emp : any) {
+    return axios.post(API_URL + '/user/create/', emp);
   }
 }
 

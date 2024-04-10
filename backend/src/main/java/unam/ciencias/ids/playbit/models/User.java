@@ -30,17 +30,18 @@ public class User {
 
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    //@ManyToMany(fetch = FetchType.LAZY)
+    //@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    //private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, LocalDate nacimiento) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.bornDate = nacimiento;
     }
 
     public String getName(){
@@ -90,7 +91,7 @@ public class User {
     }
 
 
-
+    /* 
     public Set<Role> getRoles() {
         return roles;
     }
@@ -98,5 +99,5 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
+    */
 }

@@ -76,11 +76,11 @@ public class UserController {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
-        .collect(Collectors.toList());
+        //List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+        //.collect(Collectors.toList());
 
         return ResponseEntity
-        .ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+        .ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail() /* , roles */));
     }
 
     @PostMapping("/create/")
@@ -95,14 +95,15 @@ public class UserController {
         if (userList.size() > 0) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
-
+        
+        
         // Create new user's account
         User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-            encoder.encode(signUpRequest.getPassword()));
-
+            encoder.encode(signUpRequest.getPassword()), signUpRequest.getBornDate());
+        /* 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
-
+            
         if (strRoles == null) {
         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -126,11 +127,11 @@ public class UserController {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
-            }
+            } 
         });
-    }
+    } */
 
-    user.setRoles(roles);
+    //user.setRoles(roles);
     userRepository.save(user);
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
