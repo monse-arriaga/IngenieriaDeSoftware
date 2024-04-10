@@ -1,5 +1,7 @@
 package unam.ciencias.ids.playbit.models;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -25,6 +27,21 @@ public class User {
 
     @Column(name = "biografia")
     private String bio;
+
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    public User() {
+    }
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     public String getName(){
         return this.name;
@@ -70,6 +87,16 @@ public class User {
 
     public void setBio(String bio){
         this.bio = bio;
+    }
+
+
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
 }
