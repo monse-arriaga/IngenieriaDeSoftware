@@ -5,6 +5,7 @@ import Registro from '../components/Registro.vue';
 import InicioSesion from '../components/InicioSesion.vue';
 import Configuracion from '../components/Configuracion.vue';
 import Torneo from '../components/Torneo.vue';
+import Banner from '../components/BannerDinamico.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -18,6 +19,7 @@ const routes: Array<RouteRecordRaw> = [
       component: PaginaInicio
     },
     // Agrega más rutas aquí si es necesario
+    ,
     {
       path: '/registro',
       name: 'registro',

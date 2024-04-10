@@ -3,7 +3,7 @@
 
 <template>
   <div class = "container">
-  
+
     <div class="corner-buttons">
       <div @click="() => goToPage('/')"  class="corner-button">
         <img src="./assets/ImagenesMenuPrincipal/Home.png"alt="Botón 1" class="button-image" />
@@ -30,10 +30,11 @@
   
     <router-view /> <!-- Esto es importante para que vue-router renderice los componentes correspondientes -->
   
-    </div>
-  
+  </div>
   
   </template>
+
+
   
   <script setup lang="ts">
   import { useRouter } from 'vue-router';
@@ -48,7 +49,7 @@
   const status = ref('Iniciar Sesion')
 
   </script>
-  
+
   
   <style scoped>
   .logo {
@@ -103,4 +104,6 @@
   .pagina-inicio {
     margin-top: 60px; /* Espacio entre el menú y el contenido de la página */
   }
+
+
   </style>./components/Registro.vue

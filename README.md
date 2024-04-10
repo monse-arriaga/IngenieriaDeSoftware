@@ -14,3 +14,6 @@ Para el back nos movemos a la carpeta back y ejecutamos
 
 Posteriormente podemos acceder al localhost.
 
+Para el front(windows)
+Despues de hacer docker-compose up -d, se tiene que acceder a la carpeta de front y correr npm run dev. Es importante tener Docker 
+Desktop
