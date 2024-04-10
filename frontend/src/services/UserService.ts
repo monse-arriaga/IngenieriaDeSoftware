@@ -1,5 +1,8 @@
 import apiClient from "../utils/apiClient";
 import User from "../types/User";
+import authHeader from "./auth-header";
+
+const API_URL = 'http://localhost:8080/'
 
 class UserService {
 

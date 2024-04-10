@@ -11,7 +11,7 @@
           </div>
           <!-- Campo de nombre de usuario -->
           <div class="input-wrapper">
-            <input type="text" placeholder="Nombre de usuario" v-model="userToBeSaved.name" required>
+            <input type="text" placeholder="Nombre de usuario" v-model="userToBeSaved.username" required>
           </div>
           <!-- Campo de contraseña -->
           <div class="input-wrapper">
@@ -29,23 +29,23 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import User from "../types/User";
-import UserService from '../services/UserService';
 import { useRouter } from 'vue-router';
+import AuthService from '../services/AuthService';
 
 export default defineComponent({
   name: "RegisterUserView",
   setup() {
-    const userToBeSaved = ref<User>({
-      bio: "not-yet",
+    const userToBeSaved = ref<any>({
+      //bio: "not-yet",
       bornDate: "1968-12-18",
       email: "",
-      name: "",
+      username: "",
       password: ""
     });
     const router = useRouter();
     const showPopup = ref(false);
     const submitForm = () => {
-      UserService.save(userToBeSaved.value).then(() => {
+      AuthService.register(userToBeSaved.value).then(() => {
         router.push({name: "pagina-de-inicio"});
       }).catch(() => {
         showPopup.value = true;

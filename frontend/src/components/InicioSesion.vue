@@ -7,7 +7,7 @@
       <form @submit.prevent="submitForm">
         <!-- Campo de correo -->
         <div class="input-wrapper">
-          <input type="text" placeholder="Correo" v-model="userToLogIn.email" required>
+          <input type="text" placeholder="Nombre de Usuario" v-model="userToLogIn.username" required>
         </div>
         <!-- Campo de contraseña -->
         <div class="input-wrapper">
@@ -29,21 +29,21 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import UserService from '../services/UserService';
 import { useRouter } from 'vue-router';
+import AuthService from '../services/AuthService';
 
 export default defineComponent({
   name: "LoginUserView",
   setup() {
-    const userToLogIn = {
-      password: "",
-      email: ""
-    };
+    const userToLogIn = ref({
+      password: '',
+      username: ''
+    });
     const router = useRouter();
     const showPopup = ref(false);
 
     const submitForm = () => {
-      UserService.getUser(userToLogIn.password, userToLogIn.email).then(() => {
+      AuthService.login(userToLogIn.value.username, userToLogIn.value.password).then(() => {
         router.push({name: "pagina-de-inicio"});
       }).catch(() => {
         showPopup.value = true;
