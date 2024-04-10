@@ -63,10 +63,6 @@
   .logo.vue:hover {
     filter: drop-shadow(0 0 2em #4f34c7aa);
   }
-  </style>
-  
-  <style scoped>
-  
   .container {
     display: flex;
     flex-direction: column;

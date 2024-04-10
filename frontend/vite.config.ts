@@ -1,5 +1,7 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,5 +12,11 @@ export default defineConfig({
       usePolling: true
     }
   },
-  plugins: [vue()],
-})
+  plugins: [
+    vue(),
+    quasar({
+      sassVariables: 'src/quasar-variables.sass'
+    })
+  ],
+  
+});

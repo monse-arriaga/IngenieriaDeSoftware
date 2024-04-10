@@ -1,32 +1,48 @@
 <template>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <h2 class="card-title">{{ tournament.name }}</h2>
-        </div>
-        <div class="card-header-right">
-          <button class="btn" @click="editEmployee">Edit</button>
-          <button class="btn" @click="deleteEmployee">Delete</button>
-          <button class="btn" @click="showDetails">Details</button>
-        </div>
+<q-card class="my-card" flat bordered>
+  <q-card-section horizontal>
+    <q-card-section class="q-pt-xs">
+      <div class="text-overline">Valorant</div>
+      <div class="text-h5 q-mt-sm q-mb-xs">{{ tournament.name }}</div>
+      <div class="text-caption text-grey">
+        {{ tournament.about }}
       </div>
-      <div class="card-body">
-        <div class="card-row">
-          <div class="card-label">Phone:</div>
-          <div class="card-value">{{ employee.bio }}</div>
-        </div>
-        <div class="card-row">
-          <div class="card-label">Email:</div>
-          <div class="card-value">{{ employee.email }}</div>
-        </div>
-      </div>
-    </div>
-  </template>
+    </q-card-section>
+
+    <q-img
+        class="col-5"
+        src="https://cdn.quasar.dev/img/parallax2.jpg"
+      />
+    </q-card-section>
+
+  <q-separator />
+
+  <q-card-actions>
+    <q-btn flat round icon="event" />
+    <q-btn flat>
+      {{ tournament.date.toDateString() }}
+    </q-btn>
+    <q-btn flat round icon="emoji_events" />
+    <q-btn flat>
+      {{ tournament.prize }} USD
+    </q-btn>
+    <q-btn flat round icon="groups" />
+    <q-btn flat>
+      {{ tournament.playerType }} 
+    </q-btn>
+    <q-btn flat round icon="how_to_reg" />
+    <q-btn flat>
+      {{ tournament.inPlayers }} / {{ tournament.noPlayers }} 
+    </q-btn>
+    
+  </q-card-actions>
+</q-card>
+</template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { useRouter } from "vue-router";
-import User from "../types/Tournament";
+import Tournament from "../types/Tournament";
 
 export default defineComponent({
   name: "TorneoCarta",
@@ -39,23 +55,16 @@ export default defineComponent({
   setup(props) {
     const router = useRouter();
     const showDetails = () => {
-      router.push({ name: "details", params: { id: props.employee.name } });
+      router.push({ name: "details", params: { id: props.tournament.name } });
     };
-
-    const editEmployee = () => {
-      router.push({
-        name: "edit",
-        params: { id: props.employee.name },
-      });
-    };
-    const deleteEmployee = () => {
-    };
-
     return {
       showDetails,
-      editEmployee,
-      deleteEmployee,
     };
   },
 });
 </script>
+
+<style lang="sass" >
+.my-card 
+    color: black
+</style>
