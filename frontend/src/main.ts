@@ -1,34 +1,15 @@
-import { createApp } from 'vue'
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import './style.css'
-import App from './App.vue'
-import BusquedaTorneos from './components/BusquedaTorneos.vue';
-import PaginaInicio from './components/PaginaInicio.vue';
-
-//createApp(App).mount('#app')
-
-const routes: Array<RouteRecordRaw> = [
-    {
-      path: '/busqueda-torneos',
-      name: 'BusquedaTorneos',
-      component: BusquedaTorneos
-    },
-    {
-      path: '/',
-      name: 'pagina-de-inicio',
-      component: PaginaInicio
-    },
-    // Agrega más rutas aquí si es necesario
-  ];
-  
-  const router = createRouter({
-    history: createWebHistory(),
-    routes
-  });
-  
-  export default router;
-
+import { createApp } from 'vue';
+import './style.css'; // Assuming this is for global styles
+import App from './App.vue';
+import router from './router';
+import { Quasar } from 'quasar';
+import '@quasar/extras/material-icons/material-icons.css'
+import 'quasar/src/css/index.sass'
+import '@quasar/extras/mdi-v7/mdi-v7.css'
 
 const app = createApp(App);
+app.use(Quasar, {
+    plugins: {},
+});
 app.use(router);
 app.mount('#app');

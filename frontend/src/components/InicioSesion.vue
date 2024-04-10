@@ -1,52 +1,75 @@
 <template>
     <div class="modal">
       <div class="modal-content">
-        <!-- Contenido del formulario de inicio de sesión -->
-        <button class="close-button" @click="closeForm">x</button>
-        <h2 class="title">Inicia Sesion:</h2>
-        <form @submit.prevent="handleSubmit">
-          <!-- Campo de correo -->
-          <div class="input-wrapper">
-            <input type="text" placeholder="Correo" v-model="email" required>
-          </div>
-          <!-- Campo de contraseña -->
-          <div class="input-wrapper">
-            <input type="password" placeholder="Contraseña" v-model="password" required>
-          </div>
-          <button type="submit">Iniciar Sesion</button>
-          <div v-if="popupMessage" class="popup">
-            {{ popupMessage }}
-          </div> 
-        </form>
-      </div>
+      <!-- Contenido del formulario de inicio de sesión -->
+      <button class="close-button" @click="cancelLogIn">x</button>
+      <h2 class="title">Inicia Sesion:</h2>
+      <form @submit.prevent="submitForm">
+        <!-- Campo de correo -->
+        <div class="input-wrapper">
+          <input type="text" placeholder="Nombre de Usuario" v-model="userToLogIn.username" required>
+        </div>
+        <!-- Campo de contraseña -->
+        <div class="input-wrapper">
+          <input type="password" placeholder="Contraseña" v-model="userToLogIn.password" required>
+        </div>
+        <div v-if="showPopup" class="popup">
+          <p>
+          Contraseña o usuario equivocados.
+          <br>
+          Vuelva a intentar.  
+          </p>
+        </div>
+        <button type="submit">Iniciar Sesion</button>
+      </form>
+      <p style="color: white;">¿No tienes una cuenta? <a href="#" @click="showRegister">Registrate</a></p>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, defineEmits } from 'vue';
-  import axios from 'axios';
-  
-  const emits = defineEmits(['closeInicio', 'sesionIniciada']);
-  const email = ref('');
-  const password = ref('');
-  const popupMessage = ref('');
-  
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post('http://localhost:8080/user/login/', {
-        "email": email.value,
-        "password": password.value
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import AuthService from '../services/AuthService';
+
+export default defineComponent({
+  name: "LoginUserView",
+  setup() {
+    const userToLogIn = ref({
+      password: '',
+      username: ''
+    });
+    const router = useRouter();
+    const showPopup = ref(false);
+
+    const submitForm = () => {
+      AuthService.login(userToLogIn.value.username, userToLogIn.value.password).then(() => {
+        router.push({name: "pagina-de-inicio"});
+      }).catch(() => {
+        showPopup.value = true;
       });
-      emits('sesionIniciada')
-    } catch (error) {
-      popupMessage.value = "Error correo o contraseña incorrectas";
-    }
-   };
-  
-  const closeForm = () => {
-    emits('closeInicio');
-  }
-  </script>
+      window.location.reload;
+    };
+
+    const cancelLogIn = () => {
+      router.push({name: "pagina-de-inicio"});
+    };
+
+    const showRegister = () => {
+      router.push({name: "registro"});
+    };
+
+    return {
+      userToLogIn,
+      cancelLogIn,
+      submitForm,
+      showRegister,
+      showPopup
+    };
+  },
+});
+</script>
+
   
   <style scoped>
   .modal {

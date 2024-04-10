@@ -7,21 +7,24 @@ services:
     ports:
       - "8000:8000"  
     volumes:
-      - ./frontend:/app  
+      - ./frontend:/usr/src/app
     environment:
-      - POSTGRES_HOST=postgres  
+      - POSTGRES_HOST=postgres 
+    command: npm run dev
 
   postgres:
     image: postgres:latest  
     restart: always  
     environment:
-      - POSTGRES_PASSWORD=${PASSWORD}  
-      - POSTGRES_USER=${USERNAME}  
-      - POSTGRES_DB=${DB}  
+      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_USER=${USERNAME}
+      - POSTGRES_DB=${DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data  
-      - ./database:/docker-entrypoint-initdb.d
-
+      - ./database/DDL.sql:/docker-entrypoint-initdb.d/DDL.sql
+    ports:
+      - "5432:5432"
+      
   adminer:
     image: adminer:latest  
     restart: unless-stopped  

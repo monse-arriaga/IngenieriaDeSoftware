@@ -1,11 +1,5 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-
-defineProps<{ msg: string }>()
-
-</script>
-
 <template>
+  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum officiis ut expedita impedit quos tempora eligendi, architecto maxime est nihil, omnis vel soluta cum qui nulla necessitatibus, nesciunt aperiam quaerat.
 </template>
 
 <style scoped>

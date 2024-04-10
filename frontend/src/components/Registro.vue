@@ -1,64 +1,69 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <!-- Contenido del formulario de inicio de sesión -->
-      <button class="close-button" @click="closeForm">x</button>
-      <h2 class="title">Empieza tu aventura ahora:</h2>
-      <form @submit.prevent="handleSubmit">
-        <!-- Campo de correo -->
-        <div class="input-wrapper">
-          <input type="text" placeholder="Correo" v-model="email" required>
-        </div>
-        <!-- Campo de nombre de usuario -->
-        <div class="input-wrapper">
-          <input type="text" placeholder="Nombre de usuario" v-model="username" required>
-        </div>
-        <!-- Campo de contraseña -->
-        <div class="input-wrapper">
-          <input type="password" placeholder="Contraseña" v-model="password" required>
-        </div>
-        <button type="submit">Regístrate</button>
-        <div v-if="popupMessage" class="popup">
-          {{ popupMessage }}
-        </div>
-        <p style="color: white;">¿Ya tienes una cuenta? <a href="#" @click="showLogin">Inicia sesión</a></p>
-      </form>
+        <!-- Contenido del formulario de inicio de sesión -->
+        <button class="close-button" @click="cancelRegister">x</button>
+        <h2 class="title">Empieza tu aventura ahora:</h2>
+        <form @submit.prevent="submitForm">
+          <!-- Campo de correo -->
+          <div class="input-wrapper">
+            <input type="text" placeholder="Correo" v-model="userToBeSaved.email" required>
+          </div>
+          <!-- Campo de nombre de usuario -->
+          <div class="input-wrapper">
+            <input type="text" placeholder="Nombre de usuario" v-model="userToBeSaved.username" required>
+          </div>
+          <!-- Campo de contraseña -->
+          <div class="input-wrapper">
+            <input type="password" placeholder="Contraseña" v-model="userToBeSaved.password" required>
+          </div>
+          <div v-if="showPopup" class="popup">
+            Ocurrio un error. Vuelva a intentar.
+          </div>
+          <button type="submit">Regístrate</button>
+        </form>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, defineEmits } from 'vue';
-import axios from 'axios';
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import User from "../types/User";
+import { useRouter } from 'vue-router';
+import AuthService from '../services/AuthService';
 
-const emits = defineEmits(['closeRegistro', 'showLogInInicio', 'registrado']);
-const email = ref('');
-const username = ref('');
-const password = ref('');
-const popupMessage = ref('');
-
-const handleSubmit = async () => {
-  try {
-    const response = await axios.post('http://localhost:8080/user/create/', {
-      "bio": "not yet",
-      "bornDate": "1968-12-18",
-      "email": email.value,
-      "name": username.value,
-      "password": password.value
+export default defineComponent({
+  name: "RegisterUserView",
+  setup() {
+    const userToBeSaved = ref<any>({
+      //bio: "not-yet",
+      bornDate: "1968-12-18",
+      email: "",
+      username: "",
+      password: ""
     });
-    emits('registrado')
-  } catch (error) {
-    popupMessage.value = "Error al registrar usuario";
-  }
-};
+    const router = useRouter();
+    const showPopup = ref(false);
+    const submitForm = () => {
+      AuthService.register(userToBeSaved.value).then(() => {
+        router.push({name: "pagina-de-inicio"});
+      }).catch(() => {
+        showPopup.value = true;
+      });
+      window.location.reload;
+    };
+    const cancelRegister = () => {
+      router.push({ name: "pagina-de-inicio"});
+    };
 
-const closeForm = () => {
-  emits('closeRegistro');
-}
-
-const showLogin = () => {
-  emits('showLogInInicio');
-}
+    return {
+      userToBeSaved,
+      cancelRegister,
+      submitForm,
+      showPopup
+    };
+  },
+});
 </script>
 
 <style scoped>
@@ -112,10 +117,17 @@ const showLogin = () => {
 } 
 
 .popup {
-  background-color: red; 
+  background-color: rgba(255, 0, 0, 0.8);
   color: white;
   padding: 10px;
-  margin-top: 20px; /* Adjust as needed */
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  text-align: center;
+}  
+
+.popup p {
+  margin: 0;
 }
 
 /* Ajusta los estilos según sea necesario */
