@@ -24,4 +24,31 @@ public class TournamentServices {
         tournamentRepository.save(tournament);
         return true;
     }
+
+
+    public boolean editTournament(Tournament tournament){
+        List<Tournament> tournaments = tournamentRepository.getTournamentById(tournament.getID());
+
+        if(tournaments.size() == 0){
+            return false;
+        }
+
+        tournamentRepository.delete(tournaments.get(0));
+
+        tournamentRepository.save(tournament);
+        return true;
+
+    }
+
+
+    public boolean deleteTournament(Tournament tournament){
+        List<Tournament> tournaments = tournamentRepository.getTournamentById(tournament.getID());
+
+        if(tournaments.size() == 0){
+            return false;
+        }
+        
+        tournamentRepository.delete(tournament);
+        return true;
+    }
 }

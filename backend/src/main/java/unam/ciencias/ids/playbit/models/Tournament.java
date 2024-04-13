@@ -38,6 +38,9 @@ public class Tournament {
     @Column(name="precio")
     private int prize;
 
+    public Tournament(){
+        
+    }
 
     public Tournament(
         int id,
