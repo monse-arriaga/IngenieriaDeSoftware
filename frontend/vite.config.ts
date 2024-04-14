@@ -12,6 +12,9 @@ export default defineConfig({
       usePolling: true
     }
   },
+  devServer: {
+    port: 8000
+  },
   plugins: [
     vue(),
     quasar({

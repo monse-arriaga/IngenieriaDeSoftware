@@ -1,9 +1,12 @@
-FROM node:lts
-WORKDIR /usr/src/app
-RUN npm install -g vite --only=development
-COPY package*.json ./
-COPY . .
-RUN npm install --only=development
+FROM node:21
+WORKDIR /app
 
-EXPOSE 5173
-CMD ["npm", "run", "dev"]
+COPY ./package.json .
+COPY ./package-lock.json .
+RUN npm install
+
+COPY . ./
+RUN npm run build
+
+EXPOSE 8000
+CMD [ "npm", "run", "dev" ]

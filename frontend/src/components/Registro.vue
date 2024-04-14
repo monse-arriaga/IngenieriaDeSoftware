@@ -28,7 +28,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import User from "../types/User";
 import { useRouter } from 'vue-router';
 import AuthService from '../services/AuthService';
 
