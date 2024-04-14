@@ -6,8 +6,6 @@ services:
     build: 
       context:  
         ./frontend
-      args:     
-        - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     ports:
       - "8000:8000"
     develop:
