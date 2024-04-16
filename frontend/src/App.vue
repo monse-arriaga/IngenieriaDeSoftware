@@ -22,12 +22,26 @@
       <div @click="() => goToPage('./configuracion')"  class="corner-button">
         <img src="./assets/ImagenesMenuPrincipal/configuracion.png" alt="Botón 3" class="button-image" />
       </div>
-    </div>
+
+      <!-- Espacio entre botones -->
+      <div style="margin-bottom: 10px;"></div> 
+
+      <!-- Boton quasar -->
+      <q-btn id="plus-button" color="primary" @click="() => goToPage('/crear-torneo')">
+        <strong>+</strong> 
+        <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          <strong>¡Crea tu propio torneo!</strong> 
+        </q-tooltip>
+      </q-btn>      
+
+      </div>
   
     <button @click="() => goToPage('iniciar-sesion')" class="login-button">
         {{status}}
     </button>
   
+
+
     <router-view /> <!-- Esto es importante para que vue-router renderice los componentes correspondientes -->
   
     </div>
@@ -98,5 +112,9 @@
   
   .pagina-inicio {
     margin-top: 60px; /* Espacio entre el menú y el contenido de la página */
+  }
+
+  #plus-button {
+    font-size: 16px; /* Tamaño de fuente más grande */
   }
   </style>./components/Registro.vue
