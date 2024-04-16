@@ -61,6 +61,7 @@
      
         </q-step>
   
+        <!--
         <q-step
           :name="2"
           title="Invitemos a algunos amigos"
@@ -78,6 +79,7 @@
         >
         Antes de comenzar la aventura, hay unas reglas que como organizador del torneo, tienes que cumplir
         </q-step>
+        -->
   
         <template v-slot:navigation>
           <q-stepper-navigation>
