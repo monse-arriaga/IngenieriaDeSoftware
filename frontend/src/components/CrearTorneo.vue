@@ -56,9 +56,6 @@
         clearable
         autogrow
         label="Da una breve descripción de tu torneo para los futuros participantes"
-        :shadow-text="textareaShadowText"
-        @keydown="processTextareaFill"
-        @focus="processTextareaFill"
         />
 
      
@@ -76,38 +73,39 @@
   
         <q-step
           :name="3"
-          title="Ad template"
-          icon="assignment"
-          disable
-        >
-          This step won't show up because it is disabled.
-        </q-step>
-  
-        <q-step
-          :name="4"
-          title="Create an ad"
+          title="Revisemos nuestras reglas"
           icon="add_comment"
         >
-          Try out different ad text to see what brings in the most customers, and learn how to
-          enhance your ads using features like ad extensions. If you run into any problems with
-          your ads, find out how to tell if they're running and how to resolve approval issues.
+        Antes de comenzar la aventura, hay unas reglas que como organizador del torneo, tienes que cumplir
         </q-step>
   
         <template v-slot:navigation>
           <q-stepper-navigation>
-            <q-btn @click="$refs.stepper.next()" color="primary" :label="step === 4 ? 'Finish' : 'Continue'" />
-            <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Back" class="q-ml-sm" />
+            <q-btn @click="onNext" color="primary" :label="step === 4 ? 'Finish' : 'Continue'" />
+            <q-btn v-if="step > 1" flat color="primary" @click="onPrevious" label="Back" class="q-ml-sm" />
           </q-stepper-navigation>
         </template>
       </q-stepper>
     </div>
   </template>
   
-  <script>
-  import { ref } from 'vue'
+  <script lang="ts">
+  import { Ref, ref } from 'vue'
+  import { QStepper } from 'quasar'; 
   
   export default {
     setup () {
+      const stepper = ref() as Ref<QStepper>
+      const onNext = () => {
+      if (stepper.value) {
+        stepper.value.next();
+      }
+    };
+    const onPrevious = () => {
+      if (stepper.value) {
+        stepper.value.previous();
+      }
+    };
       return {
         step: ref(1),
         nombre: ref(''), // Variable para almacenar el nombre del torneo
@@ -118,8 +116,10 @@
         jugadoresXequipo: ref(10),
         tipoTorneo: ref(null), // Variable para almacenar la opción seleccionada del selector
         options: [
-        'Torneo de Liga', 'Liga y Eliminatoria', 'Eliminatoria'
-        ]
+        'Torneo de Liga', 'Liga y Eliminatoria', 'Eliminatoria'],
+        stepper,
+        onNext,
+        onPrevious,
       }
     }
   }
