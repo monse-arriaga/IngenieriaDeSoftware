@@ -1,5 +1,7 @@
 package unam.ciencias.ids.playbit.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,12 @@ public class TournamentController {
     public void deleteTournament(@RequestBody Tournament tournament){
         if(!tournamentServices.deleteTournament(tournament))
             throw new IllegalArgumentException("tournament not found");
+    }
+
+
+    @GetMapping("/all/")
+    public List<Tournament> listAll(){
+        return tournamentServices.listAll();
     }
 
 
