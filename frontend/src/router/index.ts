@@ -5,6 +5,7 @@ import Registro from '../components/Registro.vue';
 import InicioSesion from '../components/InicioSesion.vue';
 import Configuracion from '../components/Configuracion.vue';
 import Torneo from '../components/Torneo.vue';
+import CrearTorneo from '../components/CrearTorneo.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -37,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
       path: '/torneo',
       name: 'torneo',
       component: Torneo
+    },
+    {
+      path: '/crear-torneo',
+      name: 'crear-torneo',
+      component: CrearTorneo
     },
   ];
 
