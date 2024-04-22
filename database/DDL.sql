@@ -16,17 +16,17 @@ CREATE TABLE Torneo (
   nombre VARCHAR(100) NOT NULL,
   noJugadores INT NOT NULL,
   informacion VARCHAR(250) DEFAULT '',
-  estado VARCHAR(10) CHECK (status IN ('finalizado', 'jugando', 'abierto')),
+  estado VARCHAR(10) CHECK (estado IN ('finalizado', 'jugando', 'abierto')),
   tipoTorneo VARCHAR(50) DEFAULT 'Eliminación Directa', 
-  tipoParticipante VARCHAR(10) CHECK (tipoParticipante in ('equipo', 'solitario'))
+  tipoParticipante VARCHAR(10) CHECK (tipoParticipante IN ('equipo', 'solitario')),
   fecha DATE NOT NULL,
-  premio INT DEFAULT 0.
+  premio INT DEFAULT 0,
   inscritos INT DEFAULT 0,
   CONSTRAINT torneo_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE juego (
   nombre VARCHAR(100) NOT NULL,
-  tipo VARCHAR(50)
+  tipo VARCHAR(50),
   CONSTRAINT juego_pkey PRIMARY KEY (nombre)
-)
+);
