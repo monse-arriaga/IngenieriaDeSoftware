@@ -26,8 +26,22 @@ public class TournamentController {
     @PostMapping("/create/")
     public void createTournament(@RequestBody Tournament tournament){
         if(!tournamentServices.createTournament(tournament))
-            throw new IllegalArgumentException("tournament ID not found");
+            throw new IllegalArgumentException("tournament already created");
+    }
+
+    @PostMapping("/edit/")
+    public void editTournament(@RequestBody Tournament tournament){
+        if(!tournamentServices.editTournament(tournament))
+            throw new IllegalArgumentException("tournament not found");
+    }
+
+
+    @PostMapping("/delete/")
+    public void deleteTournament(@RequestBody Tournament tournament){
+        if(!tournamentServices.deleteTournament(tournament))
+            throw new IllegalArgumentException("tournament not found");
     }
 
 
 }
+

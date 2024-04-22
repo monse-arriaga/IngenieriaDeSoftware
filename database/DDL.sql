@@ -20,6 +20,8 @@ CREATE TABLE Torneo (
   tipoTorneo VARCHAR(50) DEFAULT 'Eliminación Directa', 
   tipoParticipante VARCHAR(10) CHECK (tipoParticipante in ('equipo', 'solitario'))
   fecha DATE NOT NULL,
+  premio INT DEFAULT 0.
+  inscritos INT DEFAULT 0,
   CONSTRAINT torneo_pkey PRIMARY KEY (id)
 );
 
