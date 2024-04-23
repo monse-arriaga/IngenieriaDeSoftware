@@ -18,6 +18,7 @@ import unam.ciencias.ids.playbit.models.Tournament;
 import unam.ciencias.ids.playbit.services.TournamentServices;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/tournament")
 public class TournamentController {
     @Autowired

@@ -1,13 +1,14 @@
 interface Tournament {
     name: string,
-    noPlayers: number, 
-    about: string,
-    status: string,
+    players: number, 
+    description: string,
+    state: string,
     tournamentType: string,
-    playerType: string,
+    playersBT: number,
     inPlayers: number,
-    date: Date,
-    prize: number
+    date: string,
+    prize: number,
+    time: string
 }
 
 export default Tournament;

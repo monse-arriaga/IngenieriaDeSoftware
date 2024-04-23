@@ -1,6 +1,8 @@
 package unam.ciencias.ids.playbit.models;
 
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +19,7 @@ public class Tournament {
     @Column(name = "nombre")
     private String name;
 
-    @Column(name = "noJugadores")
+    @Column(name = "jugadores")
     private int players;
 
     @Column(name = "informacion")
@@ -29,14 +31,20 @@ public class Tournament {
     @Column(name = "tipoTorneo")
     private String tournamentType;
 
-    @Column(name = "tipoParticipante")
-    private String playerType;
+    @Column(name = "jugadores_por_equipo")
+    private int playersBT;
 
     @Column(name = "fecha")
     private LocalDate date;
 
-    @Column(name="precio")
+    @Column(name = "inscritos")
+    private int inPlayers;
+
+    @Column(name="premio")
     private int prize;
+
+    @Column(name="hora")
+    private LocalTime time;
 
     public Tournament(){
 
@@ -49,9 +57,11 @@ public class Tournament {
         String description,
         String state,
         String tournamentType,
-        String playerType,
+        int playersBT,
         LocalDate date,
-        int prize){
+        int prize,
+        int inPlayers,
+        LocalTime time){
 
 
         this.id = id;
@@ -60,9 +70,11 @@ public class Tournament {
         this.description = description;
         this.state = state;
         this.tournamentType = tournamentType;
-        this.playerType = playerType;
+        this.playersBT = playersBT;
         this.date = date;
         this.prize = prize;
+        this.inPlayers = inPlayers;
+        this.time = time;
 
     }
 
@@ -92,14 +104,24 @@ public class Tournament {
         return this.tournamentType;
     }
 
-    public String getPlayerType() {
-        return this.playerType;
+    public int getPlayersBT() {
+        return this.playersBT;
     }
     
     public LocalDate getDate() {
         return this.date;
     }
 
+    public LocalTime getTime() {
+        return time;
+    }
+    
+    public int inPlayers(){
+        return this.inPlayers;
+    }
+    public void inPlayers(int inPlayers){
+        this.inPlayers = inPlayers;
+    }
 
     public void setID(int id) {
         this.id = id;
@@ -121,12 +143,16 @@ public class Tournament {
         this.state = state;
     }
 
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
     public void setTournamentType(String tournamentType) {
         this.tournamentType = tournamentType;
     }
 
-    public void setPlayerType(String playerType) {
-        this.playerType = playerType;
+    public void setPlayersBT(int playersBT) {
+        this.playersBT = playersBT;
     }
 
 

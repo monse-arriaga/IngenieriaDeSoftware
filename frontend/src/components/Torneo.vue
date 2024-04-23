@@ -17,13 +17,14 @@ export default defineComponent ({
   setup() {
     const tournamentData = ref<Tournament>({
       name: 'VALORANT UNDERGROUND LAN #2 QUALY #1',
-      about: 'Lorem ipsum dolor sit amet',
+      description: 'Lorem ipsum dolor sit amet',
       tournamentType: 'eliminacion directa',
-      noPlayers: 10,
-      status: "live",
-      playerType: "single",
+      players: 10,
+      state: "live",
+      playersBT: 0,
       inPlayers: 0,
-      date: new Date(),
+      time: "10:00 AM",
+      date: "1-1-2000",
       prize: 0
     });
 
