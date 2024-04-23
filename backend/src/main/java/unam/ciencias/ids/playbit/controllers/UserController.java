@@ -25,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import jakarta.validation.Valid;
 import unam.ciencias.ids.playbit.models.ERole;
 import unam.ciencias.ids.playbit.models.Role;
+import unam.ciencias.ids.playbit.models.Tournament;
 import unam.ciencias.ids.playbit.models.User;
 import unam.ciencias.ids.playbit.payload.request.LoginRequest;
 import unam.ciencias.ids.playbit.payload.request.SignupRequest;
@@ -34,6 +35,8 @@ import unam.ciencias.ids.playbit.repositories.RoleRepository;
 import unam.ciencias.ids.playbit.repositories.UserRepository;
 import unam.ciencias.ids.playbit.security.jwt.JwtUtils;
 import unam.ciencias.ids.playbit.security.services.UserDetailsImpl;
+import unam.ciencias.ids.playbit.services.EnrollServices;
+import unam.ciencias.ids.playbit.services.TournamentServices;
 import unam.ciencias.ids.playbit.services.UserServices;
 
 
@@ -51,9 +54,15 @@ public class UserController {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    EnrollServices enrollServices;
+
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    TournamentServices tournamentServices;
 
     @Autowired
     PasswordEncoder encoder;
@@ -65,6 +74,20 @@ public class UserController {
     public String hello(){
         return "hola";
     }
+
+
+    // @PostMapping("/enroll/")
+    // public ResponseEntity<?> addTournament(@RequestBody User user,Tournament tournament){
+    //     if(!tournamentServices.findTournament(tournament.getID())){
+    //         throw new IllegalArgumentException("Tournament doesn't exists.");
+    //     }
+
+    //     if(!enrollServices.enrollUser(user, tournament)){
+    //         throw new IllegalArgumentException("torneo lleno o jugador esta inscrito ya");
+    //     }
+
+    //     return ResponseEntity.ok( new MessageResponse("jugador inscrito."));
+    // }
 
     @PostMapping("/login/")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
