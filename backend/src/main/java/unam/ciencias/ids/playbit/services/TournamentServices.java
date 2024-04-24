@@ -27,7 +27,7 @@ public class TournamentServices {
 
     public boolean findTournament(int id){
         List<Tournament> tournaments = tournamentRepository.getTournamentById(id);
-
+        System.out.println(tournaments.size());
         return tournaments.size() > 0;
     }
 

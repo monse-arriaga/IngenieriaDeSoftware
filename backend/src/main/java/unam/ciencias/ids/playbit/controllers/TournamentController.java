@@ -26,7 +26,7 @@ public class TournamentController {
 
     @PostMapping("/create/")
     public void createTournament(@RequestBody Tournament tournament){
-        if(!tournamentServices.createTournament(tournament))
+        if (!tournamentServices.createTournament(tournament))
             throw new IllegalArgumentException("tournament already created");
     }
 

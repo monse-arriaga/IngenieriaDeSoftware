@@ -88,7 +88,7 @@ public class Tournament {
     }
 
 
-    public int getPlayer() {
+    public int getPlayers() {
         return this.players;
     }
 
@@ -116,10 +116,10 @@ public class Tournament {
         return time;
     }
     
-    public int inPlayers(){
+    public int getInPlayers(){
         return this.inPlayers;
     }
-    public void inPlayers(int inPlayers){
+    public void setInPlayers(int inPlayers){
         this.inPlayers = inPlayers;
     }
 
@@ -127,7 +127,7 @@ public class Tournament {
         this.id = id;
     }
 
-    public void setPlayer(int players) {
+    public void setPlayers(int players) {
         this.players = players;
     }
 

@@ -27,6 +27,7 @@ import unam.ciencias.ids.playbit.models.ERole;
 import unam.ciencias.ids.playbit.models.Role;
 import unam.ciencias.ids.playbit.models.Tournament;
 import unam.ciencias.ids.playbit.models.User;
+import unam.ciencias.ids.playbit.payload.request.EnrollRequest;
 import unam.ciencias.ids.playbit.payload.request.LoginRequest;
 import unam.ciencias.ids.playbit.payload.request.SignupRequest;
 import unam.ciencias.ids.playbit.payload.response.JwtResponse;
@@ -76,18 +77,21 @@ public class UserController {
     }
 
 
-    // @PostMapping("/enroll/")
-    // public ResponseEntity<?> addTournament(@RequestBody User user,Tournament tournament){
-    //     if(!tournamentServices.findTournament(tournament.getID())){
-    //         throw new IllegalArgumentException("Tournament doesn't exists.");
-    //     }
+    @PostMapping("/enroll/")
+    public ResponseEntity<?> addTournament(@RequestBody EnrollRequest enrollRequest){
+        Tournament tournament = enrollRequest.getTournament();
+        User user = enrollRequest.getUser();
+        
+        if(!tournamentServices.findTournament(tournament.getID())){
+            throw new IllegalArgumentException("Tournament doesn't exists.");
+        }
 
-    //     if(!enrollServices.enrollUser(user, tournament)){
-    //         throw new IllegalArgumentException("torneo lleno o jugador esta inscrito ya");
-    //     }
+        if(!enrollServices.enrollUser(user, tournament)){
+            throw new IllegalArgumentException("torneo lleno o jugador esta inscrito ya");
+        }
 
-    //     return ResponseEntity.ok( new MessageResponse("jugador inscrito."));
-    // }
+        return ResponseEntity.ok( new MessageResponse("jugador inscrito."));
+    }
 
     @PostMapping("/login/")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

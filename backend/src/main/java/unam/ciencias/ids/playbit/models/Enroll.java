@@ -5,46 +5,47 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
-
+import java.io.Serializable;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.*;
+
+
 
 @Entity
 @Table(name = "Inscribir")
 public class Enroll {
 
-    @Id
-    @Column(name = "usuario_id")
-    int userID;
-
-    @Id
-    @Column(name = "torneo_id")
-    int tournamentID;
+    @EmbeddedId
+    private EnrollId enrollId;
 
     public Enroll(){
 
     }
 
+    public Enroll(EnrollId enrollId){
 
-    public Enroll(int userID, int tournamentID){
-        this.userID = userID;
-        this.tournamentID = tournamentID;
+        this.enrollId = enrollId;
+    }
+
+    public EnrollId getEnrollId(){
+        return this.enrollId;
     }
 
     public int getUserID(){
-        return this.userID;
+        return this.enrollId.getUserID();
     }
 
     public int getTournamentID(){
-        return this.tournamentID;
+        return this.enrollId.getTournamentID();
     }
 
 
     public void setUserID(int id){
-        this.userID = id;
+        this.enrollId.setUserID(id);
     }
 
     public void setTournamentID(int id){
-        this.tournamentID = id;
+        this.enrollId.setTournamentID(id);
     }
     
 }
