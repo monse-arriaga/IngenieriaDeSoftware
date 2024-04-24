@@ -25,6 +25,16 @@ public class TournamentServices {
         return true;
     }
 
+    public List<Tournament> getAllTournaments(){
+        return (List<Tournament>)tournamentRepository.findAll();
+    }
+    
+    public List<Tournament> findTournamentByName(String name){
+        List<Tournament> tournaments = tournamentRepository.getTournamentByName(name);
+        return tournaments;
+    }
+
+
     public boolean findTournament(int id){
         List<Tournament> tournaments = tournamentRepository.getTournamentById(id);
         System.out.println(tournaments.size());
