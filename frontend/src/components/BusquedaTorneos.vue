@@ -1,9 +1,35 @@
 <template>
-  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum officiis ut expedita impedit quos tempora eligendi, architecto maxime est nihil, omnis vel soluta cum qui nulla necessitatibus, nesciunt aperiam quaerat.
+  <div class="tournament-grid">
+    <TorneoCarta v-for="tournament in tournamentData" :key="tournament.name" :tournament="tournament" />
+  </div>
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888888;
-}
-</style>
+<script lang="ts">
+import TorneoCarta from './TorneoCarta.vue';
+import Tournament from '../types/Tournament';
+import { defineComponent, ref } from 'vue';
+import TournamentService from '../services/TournamentService';
+
+export default defineComponent ({
+  name: 'Torneo',
+  components: {
+    TorneoCarta
+  },
+  setup() {
+    const tournamentData = ref<Tournament[]>([]);
+    (async () => {
+      try {
+        //console.log(TournamentService.getPublicContent())
+        tournamentData.value = (await TournamentService.getPublicContent()) as Tournament[];
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+
+    return {
+      tournamentData
+    };
+  }
+});
+</script>
+

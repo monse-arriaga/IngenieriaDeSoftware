@@ -4,7 +4,10 @@ const API_URL = 'http://localhost:8080';
 
 class UserService {
   getPublicContent() {
-    return axios.get(API_URL + 'all');
+    return axios.get(API_URL + '/tournament/all/')
+        .then(response =>  {
+          return response.data
+        } )
   }
 
   tournament(emp : any) {
