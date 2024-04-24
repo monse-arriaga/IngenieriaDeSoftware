@@ -1,6 +1,8 @@
 package unam.ciencias.ids.playbit.models;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -27,6 +29,7 @@ public class User {
 
     @Column(name = "biografia")
     private String bio;
+
 
 
 
@@ -70,6 +73,8 @@ public class User {
         return this.bio;
     }
 
+
+
     public void setID(int id){
         this.id = id;
     }
@@ -89,6 +94,7 @@ public class User {
     public void setBio(String bio){
         this.bio = bio;
     }
+
 
 
     /* 
