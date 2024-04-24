@@ -27,7 +27,7 @@
       <div style="margin-bottom: 10px;"></div> 
 
       <!-- Boton quasar -->
-      <q-btn id="plus-button" color="primary" @click="() => goToPage('/crear-torneo')">
+      <q-btn v-if="isLoggedIn" id="plus-button" color="primary" @click="() => goToPage('/crear-torneo')">
         <strong>+</strong> 
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
           <strong>¡Crea tu propio torneo!</strong> 
@@ -39,7 +39,7 @@
       <button v-if="!isLoggedIn" @click="() => goToPage('iniciar-sesion')" class="login-button">
         Iniciar Sesión
       </button>
-      <button v-else @click="logout" class="logout-button">
+      <button v-else @click="logout" class="login-button">
         Cerrar Sesión
       </button>
   
@@ -66,7 +66,7 @@
   const userStore = useUserStore();
   const isLoggedIn = computed(() => userStore.isLoggedIn);
   const logout = () => {
-    userStore.logout(); 
+    userStore.signOut(); 
     goToPage('/');
   };
 
