@@ -27,7 +27,7 @@
       <div style="margin-bottom: 10px;"></div> 
 
       <!-- Boton quasar -->
-      <q-btn id="plus-button" color="primary" @click="() => goToPage('/crear-torneo')">
+      <q-btn v-if="isLoggedIn" id="plus-button" color="primary" @click="() => goToPage('/crear-torneo')">
         <strong>+</strong> 
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
           <strong>¡Crea tu propio torneo!</strong> 
@@ -36,9 +36,12 @@
 
       </div>
   
-    <button @click="() => goToPage('iniciar-sesion')" class="login-button">
-        {{status}}
-    </button>
+      <button v-if="!isLoggedIn" @click="() => goToPage('iniciar-sesion')" class="login-button">
+        Iniciar Sesión
+      </button>
+      <button v-else @click="logout" class="login-button">
+        Cerrar Sesión
+      </button>
   
 
 
@@ -51,7 +54,8 @@
   
   <script setup lang="ts">
   import { useRouter } from 'vue-router';
-  import { ref } from 'vue';
+  import { computed } from 'vue';
+  import { useUserStore } from './store/user';
   
   const router = useRouter();
 
@@ -59,7 +63,12 @@
     router.push({ path: route });
   };
   
-  const status = ref('Iniciar Sesion')
+  const userStore = useUserStore();
+  const isLoggedIn = computed(() => userStore.isLoggedIn);
+  const logout = () => {
+    userStore.signOut(); 
+    goToPage('/');
+  };
 
   </script>
   

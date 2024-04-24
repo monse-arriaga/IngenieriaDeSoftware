@@ -14,17 +14,26 @@ CREATE TABLE Usuario (
 CREATE TABLE Torneo (
   id SERIAL,
   nombre VARCHAR(100) NOT NULL,
-  noJugadores INT NOT NULL,
+  jugadores INT NOT NULL,
   informacion VARCHAR(250) DEFAULT '',
-  estado VARCHAR(10) CHECK (status IN ('finalizado', 'jugando', 'abierto')),
-  tipoTorneo VARCHAR(50) DEFAULT 'Eliminación Directa', 
-  tipoParticipante VARCHAR(10) CHECK (tipoParticipante in ('equipo', 'solitario'))
+  estado VARCHAR(10) CHECK (estado IN ('finalizado', 'jugando', 'abierto')),
+  tipo_torneo VARCHAR(50) DEFAULT 'Eliminación Directa', 
   fecha DATE NOT NULL,
+  premio INT DEFAULT 0,
+  inscritos INT DEFAULT 0,
+  hora TIME NOT NULL,
+  jugadores_por_equipo INT NOT NULL DEFAULT 1, 
   CONSTRAINT torneo_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE juego (
+CREATE TABLE Juego (
   nombre VARCHAR(100) NOT NULL,
-  tipo VARCHAR(50)
+  tipo VARCHAR(50),
   CONSTRAINT juego_pkey PRIMARY KEY (nombre)
-)
+);
+
+CREATE TABLE Inscribir (
+  usuario_id INT REFERENCES Usuario(id),
+  torneo_id INT REFERENCES Torneo(id),
+  PRIMARY KEY (usuario_id, torneo_id)
+);

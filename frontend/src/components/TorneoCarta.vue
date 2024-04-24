@@ -5,7 +5,7 @@
       <div class="text-overline">Valorant</div>
       <div class="text-h5 q-mt-sm q-mb-xs">{{ tournament.name }}</div>
       <div class="text-caption text-grey">
-        {{ tournament.about }}
+        {{ tournament.description }}
       </div>
     </q-card-section>
 
@@ -20,7 +20,7 @@
   <q-card-actions>
     <q-btn flat round icon="event" />
     <q-btn flat>
-      {{ tournament.date.toDateString() }}
+      {{ tournament.date }}
     </q-btn>
     <q-btn flat round icon="emoji_events" />
     <q-btn flat>
@@ -28,11 +28,11 @@
     </q-btn>
     <q-btn flat round icon="groups" />
     <q-btn flat>
-      {{ tournament.playerType }} 
+      {{ tournament.playersBT }} 
     </q-btn>
     <q-btn flat round icon="how_to_reg" />
     <q-btn flat>
-      {{ tournament.inPlayers }} / {{ tournament.noPlayers }} 
+      {{ tournament.inPlayers }} / {{ tournament.players }} 
     </q-btn>
     
   </q-card-actions>

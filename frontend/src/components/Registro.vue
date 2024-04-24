@@ -29,7 +29,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import AuthService from '../services/AuthService';
+import { useUserStore } from '../store/user';
 
 export default defineComponent({
   name: "RegisterUserView",
@@ -42,9 +42,10 @@ export default defineComponent({
       password: ""
     });
     const router = useRouter();
+    const userStore = useUserStore();
     const showPopup = ref(false);
     const submitForm = () => {
-      AuthService.register(userToBeSaved.value).then(() => {
+      userStore.register(userToBeSaved.value).then(() => {
         router.push({name: "pagina-de-inicio"});
       }).catch(() => {
         showPopup.value = true;
@@ -54,7 +55,9 @@ export default defineComponent({
     const cancelRegister = () => {
       router.push({ name: "pagina-de-inicio"});
     };
-
+    if (userStore.isLoggedIn) {
+       router.push({ name: "pagina-de-inicio" });
+    }
     return {
       userToBeSaved,
       cancelRegister,
