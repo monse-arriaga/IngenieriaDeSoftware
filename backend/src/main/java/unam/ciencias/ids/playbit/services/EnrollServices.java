@@ -26,13 +26,13 @@ public class EnrollServices {
             return false;
         }
 
-        List<Enroll> tournamentEnrollments =  enrollRepository.getEnrollmentByTournament(tournament.getID());
+        List<Enroll> tournamentEnrollments =  enrollRepository.getEnrollmentByTournament(tournament.getName());
 
         if(tournamentEnrollments.size() > tournament.getPlayersBT()){
             return false;
         }
 
-        EnrollId enrollId = new EnrollId(user.getID(),tournament.getID());
+        EnrollId enrollId = new EnrollId(user.getID(),tournament.getName());
 
         Enroll enroll = new Enroll(enrollId);
         enrollRepository.save(enroll);

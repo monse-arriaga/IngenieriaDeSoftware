@@ -14,12 +14,12 @@ public class EnrollId implements Serializable {
     private int userID;
 
     @Column(name = "torneo_id")
-    private int tournamentID;
+    private String tournamentID;
 
     public EnrollId() {
     }
 
-    public EnrollId(int userID, int tournamentID) {
+    public EnrollId(int userID, String tournamentID) {
         this.userID = userID;
         this.tournamentID = tournamentID;
     }
@@ -32,11 +32,11 @@ public class EnrollId implements Serializable {
         this.userID = userID;
     }
 
-    public int getTournamentID() {
+    public String getTournamentID() {
         return tournamentID;
     }
 
-    public void setTournamentID(int tournamentID) {
+    public void setTournamentID(String tournamentID) {
         this.tournamentID = tournamentID;
     }
 

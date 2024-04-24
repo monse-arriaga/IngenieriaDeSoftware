@@ -82,7 +82,7 @@ public class UserController {
         Tournament tournament = enrollRequest.getTournament();
         User user = enrollRequest.getUser();
         
-        if(!tournamentServices.findTournament(tournament.getID())){
+        if(!tournamentServices.findTournament(tournament.getName())){
             throw new IllegalArgumentException("Tournament doesn't exists.");
         }
 
