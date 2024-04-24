@@ -4,7 +4,8 @@ import PaginaInicio from "../components/PaginaInicio.vue";
 import Registro from '../components/Registro.vue';
 import InicioSesion from '../components/InicioSesion.vue';
 import Configuracion from '../components/Configuracion.vue';
-import Torneo from '../components/Torneo.vue';
+//import Torneo from '../components/Torneo.vue';
+import CrearTorneo from '../components/CrearTorneo.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -33,16 +34,24 @@ const routes: Array<RouteRecordRaw> = [
       name: 'configuracion',
       component: Configuracion
     },
+    /*
     {
       path: '/torneo',
       name: 'torneo',
       component: Torneo
     },
+    */
+    {
+      path: '/crear-torneo',
+      name: 'crear-torneo',
+      component: CrearTorneo
+    },
+    { path: '/:pathMatch(.*)*', component: PaginaInicio },
   ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes
 });
-  
-  export default router;
+
+export default router;

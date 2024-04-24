@@ -30,7 +30,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import AuthService from '../services/AuthService';
+import { useUserStore } from '../store/user'
 
 export default defineComponent({
   name: "LoginUserView",
@@ -40,10 +40,15 @@ export default defineComponent({
       username: ''
     });
     const router = useRouter();
+    const userStore = useUserStore();
     const showPopup = ref(false);
 
+    if (userStore.isLoggedIn) {
+       router.push({ name: "pagina-de-inicio" });
+    }
+
     const submitForm = () => {
-      AuthService.login(userToLogIn.value.username, userToLogIn.value.password).then(() => {
+       userStore.login(userToLogIn.value.username, userToLogIn.value.password).then(() => {
         router.push({name: "pagina-de-inicio"});
       }).catch(() => {
         showPopup.value = true;

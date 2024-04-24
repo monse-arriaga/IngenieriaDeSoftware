@@ -22,12 +22,29 @@
       <div @click="() => goToPage('./configuracion')"  class="corner-button">
         <img src="./assets/ImagenesMenuPrincipal/configuracion.png" alt="Botón 3" class="button-image" />
       </div>
-    </div>
+
+      <!-- Espacio entre botones -->
+      <div style="margin-bottom: 10px;"></div> 
+
+      <!-- Boton quasar -->
+      <q-btn v-if="isLoggedIn" id="plus-button" color="primary" @click="() => goToPage('/crear-torneo')">
+        <strong>+</strong> 
+        <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          <strong>¡Crea tu propio torneo!</strong> 
+        </q-tooltip>
+      </q-btn>      
+
+      </div>
   
-    <button @click="() => goToPage('iniciar-sesion')" class="login-button">
-        {{status}}
-    </button>
+      <button v-if="!isLoggedIn" @click="() => goToPage('iniciar-sesion')" class="login-button">
+        Iniciar Sesión
+      </button>
+      <button v-else @click="logout" class="login-button">
+        Cerrar Sesión
+      </button>
   
+
+
     <router-view /> <!-- Esto es importante para que vue-router renderice los componentes correspondientes -->
   
     </div>
@@ -37,7 +54,8 @@
   
   <script setup lang="ts">
   import { useRouter } from 'vue-router';
-  import { ref } from 'vue';
+  import { computed } from 'vue';
+  import { useUserStore } from './store/user';
   
   const router = useRouter();
 
@@ -45,7 +63,12 @@
     router.push({ path: route });
   };
   
-  const status = ref('Iniciar Sesion')
+  const userStore = useUserStore();
+  const isLoggedIn = computed(() => userStore.isLoggedIn);
+  const logout = () => {
+    userStore.signOut(); 
+    goToPage('/');
+  };
 
   </script>
   
@@ -98,5 +121,9 @@
   
   .pagina-inicio {
     margin-top: 60px; /* Espacio entre el menú y el contenido de la página */
+  }
+
+  #plus-button {
+    font-size: 16px; /* Tamaño de fuente más grande */
   }
   </style>./components/Registro.vue
