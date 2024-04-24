@@ -26,8 +26,14 @@ CREATE TABLE Torneo (
   CONSTRAINT torneo_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE juego (
+CREATE TABLE Juego (
   nombre VARCHAR(100) NOT NULL,
   tipo VARCHAR(50),
   CONSTRAINT juego_pkey PRIMARY KEY (nombre)
+);
+
+CREATE TABLE Inscribir (
+  usuario_id INT REFERENCES Usuario(id),
+  torneo_id INT REFERENCES Torneo(id),
+  PRIMARY KEY (usuario_id, torneo_id)
 );

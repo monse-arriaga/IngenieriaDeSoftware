@@ -28,7 +28,7 @@ public class Tournament {
     @Column(name = "estado")
     private String state;
 
-    @Column(name = "tipoTorneo")
+    @Column(name = "tipo_torneo")
     private String tournamentType;
 
     @Column(name = "jugadores_por_equipo")

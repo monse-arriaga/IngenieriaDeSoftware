@@ -36,9 +36,12 @@
 
       </div>
   
-    <button @click="() => goToPage('iniciar-sesion')" class="login-button">
-        {{status}}
-    </button>
+      <button v-if="!isLoggedIn" @click="() => goToPage('iniciar-sesion')" class="login-button">
+        Iniciar Sesión
+      </button>
+      <button v-else @click="logout" class="logout-button">
+        Cerrar Sesión
+      </button>
   
 
 
@@ -51,7 +54,8 @@
   
   <script setup lang="ts">
   import { useRouter } from 'vue-router';
-  import { ref } from 'vue';
+  import { computed } from 'vue';
+  import { useUserStore } from './store/user';
   
   const router = useRouter();
 
@@ -59,7 +63,12 @@
     router.push({ path: route });
   };
   
-  const status = ref('Iniciar Sesion')
+  const userStore = useUserStore();
+  const isLoggedIn = computed(() => userStore.isLoggedIn);
+  const logout = () => {
+    userStore.logout(); 
+    goToPage('/');
+  };
 
   </script>
   

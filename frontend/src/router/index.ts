@@ -44,11 +44,12 @@ const routes: Array<RouteRecordRaw> = [
       name: 'crear-torneo',
       component: CrearTorneo
     },
+    { path: '/:pathMatch(.*)*', component: PaginaInicio },
   ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes
 });
-  
-  export default router;
+
+export default router;
