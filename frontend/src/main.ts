@@ -6,6 +6,8 @@ import { Quasar } from 'quasar';
 import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 import '@quasar/extras/mdi-v7/mdi-v7.css'
+import "@fortawesome/fontawesome-free/css/all.css";
+
 import { createPinia } from "pinia";
 
 const app = createApp(App);
