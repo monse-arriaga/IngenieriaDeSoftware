@@ -99,6 +99,26 @@ public class UserController {
         return ResponseEntity.ok( new MessageResponse("jugador inscrito."));
     }
 
+
+
+    @GetMapping("/tournaments_enrolled/{userid}")
+    public List<String> getUserTournaments(@PathVariable int userid) {
+        
+        Optional<User> user = userRepository.findById(userid);
+        
+        if(!user.isPresent()){
+            throw new IllegalArgumentException("User doesn't exists.");
+        }
+        
+        List<String> tournamentsEnrolled = enrollServices.getUserTournaments(userid);
+
+        if(tournamentsEnrolled.size() == 0){
+            throw new IllegalArgumentException("User is not enrolled in any tournament.");
+        }
+
+        return tournamentsEnrolled;
+    }
+
     @PostMapping("/login/")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -171,11 +191,10 @@ public class UserController {
   }
 
 
-    // @PostMapping("/create/")
-    // public void createUser(@Valid @RequestBody User user){
-    //     if (!userServices.createUser(user))
-    //         throw new IllegalArgumentException("El email ya esta usado.");
-    // }
+
+
+
+
 
     
     @ExceptionHandler(IllegalArgumentException.class)
