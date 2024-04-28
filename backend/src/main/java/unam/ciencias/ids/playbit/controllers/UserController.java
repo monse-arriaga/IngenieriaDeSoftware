@@ -2,6 +2,7 @@ package unam.ciencias.ids.playbit.controllers;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,16 +79,20 @@ public class UserController {
     }
 
 
-    @PostMapping("/enroll/")
-    public ResponseEntity<?> addTournament(@RequestBody EnrollRequest enrollRequest){
-        Tournament tournament = enrollRequest.getTournament();
-        User user = enrollRequest.getUser();
-        
-        if(!tournamentServices.findTournament(tournament.getName())){
+    @PostMapping("/enroll/{username}/{tournament_name}")
+    public ResponseEntity<?> addTournament(@PathVariable String username, @PathVariable String tournament_name){
+        List<Tournament> tournamentList = tournamentServices.findTournamentByName(tournament_name);
+        List<User> userList = userRepository.existsByUsername(username);
+
+        if(tournamentList.size() == 0){
             throw new IllegalArgumentException("Tournament doesn't exists.");
         }
 
-        if(!enrollServices.enrollUser(user, tournament)){
+        if(userList.size() == 0){
+            throw new IllegalArgumentException("Usuario no existente");
+        }
+
+        if(!enrollServices.enrollUser(userList.get(0), tournamentList.get(0))){
             throw new IllegalArgumentException("torneo lleno o jugador esta inscrito ya");
         }
 
