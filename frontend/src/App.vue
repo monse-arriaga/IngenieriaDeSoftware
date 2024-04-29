@@ -19,7 +19,7 @@
       <!-- Espacio entre botones -->
       <div style="margin-bottom: 10px;"></div> 
   
-      <div @click="() => goToPage('/configuracion')"  class="corner-button">
+      <div v-if="isLoggedIn" @click="() => goToPage('/configuracion')"  class="corner-button">
         <img src="./assets/ImagenesMenuPrincipal/configuracion.png" alt="Botón 3" class="button-image" />
       </div>
 

@@ -16,6 +16,7 @@ CREATE TABLE Torneo (
   informacion VARCHAR(250) DEFAULT '',
   estado VARCHAR(10) CHECK (estado IN ('finalizado', 'jugando', 'abierto')),
   tipo_torneo VARCHAR(50) DEFAULT 'Eliminación Directa',
+  tipo_juego VARCHAR(100) DEFAULT '',
   fecha DATE NOT NULL,
   premio INT DEFAULT 0,
   inscritos INT DEFAULT 0,
