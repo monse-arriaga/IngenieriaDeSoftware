@@ -1,5 +1,6 @@
 package unam.ciencias.ids.playbit.services;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,38 @@ public class EnrollServices {
     @Autowired
     TournamentServices tournamentServices;
 
+    public List<String> getUserTournaments(int userid){
+        List<Enroll> userEnrolls = enrollRepository.getEnrollmentByUser(userid);
+
+
+        if(userEnrolls.size() == 0){
+            throw new IllegalArgumentException("no user enrollments");
+        }
+
+        List<String> userTournaments = new LinkedList<>();
+
+        for(Enroll enroll : userEnrolls){
+            userTournaments.add(enroll.getTournamentID());
+        }
+
+        return userTournaments;
+    }
+
     public boolean enrollUser(User user, Tournament tournament){
-        List<Enroll> userEnrollments = enrollRepository.getEnrollmentByUser(user.getID());
+
+        List<Enroll> userEnrollments = enrollRepository.getUserEnrollInTournament(user.getID(),tournament.getName());
+
         if(userEnrollments.size() > 0){
             return false;
         }
 
-        List<Enroll> tournamentEnrollments =  enrollRepository.getEnrollmentByTournament(tournament.getID());
+        List<Enroll> tournamentEnrollments =  enrollRepository.getEnrollmentByTournament(tournament.getName());
 
         if(tournamentEnrollments.size() > tournament.getPlayersBT()){
             return false;
         }
 
-        EnrollId enrollId = new EnrollId(user.getID(),tournament.getID());
+        EnrollId enrollId = new EnrollId(user.getID(),tournament.getName());
 
         Enroll enroll = new Enroll(enrollId);
         enrollRepository.save(enroll);

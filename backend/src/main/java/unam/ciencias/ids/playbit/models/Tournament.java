@@ -6,16 +6,16 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="Torneo")
 public class Tournament {
+        
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
     @Column(name = "nombre")
     private String name;
 
@@ -51,7 +51,6 @@ public class Tournament {
     }
 
     public Tournament(
-        int id,
         String name,
         int players,
         String description,
@@ -64,7 +63,6 @@ public class Tournament {
         LocalTime time){
 
 
-        this.id = id;
         this.name = name;
         this.players = players;
         this.description = description;
@@ -78,10 +76,7 @@ public class Tournament {
 
     }
 
-    public int getID() {
-        return this.id;
 
-    }
 
     public String getName() {
         return this.name;
@@ -123,9 +118,7 @@ public class Tournament {
         this.inPlayers = inPlayers;
     }
 
-    public void setID(int id) {
-        this.id = id;
-    }
+ 
 
     public void setPlayers(int players) {
         this.players = players;

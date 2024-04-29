@@ -35,7 +35,7 @@ public class Enroll {
         return this.enrollId.getUserID();
     }
 
-    public int getTournamentID(){
+    public String getTournamentID(){
         return this.enrollId.getTournamentID();
     }
 
@@ -44,7 +44,7 @@ public class Enroll {
         this.enrollId.setUserID(id);
     }
 
-    public void setTournamentID(int id){
+    public void setTournamentID(String id){
         this.enrollId.setTournamentID(id);
     }
     
