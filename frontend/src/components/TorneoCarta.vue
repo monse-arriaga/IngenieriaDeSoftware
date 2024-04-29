@@ -55,7 +55,7 @@ export default defineComponent({
   setup(props) {
     const router = useRouter();
     const showDetails = () => {
-      const tournament = props.tournament.id;
+      const tournament = props.tournament.name;
       router.push({ name: 'torneo', params: { tournament } });
     };
     return {

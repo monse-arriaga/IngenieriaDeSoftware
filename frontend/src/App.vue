@@ -12,14 +12,14 @@
       <!-- Espacio entre botones -->
       <div style="margin-bottom: 10px;"></div> 
   
-      <div @click="() => goToPage('./busqueda-torneos')"  class="corner-button">
+      <div @click="() => goToPage('/busqueda-torneos')"  class="corner-button">
         <img src="./assets/ImagenesMenuPrincipal/Trofeo.png" alt="Botón 2" class="button-image" />
       </div>
   
       <!-- Espacio entre botones -->
       <div style="margin-bottom: 10px;"></div> 
   
-      <div @click="() => goToPage('./configuracion')"  class="corner-button">
+      <div @click="() => goToPage('/configuracion')"  class="corner-button">
         <img src="./assets/ImagenesMenuPrincipal/configuracion.png" alt="Botón 3" class="button-image" />
       </div>
 
@@ -36,7 +36,7 @@
 
       </div>
   
-      <button v-if="!isLoggedIn" @click="() => goToPage('iniciar-sesion')" class="login-button">
+      <button v-if="!isLoggedIn" @click="() => goToPage('/iniciar-sesion')" class="login-button">
         Iniciar Sesión
       </button>
       <button v-else @click="logout" class="login-button">

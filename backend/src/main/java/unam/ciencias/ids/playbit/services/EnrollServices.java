@@ -39,9 +39,9 @@ public class EnrollServices {
     }
 
     public boolean enrollUser(User user, Tournament tournament){
-
+        
         List<Enroll> userEnrollments = enrollRepository.getUserEnrollInTournament(user.getID(),tournament.getName());
-
+        
         if(userEnrollments.size() > 0){
             return false;
         }

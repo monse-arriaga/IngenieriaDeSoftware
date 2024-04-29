@@ -83,7 +83,7 @@ public class UserController {
     public ResponseEntity<?> addTournament(@PathVariable String username, @PathVariable String tournament_name){
         List<Tournament> tournamentList = tournamentServices.findTournamentByName(tournament_name);
         List<User> userList = userRepository.existsByUsername(username);
-
+        
         if(tournamentList.size() == 0){
             throw new IllegalArgumentException("Tournament doesn't exists.");
         }
@@ -91,7 +91,7 @@ public class UserController {
         if(userList.size() == 0){
             throw new IllegalArgumentException("Usuario no existente");
         }
-
+        
         if(!enrollServices.enrollUser(userList.get(0), tournamentList.get(0))){
             throw new IllegalArgumentException("torneo lleno o jugador esta inscrito ya");
         }
