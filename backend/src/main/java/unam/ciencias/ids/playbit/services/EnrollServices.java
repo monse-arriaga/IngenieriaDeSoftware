@@ -11,12 +11,16 @@ import unam.ciencias.ids.playbit.models.EnrollId;
 import unam.ciencias.ids.playbit.models.Tournament;
 import unam.ciencias.ids.playbit.models.User;
 import unam.ciencias.ids.playbit.repositories.EnrollRepository;
+import unam.ciencias.ids.playbit.repositories.TournamentRepository;
 
 @Service
 public class EnrollServices {
 
     @Autowired
     EnrollRepository enrollRepository;
+
+    @Autowired
+    TournamentRepository tournamentRepository;
 
     @Autowired
     TournamentServices tournamentServices;
@@ -58,7 +62,7 @@ public class EnrollServices {
         enrollRepository.save(enroll);
 
         tournament.setInPlayers(tournament.getInPlayers()+1);
-        tournamentServices.editTournament(tournament);
+        tournamentRepository.save(tournament);
 
 
         return true;
