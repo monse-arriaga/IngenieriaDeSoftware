@@ -52,7 +52,7 @@ const inactiveClass = ref(
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Dashboard' ? activeClass : inactiveClass]"
-          to="/dashboard"
+          to="/Configuracion"
         >
           <svg
             class="w-5 h-5"
@@ -70,13 +70,13 @@ const inactiveClass = ref(
             />
           </svg>
 
-          <span class="mx-4">Dashboard</span>
+          <span class="mx-4">Mi perfil</span>
         </router-link>
 
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Blank' ? activeClass : inactiveClass]"
-          to="/blank"
+          to="/Configuracion"
         >
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path
@@ -84,7 +84,7 @@ const inactiveClass = ref(
             />
           </svg>
 
-          <span class="mx-4">Blank</span>
+          <span class="mx-4">Mis participaciones</span>
         </router-link>
       </nav>
     </div>

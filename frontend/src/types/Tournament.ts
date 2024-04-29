@@ -4,6 +4,7 @@ interface Tournament {
     description: string,
     state: string,
     tournamentType: string,
+    tournamentGame : string,
     playersBT: number,
     inPlayers: number,
     date: string,
