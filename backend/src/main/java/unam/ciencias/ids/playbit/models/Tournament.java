@@ -31,6 +31,9 @@ public class Tournament {
     @Column(name = "tipo_torneo")
     private String tournamentType;
 
+    @Column(name = "tipo_juego")
+    private String tournamentGame;
+
     @Column(name = "jugadores_por_equipo")
     private int playersBT;
 
@@ -56,6 +59,7 @@ public class Tournament {
         String description,
         String state,
         String tournamentType,
+        String tournamentGame,
         int playersBT,
         LocalDate date,
         int prize,
@@ -68,6 +72,7 @@ public class Tournament {
         this.description = description;
         this.state = state;
         this.tournamentType = tournamentType;
+        this.tournamentGame = tournamentGame;
         this.playersBT = playersBT;
         this.date = date;
         this.prize = prize;
@@ -97,6 +102,10 @@ public class Tournament {
 
     public String getTournamentType() {
         return this.tournamentType;
+    }
+
+    public String getTournamentGame() {
+        return this.tournamentGame;
     }
 
     public int getPlayersBT() {
@@ -142,6 +151,10 @@ public class Tournament {
 
     public void setTournamentType(String tournamentType) {
         this.tournamentType = tournamentType;
+    }
+
+    public void setTournamentGame(String tournamentGame) {
+        this.tournamentGame = tournamentGame;
     }
 
     public void setPlayersBT(int playersBT) {

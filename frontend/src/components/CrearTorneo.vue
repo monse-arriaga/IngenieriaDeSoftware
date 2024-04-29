@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-md">
+    <div class="q-pa-md" style="margin-top: 50px;">
       <q-stepper
         v-model="step"
         ref="stepper"
@@ -35,7 +35,13 @@
         <!-- Selector de opciones múltiples -->
         <div style="margin-top: 40px;"></div>
         <div class="q-gutter-md">
-        <q-select dark filled v-model="tournamentTBC.tournamentType" :options="options" label="Selecciona el tipo de torneo" />
+        <q-select dark filled v-model="tournamentTBC.tournamentType" :options="optionsTipo" label="Selecciona el tipo de torneo" />
+        </div>
+
+        <!-- Selector de opciones múltiples -->
+        <div style="margin-top: 40px;"></div>
+        <div class="q-gutter-md">
+        <q-select dark filled v-model="tournamentTBC.tournamentGame" :options="optionsGame" label="Selecciona el juego" />
         </div>
 
         <div style="margin-top: 40px;"></div>
@@ -117,6 +123,7 @@
         players: 2, 
         description: " ",
         state: "abierto",
+        tournamentGame: "Juego que jugarán",
         tournamentType: "Eliminación Directa",
         inPlayers: 0,
         date: "1-1-2000",
@@ -139,9 +146,12 @@
         informacion: ref(''),
         noJugadores: ref(10),
         jugadoresXequipo: ref(10),
-        tipoTorneo: ref(null), // Variable para almacenar la opción seleccionada del selector
-        options: [
+        tipoTorneo: ref(null), 
+        tipoJuego: ref(null), 
+        optionsTipo: [
         'Torneo de Liga', 'Liga y Eliminatoria', 'Eliminatoria'],
+        optionsGame: [
+        'Fall Guys', 'Fortnite', 'Minecraft'],
         stepper,
         onNext,
         onPrevious,

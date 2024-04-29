@@ -35,6 +35,14 @@
       </q-btn>      
 
       </div>
+
+       <!-- BOTON DE BUSQUEDA, FALTA IMPLEMENTAR LA LOGICA DETRAS DE ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO -->
+      <div class="search-bar">
+        <input v-model="searchVal" class="search-input" type="text" placeholder="  Busca un torneo"/>
+        <button class="search-button" @click="handleSearch"> <!-- Agrega un botón con clase "search-button" -->
+          <i class="fas fa-search"></i> <!-- Ícono de lupa de Font Awesome -->
+        </button>
+      </div>
   
       <button v-if="!isLoggedIn" @click="() => goToPage('/iniciar-sesion')" class="login-button">
         Iniciar Sesión
@@ -56,6 +64,9 @@
   import { useRouter } from 'vue-router';
   import { computed } from 'vue';
   import { useUserStore } from './store/user';
+  import { ref } from 'vue'; 
+  import 'vue-search-input/dist/styles.css';
+  
   
   const router = useRouter();
 
@@ -70,10 +81,29 @@
     goToPage('/');
   };
 
+
+  const handleSearch = () => {
+    // Aquí puedes poner la lógica para manejar la búsqueda
+    console.log('Realizando búsqueda...');
+  };
+
+  const searchVal = ref('')
+ 
+
   </script>
   
   
   <style scoped>
+  .search-input {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    background-color: white !important;
+    font-size: 16px;
+    color: rgb(2, 0, 0); /* Color del texto */
+  }
   .logo {
     height: 6em;
     padding: 1.5em;
@@ -107,7 +137,24 @@
     height: auto; /* Permite que la altura se ajuste automáticamente para mantener la proporción */
   
   }
+
+  .search-bar {
+    position: absolute; /* Posicionamiento absoluto */
+    top: 20px; /* Ajusta la distancia desde la parte superior según sea necesario */
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Centra horizontalmente */
+  }
   
+  .search-input {
+    width: 650px; /* Ancho deseado del input de búsqueda */
+    padding: 10px; /* Ajusta el relleno del input */
+    border: none; /* Quita el borde del input */
+    outline: none; /* Quita el contorno alrededor del input al hacer clic */
+    border-radius: 20px; /* Hace que el input tenga forma circular */
+    background-color: #fdf7f7 !important;  /* Color de fondo del input */
+    font-size: 16px; /* Tamaño de fuente del input */
+  }
+
   .login-button {
     position: absolute; /* Posicionamiento absoluto */
     top: 20px; /* Distancia desde la parte superior */
@@ -126,4 +173,19 @@
   #plus-button {
     font-size: 16px; /* Tamaño de fuente más grande */
   }
+
+  .search-button {
+    position: absolute;
+    top: 2px;
+    right: 6px; /* Ajusta la posición del botón según sea necesario */
+    background-color: #27e6b900;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .search-button i {
+    color: #111111; /* Color del ícono de lupa */
+    font-size: 20px; /* Tamaño del ícono de lupa */
+  }
+
   </style>./components/Registro.vue
