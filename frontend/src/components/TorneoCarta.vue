@@ -1,5 +1,5 @@
 <template>
-<q-card class="my-card" flat bordered>
+<q-card @click="showDetails" class="my-card" flat bordered>
   <q-card-section horizontal>
     <q-card-section class="q-pt-xs">
       <div class="text-overline">Valorant</div>
@@ -42,20 +42,21 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { useRouter } from "vue-router";
-import Tournament from "../types/Tournament";
+//import Tournament from "../types/Tournament";
 
 export default defineComponent({
   name: "TorneoCarta",
   props: {
     tournament: {
-      type: Object as PropType<Tournament>,
+      type: Object as PropType<any>,
       required: true,
     },
   },
   setup(props) {
     const router = useRouter();
     const showDetails = () => {
-      router.push({ name: "details", params: { id: props.tournament.name } });
+      const tournament = props.tournament.id;
+      router.push({ name: 'torneo', params: { tournament } });
     };
     return {
       showDetails,

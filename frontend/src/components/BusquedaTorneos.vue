@@ -21,6 +21,7 @@ export default defineComponent ({
       try {
         //console.log(TournamentService.getPublicContent())
         tournamentData.value = (await TournamentService.getPublicContent()) as Tournament[];
+        //console.log(TournamentService.getTournamentByName("conejos"))
       } catch (error) {
         console.error(error);
       }

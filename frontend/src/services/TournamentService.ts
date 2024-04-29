@@ -10,6 +10,13 @@ class UserService {
         } )
   }
 
+  getTournamentByName(name: string) {
+      return axios.get(API_URL + "/tournament/find/" + name)
+          .then(response => {
+            return response.data
+          })
+  }
+
   tournament(emp : any) {
     return axios.post(API_URL + '/tournament/create/', emp);
   }
