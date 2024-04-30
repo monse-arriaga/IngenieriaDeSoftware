@@ -22,6 +22,9 @@ public class Tournament {
     @Column(name = "jugadores")
     private int players;
 
+    @Column(name = "imagen")
+    private String image;
+
     @Column(name = "informacion")
     private String description;
 
@@ -55,6 +58,7 @@ public class Tournament {
 
     public Tournament(
         String name,
+        String image,
         int players,
         String description,
         String state,
@@ -68,6 +72,7 @@ public class Tournament {
 
 
         this.name = name;
+        this.image = image;
         this.players = players;
         this.description = description;
         this.state = state;
@@ -85,6 +90,10 @@ public class Tournament {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getImage() {
+        return this.image;
     }
 
 
@@ -135,6 +144,10 @@ public class Tournament {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setDescription(String description){

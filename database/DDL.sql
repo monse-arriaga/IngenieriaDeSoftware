@@ -21,6 +21,7 @@ CREATE TABLE Torneo (
   premio INT DEFAULT 0,
   inscritos INT DEFAULT 0,
   hora TIME NOT NULL,
+  imagen VARCHAR(250) DEFAULT '',
   jugadores_por_equipo INT NOT NULL DEFAULT 1
 );
 
