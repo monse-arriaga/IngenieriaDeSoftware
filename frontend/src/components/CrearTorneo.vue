@@ -135,7 +135,7 @@
         players: 2, 
         description: " ",
         state: "abierto",
-        tournamentGame: "Juego que jugarán",
+        tournamentGame: "Minecraft",
         tournamentType: "Eliminación Directa",
         inPlayers: 0,
         date: "1-1-2000",
