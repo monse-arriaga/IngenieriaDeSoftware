@@ -62,7 +62,7 @@ public class TournamentServices {
             return false;
         }
 
-        tournamentRepository.delete(tournament);
+        tournamentRepository.delete(tournaments.get(0));
         return true;
     }
 }
