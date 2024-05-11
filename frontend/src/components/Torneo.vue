@@ -1,4 +1,35 @@
 <template>
+  <div class="tournament-info">
+  <div v-if="loading">
+    <h1>Loading...</h1>
+  </div>
+  <div v-else-if="tournamentDetails">
+    <q-img class="col-2"
+    :src="tournamentDetails.image"
+     style="width: 1250px; height: 700px; object-fit: cover;"/>
+
+  <div class="tournament-info">
+    <h6 class="text-grey-5 q-gutter-md; " >
+      <q-icon name="lock_open" />{{ '   '+tournamentDetails.state}}  
+      <q-icon name="sports_esports" />{{ '   '+tournamentDetails.tournamentGame}}  
+      <q-icon name="sports_kabaddi" />{{ '   '+tournamentDetails.tournamentType}}</h6>
+    <h1 class="text-white q-gutter-md; " >{{ tournamentDetails.name }}</h1>
+    <h4 class="text-grey-5 q-gutter-md; " >{{ tournamentDetails.description }}</h4>
+    <div class="tournament-info">
+    <h6 class="text-grey-5 q-gutter-md; " >
+      <q-icon name="today" />{{ '   '+tournamentDetails.date}}  
+      <q-icon name="schedule" />{{ '   '+tournamentDetails.time}}  
+      <q-icon name="groups" />{{ '   '+tournamentDetails.inPlayers+'/'+tournamentDetails.players}}</h6>
+    </div>
+  </div >
+      <!-- Render other tournament details here -->
+  </div>
+  <div v-else>
+    <h1>No carga lol</h1>
+  </div>
+</div>
+
+<div class="tournament-info">
   <div v-if="isLoggedIn">
     <q-btn v-if="!isEnrolled" id="plus-button" color="primary" @click="enroll">
       <strong>Inscribete</strong> 
@@ -10,17 +41,7 @@
   <div v-else>
     Inicia Sesión Por Favor
   </div>
-  <div v-if="loading">
-    <h1>Loading...</h1>
-  </div>
-  <div v-else-if="tournamentDetails">
-    <h1>{{ tournamentDetails.name }}</h1>
-    <p>{{ tournamentDetails.prize }}</p>
-    <!-- Render other tournament details here -->
-  </div>
-  <div v-else>
-    <h1>No carga lol</h1>
-  </div>
+</div>
 </template>
   
 <script lang="ts">
@@ -94,7 +115,9 @@ export default defineComponent({
 });
 </script>
 
-<style lang="sass" >
-.my-card 
-    color: black
+<style scoped>
+.tournament-info {
+  margin-top: 55px; /* Adjust the margin-top as needed */
+}
+
 </style>
