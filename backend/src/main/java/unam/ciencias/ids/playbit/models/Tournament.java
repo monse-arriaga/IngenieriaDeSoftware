@@ -37,6 +37,9 @@ public class Tournament {
     @Column(name = "jugadores_por_equipo")
     private int playersBT;
 
+    @Column(name = "imagen")
+    private String image;
+
     @Column(name = "fecha")
     private LocalDate date;
 
