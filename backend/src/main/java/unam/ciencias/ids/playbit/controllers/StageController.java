@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,5 +56,17 @@ public class StageController {
             throw new IllegalArgumentException("Stage does not exist");
 
         stageRepository.delete(stages.get(0));
+    }
+
+
+    @GetMapping("/find/{id}")
+    public List<Stage> findStage(@PathVariable int id){
+        List<Stage> stages = stageRepository.getStageById(id);
+
+        if (stages.size() == 0)
+            throw new IllegalArgumentException("Stage does not exist");
+
+        return stages;
+
     }
 }
