@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,5 +54,15 @@ public class MatchController {
             throw new IllegalArgumentException("match does not exist");
 
         matchRepository.delete(matches.get(0));
+    }
+
+    @GetMapping("/find/{id}")
+    public List<Match> findMatch(@PathVariable int id){
+        List<Match> matches = matchRepository.getMatchById(id);
+
+        if(matches.size() == 0)
+            throw new IllegalArgumentException("match does not exist");
+    
+        return matches;
     }
 }

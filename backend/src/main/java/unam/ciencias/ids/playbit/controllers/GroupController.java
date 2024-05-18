@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +54,18 @@ public class GroupController {
             throw new IllegalArgumentException("Group does not exist");
         
         groupRepository.delete(groups.get(0));
+    }
+
+
+    @GetMapping("/find/{name}")
+    public List<Group> findGroup(@PathVariable int id){
+        List<Group> groups = groupRepository.getGroupById(id);
+
+        if (groups.size() == 0)
+            throw new IllegalArgumentException("Group does not exist");
+
+
+        return groups;
     }
 
     
