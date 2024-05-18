@@ -1,0 +1,28 @@
+import axios from 'axios';
+
+const API_URL = 'http://localhost:8080/group';
+
+class UserService {
+  async create() {
+    return axios.post(API_URL + '/create/', )
+        .then(response =>  {
+          return response.data
+        } )
+  }
+
+  getTournamentByName(name: string) {
+      return axios.get(API_URL + "/tournament/find/" + name)
+          .then(response => {
+            return response.data
+          })
+  }
+
+  tournament(emp : any) {
+    return axios.post(API_URL + '/tournament/create/', emp);
+  }
+
+
+
+}
+
+export default new UserService();

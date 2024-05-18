@@ -6,6 +6,7 @@ import InicioSesion from '../components/InicioSesion.vue';
 import Configuracion from '../components/Configuracion.vue';
 import Torneo from '../components/Torneo.vue';
 import CrearTorneo from '../components/CrearTorneo.vue';
+import MisParticipacions from '../components/MisParticipacions.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -43,6 +44,11 @@ const routes: Array<RouteRecordRaw> = [
       path: '/crear-torneo',
       name: 'crear-torneo',
       component: CrearTorneo
+    },
+    {
+      path: '/mis-torneos',
+      name: 'mis-torneos',
+      component: MisParticipacions
     },
     { path: '/:pathMatch(.*)*', component: PaginaInicio },
   ];

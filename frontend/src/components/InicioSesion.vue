@@ -20,9 +20,9 @@
           Vuelva a intentar.  
           </p>
         </div>
-        <button type="submit">Iniciar Sesion</button>
+        <button type="submit">Iniciar Sesión</button>
       </form>
-      <p style="color: white;">¿No tienes una cuenta? <a href="#" @click="showRegister">Registrate</a></p>
+      <p style="color: white;">¿No tienes una cuenta? <a href="#" @click="showRegister">Regístrate</a></p>
     </div>
   </div>
 </template>

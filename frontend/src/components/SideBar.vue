@@ -1,16 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useSidebar } from '../composables/useSideBar'
-
-const { isOpen } = useSidebar()
-const activeClass = ref(
-  'bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100',
-)
-const inactiveClass = ref(
-  'border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100',
-)
-</script>
-
 <template>
   <div class="flex">
     <!-- Backdrop -->
@@ -76,9 +63,9 @@ const inactiveClass = ref(
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Blank' ? activeClass : inactiveClass]"
-          to="/Configuracion"
+          to="/mis-torneos"
         >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <svg class="w-5 h-5" @click="() => goToPage('/mis-torneos')" fill="currentColor" viewBox="0 0 20 20">
             <path
               d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"
             />
@@ -90,3 +77,22 @@ const inactiveClass = ref(
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useSidebar } from '../composables/useSideBar'
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const { isOpen } = useSidebar()
+const activeClass = ref(
+  'bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100',
+)
+const inactiveClass = ref(
+  'border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100',
+)
+const goToPage = (route: string) => {
+    console.log(1)
+    router.push({ path: route });
+}
+</script>1
