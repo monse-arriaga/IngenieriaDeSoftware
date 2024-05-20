@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.annotations.ManyToAny;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,6 +26,7 @@ import lombok.Setter;
 @Getter @Setter 
 @Entity
 @Table(name = "round")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","matches"})
 public class Round {
 
     @Id
