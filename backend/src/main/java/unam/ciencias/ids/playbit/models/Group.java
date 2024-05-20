@@ -2,6 +2,8 @@ package unam.ciencias.ids.playbit.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,6 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "rounds", "matches"})
 @Table(name = "grupo")
 public class Group {
 

@@ -57,7 +57,7 @@ public class GroupController {
     }
 
 
-    @GetMapping("/find/{name}")
+    @GetMapping("/find/{id}")
     public List<Group> findGroup(@PathVariable int id){
         List<Group> groups = groupRepository.getGroupById(id);
 

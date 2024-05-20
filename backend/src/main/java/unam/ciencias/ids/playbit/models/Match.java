@@ -2,6 +2,7 @@ package unam.ciencias.ids.playbit.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,6 +27,7 @@ import lombok.Setter;
 @Getter @Setter
 @Entity
 @Table(name = "match")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","games"})
 public class Match {
     
     @Id
