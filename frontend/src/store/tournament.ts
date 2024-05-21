@@ -1,6 +1,10 @@
 import { CrudInterface, Table } from "brackets-manager";
 import StageService from "../services/StageService";
-import { Stage } from "brackets-model";
+import { Group, Match, MatchGame, Round, Stage } from "brackets-model";
+import GroupService from "../services/GroupService";
+import RoundService from "../services/RoundService";
+import MatchGameService from "../services/MatchGameService";
+import MatchService from "../services/MatchService";
 
 export class tournamentStorage implements CrudInterface {
 
@@ -16,16 +20,16 @@ export class tournamentStorage implements CrudInterface {
                     StageService.create(values as Stage)
                     break;
                 case "group":
-                    console.log("Processing group table...");
+                    GroupService.create(values as Group);
                     break;
                 case "round":
-                    console.log("Processing round table...");
+                    RoundService.create(values as Round)
                     break;
                 case "match":
-                    console.log("Processing match table...");
+                    MatchService.create(values as Match)
                     break;
                 case "match_game":
-                    console.log("Processing match game table...");
+                    MatchGameService.create(values as MatchGame);
                     break;
                 case "participant":
                     console.log("Processing participant table...");
@@ -44,28 +48,92 @@ export class tournamentStorage implements CrudInterface {
     public select<T>(table: Table, filter: Partial<T>): Promise<T[] | null>;
 
     public async select<T>(table: Table, filter?: number | Partial<T>): Promise< T |  T[] | null> {
-        if(table) return null;
-        if(filter) return null;
-        return null;  
+        try {
+            switch (table) {
+                case "stage":
+                    return StageService.select(filter) as T;
+                case "group":
+                    return GroupService.select(filter) as T;
+                case "round":
+                    return RoundService.select(filter) as T;
+                case "match":
+                    return MatchService.select(filter) as T;
+                case "match_game":
+                    return MatchGameService.select(filter) as T;
+                case "participant":
+                    return null;
+                default:
+                    return null;
+            }
+        } catch (error) {
+            return null;
+        }
     }
 
     public update<T>(table: Table, id: number, value: T): Promise<boolean>;
     public update<T>(table: Table, filter: Partial<T>, value: Partial<T>): Promise<boolean>;
  
     public async update<T>(table: Table, filter: number | Partial<T>, value: T | Partial<T>): Promise<boolean> {
-        if(table) return true;
-        if(filter) return false;
-        if(value) return true;
-        return false;        
+        try {
+            switch (table) {
+                case "stage":
+                    StageService.update(filter, value as Stage)
+                    break;
+                case "group":
+                    GroupService.update(filter, value as Group)
+                    break;
+                case "round":
+                    RoundService.update(filter, value as Round)
+                    break;
+                case "match":
+                    MatchService.update(filter, value as Match)
+                    break;
+                case "match_game":
+                    MatchGameService.update(filter, value as MatchGame)
+                    break;
+                case "participant":
+                    console.log("Processing participant table...");
+                    break;
+                default:
+                    console.log("Unknown table");
+            }
+        } catch (error) {
+            return false;
+        }
+        return true;    
     }
 
     public delete<T>(table: Table): Promise<boolean>;
     public delete<T>(table: Table, filter: Partial<T>): Promise<boolean>;
     
     public async delete<T>(table: Table, filter?: T | Partial<T>): Promise<boolean> {
-        if(table) return true;
-        if(filter) return false;
-        return false;  
+        try {
+            switch (table) {
+                case "stage":
+                    StageService.delete(filter as object)
+                    break;
+                case "group":
+                    GroupService.delete(filter as object)
+                    break;
+                case "round":
+                    RoundService.delete(filter as object)
+                    break;
+                case "match":
+                    MatchService.delete(filter as object)
+                    break;
+                case "match_game":
+                    MatchGameService.delete(filter as object)
+                    break;
+                case "participant":
+                    console.log("Processing participant table...");
+                    break;
+                default:
+                    console.log("Unknown table");
+            }
+        } catch (error) {
+            return false;
+        }
+        return true;  
     }
 
 }
