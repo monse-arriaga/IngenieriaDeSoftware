@@ -1,14 +1,12 @@
 import MatchResult from "./MatchResult";
 
 interface ParticipantMatchGameResult {
-    id: number,
+    id?: number,
     participant: {id: number},
-    position: number,
-    forfeit: boolean,
-    score: number,
-    result: MatchResult,
-    opponentOneMatchGame: {id: number},
-    opponentTwoMatchGame: {id: number},   
+    position?: number,
+    forfeit?: boolean,
+    score?: number,
+    result?: MatchResult
 }
 
 export default ParticipantMatchGameResult

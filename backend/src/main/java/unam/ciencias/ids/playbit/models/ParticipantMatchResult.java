@@ -48,18 +48,5 @@ public class ParticipantMatchResult {
     @Column(name = "matchresult")
     private MatchResult result;
 
-    // @Column(name = "opponent1matchid")
-    // private int opponentOneMatchId;
-    
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "opponent1matchid",referencedColumnName = "id")
-    private Match opponentOneMatch;
-
-    // @Column(name = "opponent2matchid")
-    // private int opponentTwoMatchId;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "opponent2matchid",referencedColumnName = "id")
-    private Match opponentTwoMatch;
 
 }

@@ -40,12 +40,14 @@ public class MatchGame {
     private MatchStatus matchStatus;
 
 
-    @OneToOne(mappedBy = "opponentOneMatchGame")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "opponent1_result_id",referencedColumnName = "id")
     private ParticipantMatchGameResult opponentOneResult;
     // @Column(name = "opponent1id")
     // private int opponentOneResultId;
     
-    @OneToOne(mappedBy = "opponentTwoMatchGame")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "opponent2_result_id",referencedColumnName = "id")
     private ParticipantMatchGameResult opponentTwoResult;
     // @Column(name = "opponent2id")
     // private int opponentTwoResultId;

@@ -36,10 +36,6 @@ public class StageSettings {
     // @Column(name = "stageId")    
     // private int stageId;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "stage_id",referencedColumnName = "id")
-    private Stage stage;
-
     @Column(name = "size")
     private int size;
 

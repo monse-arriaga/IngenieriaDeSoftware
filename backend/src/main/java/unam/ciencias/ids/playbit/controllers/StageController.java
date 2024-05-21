@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import unam.ciencias.ids.playbit.models.Stage;
+import unam.ciencias.ids.playbit.models.StageSettings;
 import unam.ciencias.ids.playbit.repositories.StageRepository;
+import unam.ciencias.ids.playbit.repositories.StageSettingsRepository;
 
 @RestController
 @RequestMapping("/stage")
@@ -22,13 +24,19 @@ public class StageController {
     @Autowired
     StageRepository stageRepository;
 
+    @Autowired
+    StageSettingsRepository stageSettingsRepository;
 
     @PostMapping("/create/")
-    public void createStage(@RequestBody Stage stage){
+    public void createStage(@RequestBody Stage stage, StageSettings settings){
         List<Stage> stages = stageRepository.getStageById(stage.getId());
 
         if(stages.size() > 0)
             throw new IllegalArgumentException("Stage already created");
+
+        stage.setStageSettings(settings);
+
+        stageSettingsRepository.save(settings);
 
         stageRepository.save(stage);
 

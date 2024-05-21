@@ -17,6 +17,7 @@
     "axios": "^1.6.8",
     "brackets-manager": "^1.6.4",
     "brackets-memory-db": "^1.0.4",
+    "brackets-model": "^1.5.0",
     "brackets-viewer": "^1.6.2",
     "pinia": "^2.1.7",
     "quasar": "^2.15.2",

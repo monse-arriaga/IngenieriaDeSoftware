@@ -1,11 +1,8 @@
-import Match from "./Match";
-
-interface Round {
+interface MyRound {
     id: number,
     stage: {id: number},
     group: {id: number},
-    number: number,
-    matches: Array<Match>
+    number: number
 }
 
-export default Round
+export default MyRound

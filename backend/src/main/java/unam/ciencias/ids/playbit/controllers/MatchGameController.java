@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import unam.ciencias.ids.playbit.models.MatchGame;
+import unam.ciencias.ids.playbit.models.ParticipantMatchGameResult;
 import unam.ciencias.ids.playbit.repositories.MatchGameRepository;
+import unam.ciencias.ids.playbit.repositories.ParticipantMatchGameRepository;
 
 @RestController
 @RequestMapping("/matchgame")
@@ -22,13 +24,22 @@ public class MatchGameController {
     @Autowired
     MatchGameRepository matchGameRepository;
 
+    @Autowired
+    ParticipantMatchGameRepository participantMatchGameRepository;
+
     @PostMapping("/create/")
-    public void createMatchGame(@RequestBody MatchGame matchGame){
+    public void createMatchGame(@RequestBody MatchGame matchGame, ParticipantMatchGameResult result1, ParticipantMatchGameResult result2){
         List<MatchGame> matchgames = matchGameRepository.getMatchGameById(matchGame.getId());
 
         if(matchgames.size() > 0)
             throw new IllegalArgumentException("match game already exists");
+        
+        matchGame.setOpponentOneResult(result1);
+        matchGame.setOpponentTwoResult(result2);
 
+        participantMatchGameRepository.save(result1);
+        participantMatchGameRepository.save(result2);
+            
         matchGameRepository.save(matchGame);
     }
 

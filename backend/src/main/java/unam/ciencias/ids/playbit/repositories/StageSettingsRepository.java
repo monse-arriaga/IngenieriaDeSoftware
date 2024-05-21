@@ -11,6 +11,6 @@ import unam.ciencias.ids.playbit.models.StageSettings;
 public interface StageSettingsRepository extends CrudRepository<StageSettings, Integer> {
 
 
-    @Query(nativeQuery = true, value = "SELECT * FROM stagesettings WHERE id = :stagesetid")
+    @Query(nativeQuery = true, value = "SELECT * FROM stage_settings WHERE id = :stagesetid")
     public List<StageSettings> getStageSettingsById(@Param("stagesetid") int id);
 }
