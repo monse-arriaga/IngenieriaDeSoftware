@@ -27,6 +27,12 @@ public class MatchGameController {
     @Autowired
     ParticipantMatchGameRepository participantMatchGameRepository;
 
+
+    @GetMapping("/all/")
+    public List<MatchGame> findAll(){
+        return (List<MatchGame>)matchGameRepository.findAll();
+    }
+
     @PostMapping("/create/")
     public void createMatchGame(@RequestBody MatchGame matchGame, ParticipantMatchGameResult result1, ParticipantMatchGameResult result2){
         List<MatchGame> matchgames = matchGameRepository.getMatchGameById(matchGame.getId());

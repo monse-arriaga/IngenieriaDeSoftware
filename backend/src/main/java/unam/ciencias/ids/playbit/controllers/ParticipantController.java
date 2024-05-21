@@ -23,6 +23,11 @@ public class ParticipantController {
     ParticipantRepository participantRepository;
 
 
+    @GetMapping("/all/")
+    public List<Participant> findAll(){
+        return (List<Participant>) participantRepository.findAll();
+    }
+
     @PostMapping("/create/")
     public void createParticipant(@RequestBody Participant participant){
         List<Participant> participants = participantRepository.getParticipantById(participant.getId());

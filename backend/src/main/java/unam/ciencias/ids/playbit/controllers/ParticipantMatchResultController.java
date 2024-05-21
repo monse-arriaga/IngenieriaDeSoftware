@@ -23,6 +23,10 @@ public class ParticipantMatchResultController {
     @Autowired
     ParticipantMatchRepository participantMatchRepository;
 
+    @GetMapping("/all/")
+    public List<ParticipantMatchResult> findAll(){
+        return (List<ParticipantMatchResult>) participantMatchRepository.findAll();
+    }
 
     @PostMapping("/create/")
     public void createParticipantMatch(@RequestBody ParticipantMatchResult participantMatchResult){

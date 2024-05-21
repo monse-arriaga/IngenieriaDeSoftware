@@ -21,6 +21,11 @@ public class RoundController {
 
     @Autowired
     RoundRepository roundRepository;
+
+    @GetMapping("/all/")
+    public List<Round> findAll(){
+        return (List<Round>) roundRepository.findAll();
+    }
     
 
     @PostMapping("/create/")
