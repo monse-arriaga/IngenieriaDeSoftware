@@ -22,6 +22,11 @@ public class GroupController {
     @Autowired
     GroupRepository groupRepository;
 
+    @GetMapping("/all/")
+    public List<Group> findAll(){
+        return (List<Group>) groupRepository.findAll();
+    }
+
 
     @PostMapping("/create/")
     public void createGroup(@RequestBody Group group){

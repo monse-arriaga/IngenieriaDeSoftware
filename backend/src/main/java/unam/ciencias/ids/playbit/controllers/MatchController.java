@@ -27,6 +27,12 @@ public class MatchController {
     @Autowired
     ParticipantMatchRepository participantMatchRepository;
 
+
+    @GetMapping("/all/")
+    public List<Match> findAll(){
+        return (List<Match>) matchRepository.findAll();
+    }
+
     @PostMapping("/create/")
     public void createMatch(@RequestBody Match match, ParticipantMatchResult result1, ParticipantMatchResult result2){
         List<Match> matches = matchRepository.getMatchById(match.getId());

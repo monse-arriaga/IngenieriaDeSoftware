@@ -29,6 +29,11 @@ public class TournamentController {
     @Autowired
     TournamentServices tournamentServices;
 
+    @GetMapping("/all/")
+    public List<Tournament> findAll(){
+        return tournamentServices.findAll();
+    }
+
     @PostMapping("/create/")
     public void createTournament(@RequestBody Tournament tournament){
         if (!tournamentServices.createTournament(tournament))

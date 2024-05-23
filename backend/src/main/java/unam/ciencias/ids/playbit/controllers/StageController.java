@@ -27,6 +27,11 @@ public class StageController {
     @Autowired
     StageSettingsRepository stageSettingsRepository;
 
+    @GetMapping("/all/")
+    public List<Stage> findAll(){
+        return (List<Stage>) stageRepository.findAll();
+    }
+
     @PostMapping("/create/")
     public void createStage(@RequestBody Stage stage, StageSettings settings){
         List<Stage> stages = stageRepository.getStageById(stage.getId());

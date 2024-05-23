@@ -14,6 +14,10 @@ public class TournamentServices {
     @Autowired
     TournamentRepository tournamentRepository;
 
+    public List<Tournament> findAll(){
+        return (List<Tournament>) tournamentRepository.findAll();
+    }
+    
     public boolean createTournament(Tournament tournament){
         List<Tournament> tournaments = tournamentRepository.getTournamentByName(tournament.getName());
 

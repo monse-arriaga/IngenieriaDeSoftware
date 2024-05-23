@@ -23,6 +23,10 @@ public class StageSettingsController {
     @Autowired
     StageSettingsRepository stageSettingsRepository;
 
+    @GetMapping("/all/")
+    public List<StageSettings> findAll(){
+        return (List<StageSettings>) stageSettingsRepository.findAll();
+    }
 
     @PostMapping("/create/")
     public void createStageSettings(@RequestBody StageSettings stageSettings){
