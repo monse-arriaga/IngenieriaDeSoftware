@@ -1,6 +1,7 @@
 import axios from 'axios';
 import StageT from '../tranformers/Stage';
 import { Stage } from 'brackets-model';
+import MyStage from '../types/MyStage';
 
 const API_URL = 'http://localhost:8080/stage';
 const tranformer = new StageT()
@@ -41,24 +42,15 @@ class StageService {
       return await axios.get(API_URL + "/all/").then(response => {
         const allStages: Stage[] = response.data;
         return allStages.filter(stage => 
-          Object.keys(filter).every(key => filter[key as keyof Stage] === stage[key as keyof Stage])
-        );
+          stage.id == filter.tournament_id);
       });
     }
   }
 
-  async update(filter: number | Partial<Stage>, value: Stage | Partial<Stage>){ 
-    if (typeof filter == "number" && ((value: Stage): value is Stage => !!value.id)) {
-      await axios.post(API_URL + "/edit/", tranformer.from(value as Stage))
-    } else {
-      const stages = await this.select(filter);
-      const stagesArray = stages == null ? [] : Array.isArray(stages) ? stages : [stages];
-
-      for (const stage of stagesArray) {
-        const updatedStage = { ...stage, ...value };
-        await axios.post(API_URL + "/edit/", tranformer.from(updatedStage));
-      }
-    }
+  async update(filter: number | Partial<Stage>, value: Stage | Partial<Stage>){
+    const obj: MyStage = tranformer.from(value as Stage);
+    obj.id = filter as number;
+    await axios.post(API_URL + "/edit/", obj)
   }
 
   async delete(filter?: Stage | Partial<Stage>){

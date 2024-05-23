@@ -24,8 +24,8 @@ import authHeader from "../services/auth-header";
 import { useUserStore } from "../store/user";
 import TorneoCarta from "./TorneoCarta.vue";
 import TournamentService from "../services/TournamentService";
-import { BracketsManager } from 'brackets-manager';
-import { InMemoryDatabase } from 'brackets-memory-db';
+import { BracketsManager } from 'brackets-manager'
+import { tournamentStorage } from "../store/tournament";
 
 export default defineComponent({
   name: "Detalles",
@@ -39,7 +39,7 @@ export default defineComponent({
     const isLoggedIn = computed(() => userStore.isLoggedIn);
     const isEnrolled = ref(false);
     const tournamentO = ref("");
-    const storage = new InMemoryDatabase();
+    const storage = new tournamentStorage();
     const manager = new BracketsManager(storage);
 
     

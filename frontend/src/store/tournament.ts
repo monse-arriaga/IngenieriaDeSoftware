@@ -5,6 +5,8 @@ import GroupService from "../services/GroupService";
 import RoundService from "../services/RoundService";
 import MatchGameService from "../services/MatchGameService";
 import MatchService from "../services/MatchService";
+import ParticipantService from "../services/ParticipantService";
+import Participant from "../types/Participant";
 
 export class tournamentStorage implements CrudInterface {
 
@@ -14,25 +16,26 @@ export class tournamentStorage implements CrudInterface {
     
     public async insert<T>(table: Table, values: T | T[]): Promise<number | boolean> {
         const isArray = Array.isArray(values)
+        const valuesA = isArray ? values : [values]
         try {
             switch (table) {
                 case "stage":
-                    StageService.create(values as Stage)
+                    StageService.create(valuesA as Stage[])
                     break;
                 case "group":
-                    GroupService.create(values as Group);
+                    GroupService.create(valuesA as Group[]);
                     break;
                 case "round":
-                    RoundService.create(values as Round)
+                    RoundService.create(valuesA as Round[])
                     break;
                 case "match":
-                    MatchService.create(values as Match)
+                    MatchService.create(valuesA as Match[])
                     break;
                 case "match_game":
-                    MatchGameService.create(values as MatchGame);
+                    MatchGameService.create(valuesA as MatchGame[]);
                     break;
                 case "participant":
-                    console.log("Processing participant table...");
+                    ParticipantService.create(valuesA as Participant[])
                     break;
                 default:
                     console.log("Unknown table");
@@ -61,7 +64,7 @@ export class tournamentStorage implements CrudInterface {
                 case "match_game":
                     return MatchGameService.select(filter) as T;
                 case "participant":
-                    return null;
+                    return ParticipantService.select(filter) as T;
                 default:
                     return null;
             }
@@ -92,7 +95,6 @@ export class tournamentStorage implements CrudInterface {
                     MatchGameService.update(filter, value as MatchGame)
                     break;
                 case "participant":
-                    console.log("Processing participant table...");
                     break;
                 default:
                     console.log("Unknown table");
@@ -125,7 +127,7 @@ export class tournamentStorage implements CrudInterface {
                     MatchGameService.delete(filter as object)
                     break;
                 case "participant":
-                    console.log("Processing participant table...");
+                    ParticipantService.delete(filter as object)
                     break;
                 default:
                     console.log("Unknown table");
@@ -137,3 +139,5 @@ export class tournamentStorage implements CrudInterface {
     }
 
 }
+
+export default tournamentStorage
