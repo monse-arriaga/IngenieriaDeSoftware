@@ -34,7 +34,9 @@
         </q-tab-panel>
 
         <q-tab-panel name="other">
-          <h1>Aquí hay otra tab</h1>
+          <div id="brackets-container" style="width: 100%; height: 700px; background-color: #2c3e50;">
+            <!-- Aquí se renderizará la gráfica de brackets -->
+          </div>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -85,6 +87,8 @@ export default defineComponent({
     const tournamentDetails = ref<Tournament | null>(null);
     const loading = ref(true); // Add loading state
     const tab = ref('details'); // Add ref for the tab
+    const storage = new tournamentStorage();
+    const manager = new BracketsManager(storage);
 
     const checkEnrolled = async () => {
       try {
@@ -106,9 +110,30 @@ export default defineComponent({
       }
     };
 
+    async function render() {
+      const data = await manager.get.tournamentData("3");
+      console.log(data)
+      window.bracketsViewer.render({
+        stages: data.stage,
+        matches: data.match,
+        matchGames: data.match_game,
+        participants: data.participant,
+      });
+    }   
+
+
     onMounted(async () => {
       await checkEnrolled();
       await fetchTournamentDetails();
+
+      await manager.create.stage({
+          tournamentId: 3,
+          name: 'Elimination stage',
+          type: 'double_elimination',
+          seeding: ['Team 1', 'Team 2', 'Team 3', 'Team 4'],
+          settings: { grandFinal: 'double' },
+        });
+        await render()
     });
 
     const enroll = async () => {
@@ -128,6 +153,7 @@ export default defineComponent({
       tournamentDetails,
       loading,
       tab, // Return the tab ref
+      render,
     };
   },
 });
