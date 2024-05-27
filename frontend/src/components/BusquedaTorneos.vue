@@ -34,3 +34,13 @@ export default defineComponent ({
 });
 </script>
 
+<style scoped>
+.tournament-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 2000fr); /* Dos columnas */
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 20px;
+  justify-items: center;
+  align-items: center;
+}
+</style>

@@ -3,12 +3,20 @@ CREATE SCHEMA public;
 
 CREATE SEQUENCE grupo_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
-CREATE TABLE "public"."grupo" (
-    "id" integer DEFAULT nextval('grupo_id_seq') NOT NULL,
-    "number" integer,
-    "stage_id" integer,
-    CONSTRAINT "grupo_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
+CREATE TABLE Torneo (
+  nombre VARCHAR(100) PRIMARY KEY,
+  jugadores INT NOT NULL,
+  informacion VARCHAR(250) DEFAULT '',
+  estado VARCHAR(10) CHECK (estado IN ('finalizado', 'jugando', 'abierto')),
+  tipo_torneo VARCHAR(50) DEFAULT 'Eliminación Directa',
+  tipo_juego VARCHAR(100) DEFAULT '',
+  fecha DATE NOT NULL,
+  premio INT DEFAULT 0,
+  inscritos INT DEFAULT 0,
+  hora TIME NOT NULL,
+  imagen VARCHAR(250) DEFAULT '',
+  jugadores_por_equipo INT NOT NULL DEFAULT 1
+);
 
 
 CREATE TABLE "public"."inscribir" (
