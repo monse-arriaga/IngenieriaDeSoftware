@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#181920"
+        tools:context=".ui.landing.LandingFragment">
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="130dp"
+            app:layout_constraintCircleRadius="24dp"
+            android:background="@drawable/playbit"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/l_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/r_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75" />
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="590dp"
+            android:background="@drawable/background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:text="¡A jugar!"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login"
+            style="@style/CustomButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="96dp"
+            android:text="Iniciar Sesión"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            app:layout_constraintCircleRadius="40dp"
+            app:layout_constraintEnd_toStartOf="@+id/r_guideline"
+            app:layout_constraintStart_toStartOf="@+id/l_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/createacc"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/buttonbackground"
+            android:text="Registrarse"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/r_guideline"
+            app:layout_constraintStart_toStartOf="@+id/l_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/login" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

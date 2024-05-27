@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginnav"
+    app:startDestination="@id/landingFragment">
+
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="mx.ids.playbit.ui.landing.LandingFragment"
+        android:label="fragment_landing"
+        tools:layout="@layout/fragment_login_new" >
+        <action
+            android:id="@+id/action_landingFragment_to_newRegFragment"
+            app:destination="@id/newRegFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newRegFragment"
+        android:name="mx.ids.playbit.ui.register.NewRegFragment"
+        android:label="fragment_new_reg"
+        tools:layout="@layout/fragment_register_new" >
+        <action
+            android:id="@+id/action_newRegFragment_to_landingFragment"
+            app:destination="@id/landingFragment" />
+    </fragment>
+</navigation>

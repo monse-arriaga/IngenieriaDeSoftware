@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Playbit.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/playbitlogo_anim</item>
+        <item name="android:windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.Playbit</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/playbit</item>
+    </style>
+</resources>

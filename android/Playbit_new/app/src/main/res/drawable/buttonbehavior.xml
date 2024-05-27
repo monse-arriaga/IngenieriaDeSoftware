@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado deshabilitado -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/disabled_button_color" /> <!-- Color para el estado deshabilitado -->
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+    <!-- Estado normal -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/button_color" /> <!-- Color para el estado normal -->
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+</selector>

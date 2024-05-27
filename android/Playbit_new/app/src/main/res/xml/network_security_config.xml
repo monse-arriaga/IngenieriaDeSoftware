@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <!-- This allows all cleartext traffic; use with caution -->
+        <!-- Consider restricting to specific domains or using HTTPS -->
+    </base-config>
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">192.168.1.121</domain>
+    </domain-config>
+</network-security-config>

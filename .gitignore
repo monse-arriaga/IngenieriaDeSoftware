@@ -7,3 +7,5 @@ docker-compose.override.yml
 *.iml
 .DS_Store
 Thumbs.db
+backend/src/main/resources/application.properties
+backend/src/main/java/unam/ciencias/ids/playbit/controllers/TournamentController.java

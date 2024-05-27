@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background_color">#181920</color>
+    <color name="button_color">#96A633</color>
+    <color name="foreground_color">#202026</color>
+    <color name="disabled_button_color">#CCCCCC</color>
+    <color name="electric_blue">#007BFF</color>
+    <color name="electric_blue_light">#1D99F8</color>
+    <color name="dark_electric_blue">#04274C</color>
+    <color name="neon_green">#39FF14</color>
+    <color name="cyber_yellow">#FFD700</color>
+    <color name="cyber_orange">#E68900</color>
+    <color name="dark_slate">#2F4F4F</color>
+    <color name="gunmetal_gray">#2A3439</color>
+    <color name="alien_purple">#6A0DAD</color>
+    <color name="bright_pink">#F96DE9</color>
+    <color name="bright_cyan">#00FFFF</color>
+    <color name="light_gray">#D3D3D3</color>
+    <color name="fiery_red">#FF4500</color>
+    <color name="blue">#0C7FC4</color>
+    <color name="navy_blue">#181A4B</color>
+
+
+</resources>

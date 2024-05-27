@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Playbit</string>
+    <string-array name="dropdown_tournament_type">
+        <item>Round Robin</item>
+        <item>Single Elimination</item>
+        <item>Double Elimination</item>
+    </string-array>
+
+    <string-array name="dropdown_games">
+        <item>Call of Duty: Warzone</item>
+        <item>Apex Legends</item>
+        <item>FIFA 23</item>
+        <item>Dota 2</item>
+        <item>Clash Royale</item>
+        <item>Tekken 7</item>
+        <item>Injustice 2</item>
+        <item>Gran Turismo 7</item>
+        <item>Dirt 5</item>
+        <item>Slay the Spire</item>
+        <item>Catan</item>
+        <item>Chess</item>
+        <item>Béisbol</item>
+        <item>Fútbol</item>
+        <item>Ping Pong</item>
+        <item>Tenis</item>
+        <item>Natación</item>
+        <item>Monopoly</item>
+        <item>Uno</item>
+    </string-array>
+</resources>

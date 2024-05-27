@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_bg_color">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeableImageView"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="25dp"
+            android:background="@color/cyber_yellow"
+            android:padding="2dp"
+            android:src="@drawable/ic_user"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImageView" />
+
+        <TextView
+            android:id="@+id/tvUname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Hola, Leo"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
+            app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
+            app:layout_constraintTop_toTopOf="@+id/shapeableImageView" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".15" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guidelineTop">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <TextView
+                    android:id="@+id/tvTorneos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Torneos"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvShowTorneos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Ver Todos"
+                    android:textColor="@color/bright_cyan"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTorneos"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvTorneos" />
+
+                <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                    android:id="@+id/createTCard"
+                    android:layout_width="120dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="18dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTorneos" />
+
+                <HorizontalScrollView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/createTCard"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/createTCard"
+                    app:layout_constraintTop_toTopOf="@id/createTCard">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidelineMid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.39" />
+
+                <TextView
+                    android:id="@+id/tvGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Juegos"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/createTCard" />
+
+                <TextView
+                    android:id="@+id/tvShowGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Ver Todos"
+                    android:textColor="@color/bright_cyan"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvGames"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvGames" />
+
+                <mx.ids.playbit.utils.ui.CustomHorizontalCardView
+                    android:id="@+id/cardGameOne"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/cardGameTwo"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvGames" />
+
+                <mx.ids.playbit.utils.ui.CustomHorizontalCardView
+                    android:id="@+id/cardGameTwo"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/cardGameOne"
+                    app:layout_constraintTop_toBottomOf="@id/tvGames" />
+
+                <mx.ids.playbit.utils.ui.CustomHorizontalCardView
+                    android:id="@+id/cardGameThree"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/cardGameFour"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardGameOne" />
+
+                <mx.ids.playbit.utils.ui.CustomHorizontalCardView
+                    android:id="@+id/cardGameFour"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/cardGameThree"
+                    app:layout_constraintTop_toBottomOf="@id/cardGameTwo" />
+
+                <TextView
+                    android:id="@+id/tvPlayers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Jugadores"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardGameThree" />
+
+                <TextView
+                    android:id="@+id/tvShowPlayers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Ver Todos"
+                    android:textColor="@color/bright_cyan"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPlayers"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvPlayers" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvPlayers"
+                    app:layout_constraintTop_toBottomOf="@id/tvPlayers">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                        <mx.ids.playbit.utils.ui.CustomVerticalCardView
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp" />
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".83" />
+
+        <com.ismaeldivita.chipnavigation.ChipNavigationBar
+            android:id="@+id/nav_bar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/chip_nav_bg"
+            app:cnb_iconSize="20dp"
+            app:cnb_menuResource="@menu/bottom_menu"
+            app:cnb_radius="50dp"
+            app:cnb_unselectedColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guidelineBottom" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
