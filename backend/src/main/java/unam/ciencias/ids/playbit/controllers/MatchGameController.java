@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.transaction.Transactional;
 import unam.ciencias.ids.playbit.models.MatchGame;
 import unam.ciencias.ids.playbit.models.ParticipantMatchGameResult;
 import unam.ciencias.ids.playbit.repositories.MatchGameRepository;
@@ -34,7 +35,11 @@ public class MatchGameController {
     }
 
     @PostMapping("/create/")
-    public void createMatchGame(@RequestBody MatchGame matchGame, ParticipantMatchGameResult result1, ParticipantMatchGameResult result2){
+    @Transactional
+    public void createMatchGame(@RequestBody MatchGame matchGame){
+        ParticipantMatchGameResult result1 = matchGame.getOpponentOneResult();
+        ParticipantMatchGameResult result2 = matchGame.getOpponentTwoResult();
+
         List<MatchGame> matchgames = matchGameRepository.getMatchGameById(matchGame.getId());
 
         if(matchgames.size() > 0)

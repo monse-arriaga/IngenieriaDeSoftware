@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.jsonwebtoken.lang.Arrays;
+import jakarta.transaction.Transactional;
 import unam.ciencias.ids.playbit.models.Match;
 import unam.ciencias.ids.playbit.models.ParticipantMatchResult;
 import unam.ciencias.ids.playbit.repositories.MatchRepository;
@@ -34,19 +36,16 @@ public class MatchController {
     }
 
     @PostMapping("/create/")
-    public void createMatch(@RequestBody Match match, ParticipantMatchResult result1, ParticipantMatchResult result2){
-        List<Match> matches = matchRepository.getMatchById(match.getId());
-
-        if(matches.size() > 0)
-            throw new IllegalArgumentException("match already created");
-
-        match.setOpponentOneResult(result1);
-        match.setOpponentTwoResult(result2);
-
-        participantMatchRepository.save(result1);
-        participantMatchRepository.save(result2);
-
-        matchRepository.save(match);
+    @Transactional
+    public void createMatch(@RequestBody Match[] matches){
+    
+        for (Match match : matches) {
+            ParticipantMatchResult result1 = match.getOpponentOneResult();
+            ParticipantMatchResult result2 = match.getOpponentTwoResult();
+            participantMatchRepository.save(result1);
+            participantMatchRepository.save(result2);
+        }
+        matchRepository.saveAll(java.util.Arrays.asList(matches));
     }
 
 

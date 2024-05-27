@@ -1,5 +1,6 @@
 package unam.ciencias.ids.playbit.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.transaction.Transactional;
 import unam.ciencias.ids.playbit.models.Participant;
 import unam.ciencias.ids.playbit.repositories.ParticipantRepository;
 
@@ -29,13 +31,10 @@ public class ParticipantController {
     }
 
     @PostMapping("/create/")
-    public void createParticipant(@RequestBody Participant participant){
-        List<Participant> participants = participantRepository.getParticipantById(participant.getId());
-
-        if(participants.size() > 0)
-            throw new IllegalArgumentException("participant already exists");
+    @Transactional
+    public void createParticipant(@RequestBody Participant[] participant){
         
-        participantRepository.save(participant);
+        participantRepository.saveAll(Arrays.asList(participant));
     }
 
 

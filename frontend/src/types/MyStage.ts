@@ -5,7 +5,7 @@ interface MyStage {
     id: number,
     tournamentId: string,
     name: string,
-    type: MyStageType,
+    type: MyStageType | String,
     stageSettings: MyStageSettings,
     number: number,
 }

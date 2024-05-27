@@ -1,29 +1,29 @@
 import { ParticipantResult } from "brackets-model"
 import ParticipantMatchResullt from "../types/ParticipantMatchResult"
-import MatchResult from "../types/MatchResult"
+import Result from "./Result";
 
 class MatchGameT {
     to (value:  ParticipantMatchResullt | null): ParticipantResult | null {
         if (value == null) return null; 
         return {
-            id: value.participant.id,
+            id: value.participant == null ? 0: value.participant.id,
             position: value.position,
             forfeit: value.forfeit,
             score: value.score,
-            result: value.result
+            result: Result.to(value.result)
         }
     }
 
     from (value: ParticipantResult | null): ParticipantMatchResullt | null{
         if (value == null) return null; 
         return {
-            participant: {
-                id: value.id as number
+            participant: value.id == null ? null : {
+                id: value.id as unknown as number
             },
             position: value.position,
             forfeit: value.forfeit,
             score: value.score,
-            result: value.result as MatchResult,
+            result: Result.from(value.result),
         }
     }
 }

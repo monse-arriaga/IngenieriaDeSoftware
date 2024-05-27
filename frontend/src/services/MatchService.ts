@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MatchT from '../tranformers/Match';
 import { Match } from 'brackets-model';
+import MyMatch from '../types/MyMatch';
 
 const API_URL = 'http://localhost:8080/match';
 const tranformer = new MatchT()
@@ -8,27 +9,13 @@ const tranformer = new MatchT()
 class matchService {
 
   async create(value: Match | Match[]){
-    
     value = Array.isArray(value) ? value : [value];
-
-    value.forEach( async match => {
-        const mymatch = tranformer.from(match);
-
-        await axios.post(API_URL + '/create/', {
-          match: {
-            id: mymatch.id,
-            childcount: mymatch.childCount,
-            matchStatus: mymatch.matchStatus,
-            stage: mymatch.stage,
-            group: mymatch.group,
-            round: mymatch.round,
-            number: mymatch.number
-          },
-          result1: mymatch.opponentOneResult,
-          result2: mymatch.opponentTwoResult
-        })
-    } )
-
+    const valueT:MyMatch[] = []
+    value.forEach(element => {
+      valueT.push(tranformer.from(element))
+    });
+    console.log(valueT)
+    await axios.post(API_URL + '/create/', valueT).then()
   }
 
   async select(filter?: number | Partial<Match>): Promise<Match | Match[] | null> {
@@ -42,10 +29,18 @@ class matchService {
       })
     } else {
       return await axios.get(API_URL + "/all/").then(response => {
-        const allmatchs: Match[] = response.data;
-        return allmatchs.filter(match => 
-          Object.keys(filter).every(key => filter[key as keyof Match] === match[key as keyof Match])
-        );
+        const allmatchs: MyMatch[] = response.data;
+        const matches: Match[] = []
+        allmatchs.forEach(element => {
+          matches.push(tranformer.to(element))
+        });
+        if (filter.stage_id != undefined) {
+          return matches.filter(match => match.stage_id == filter.stage_id)
+        } else if (filter.group_id != undefined) {
+          return matches.filter(match => match.group_id == filter.group_id)
+        } else {
+          return matches.filter(match => match.round_id == filter.round_id)
+        };
       });
     }
   }

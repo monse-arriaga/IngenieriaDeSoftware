@@ -27,6 +27,7 @@ import TournamentService from "../services/TournamentService";
 import { BracketsManager } from 'brackets-manager'
 import { tournamentStorage } from "../store/tournament";
 
+
 export default defineComponent({
   name: "Detalles",
   components: {
@@ -59,8 +60,18 @@ export default defineComponent({
         tournamentO.value = await TournamentService.getTournamentByName(tournament.toString());
     }
 
+    async function render() {
+      const data = await manager.get.tournamentData("3");
+      console.log(data)
+      window.bracketsViewer.render({
+        stages: data.stage,
+        matches: data.match,
+        matchGames: data.match_game,
+        participants: data.participant,
+      });
+    }
+
     onMounted(async () => {
-        await checkEnrolled();
         await getToournament();
         await manager.create.stage({
           tournamentId: 3,
@@ -69,8 +80,10 @@ export default defineComponent({
           seeding: ['Team 1', 'Team 2', 'Team 3', 'Team 4'],
           settings: { grandFinal: 'double' },
         });
-    });
-    
+        await render()
+      });
+        
+
     const enroll = async () => {
         try {
           await UserService.enroll(authHeader().UserName, tournament.toString());
@@ -88,6 +101,7 @@ export default defineComponent({
       tournamentO,
       isLoggedIn,
       enroll,
+      render
     };
   },
 });

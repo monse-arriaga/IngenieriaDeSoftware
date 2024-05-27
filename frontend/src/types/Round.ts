@@ -2,7 +2,7 @@ import MyStageSettings from "./MyStageSettings"
 import MyStageType from "./MyStageType"
 
 interface MyRound {
-    id: number,
+    id?: number,
     stage: {
         id: number,
         tournamentId?: string,

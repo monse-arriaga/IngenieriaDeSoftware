@@ -31,13 +31,13 @@ public class StageSettings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     // @Column(name = "stageId")    
     // private int stageId;
 
     @Column(name = "size")
-    private int size;
+    private Integer size;
 
     // @ElementCollection(targetClass = SeedOrdering.class) 
     // @CollectionTable(name = "seed_ordering_setting", joinColumns = @JoinColumn(name = "stage_setting_id")) 
@@ -47,16 +47,25 @@ public class StageSettings {
     // private List<SeedOrdering> seedOrdering;
 
     @Column(name = "balanceByes")
-    private boolean balanceByes;
+    private Boolean balanceByes;
 
     @Column(name = "matchesChildCount")
-    private int matchesChildCount;
+    private Integer matchesChildCount;
 
     @Column(name = "groupCount")
-    private int groupCount;
+    private Integer groupCount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "roundRobinMode")
     private RoundRobinMode roundRobinMode;
 
+    @Column(name = "consolationFinal")
+    private Boolean consolationFinal;
+
+    @Column(name = "skipFirstRound")
+    private Boolean skipFirstRound;
+
+    @Column(name = "grandFinal")
+    private GrandFinalType grandFinal;
+    
 }

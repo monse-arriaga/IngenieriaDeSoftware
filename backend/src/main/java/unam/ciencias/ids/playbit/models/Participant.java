@@ -3,6 +3,7 @@ package unam.ciencias.ids.playbit.models;
 import java.util.List;
 
 import org.hibernate.annotations.Collate;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Getter @Setter
 @Entity
 @Table(name = "participant")
+@JsonIgnoreProperties({"matchResult", "matchGameResults"})
 public class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +34,7 @@ public class Participant {
     private String name;
 
     @Column(name = "tournamentId")
-    private String tournamentId;
+    private String tournament_id;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "participant")
     private List<ParticipantMatchResult> matchResult;

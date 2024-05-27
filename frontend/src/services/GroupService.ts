@@ -1,20 +1,20 @@
 import axios from 'axios';
 import { Group } from 'brackets-model';
 import GroupT from '../tranformers/Group';
+import MyGroup from '../types/MyGroup';
 
 const API_URL = 'http://localhost:8080/group';
 const tranformer = new GroupT;
 
 class GroupService {
   async create(value: Group | Group[]){
-    
-    value = Array.isArray(value) ? value : [value];
-
-    value.forEach( async group => {
-        const myGroup = tranformer.from(group);
-
-        await axios.post(API_URL + '/create/', myGroup)
-    } )
+    console.log(value)
+    value = Array.isArray(value) ? value : [value]
+    const valueT:MyGroup[] = []
+    value.forEach(element => {
+      valueT.push(tranformer.from(element))
+    });
+    await axios.post(API_URL + '/create/', valueT).then()
 
   }
 
@@ -29,9 +29,13 @@ class GroupService {
       })
     } else {
       return await axios.get(API_URL + "/all/").then(response => {
-        const allGroups: Group[] = response.data;
-        return allGroups.filter(Group => 
-          Object.keys(filter).every(key => filter[key as keyof Group] === Group[key as keyof Group])
+        const allGroups: MyGroup[] = response.data;
+        const groups: Group[] = []
+        allGroups.forEach(element => {
+          groups.push(tranformer.to(element))
+        });
+        return groups.filter(group => 
+          group.stage_id == filter.stage_id
         );
       });
     }

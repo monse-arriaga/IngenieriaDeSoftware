@@ -1,6 +1,7 @@
 import axios from 'axios';
 import RoundT from '../tranformers/Round';
 import { Round } from 'brackets-model';
+import MyRound from '../types/Round';
 
 const API_URL = 'http://localhost:8080/round';
 const tranformer = new RoundT;
@@ -12,7 +13,6 @@ class roundService {
 
     value.forEach( async round => {
         const myround = tranformer.from(round);
-
         await axios.post(API_URL + '/create/', myround)
     } )
 
@@ -29,10 +29,16 @@ class roundService {
       })
     } else {
       return await axios.get(API_URL + "/all/").then(response => {
-        const allrounds: Round[] = response.data;
-        return allrounds.filter(round => 
-          Object.keys(filter).every(key => filter[key as keyof Round] === round[key as keyof Round])
-        );
+        const allrounds: MyRound[] = response.data;
+        const rounds: Round[] = []
+        allrounds.forEach(element => {
+          rounds.push(tranformer.to(element))
+        });
+        if (filter.group_id == undefined) {
+          return rounds.filter(round => round.stage_id == filter.stage_id)
+        } else {
+          return rounds.filter(round => round.group_id == filter.group_id)
+        }
       });
     }
   }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MatchGameT from '../tranformers/MatchGame';
 import { MatchGame } from 'brackets-model';
+import MyMatchGame from '../types/MyMatchGame';
 
 const API_URL = 'http://localhost:8080/matchgame';
 const tranformer = new MatchGameT()
@@ -14,22 +15,13 @@ class matchgameService {
     value.forEach( async matchgame => {
         const mymatchgame = tranformer.from(matchgame);
 
-        await axios.post(API_URL + '/create/', {
-          matchgame: {
-            id: mymatchgame.id,
-            matchStatus: mymatchgame.matchStatus,
-            stage: mymatchgame.stage,
-            group: mymatchgame.match,
-            number: mymatchgame.number
-          },
-          result1: mymatchgame.opponentOneResult,
-          result2: mymatchgame.opponentTwoResult
-        })
+        await axios.post(API_URL + '/create/', mymatchgame)
     } )
 
   }
 
   async select(filter?: number | Partial<MatchGame>): Promise<MatchGame | MatchGame[] | null> {
+    console.log(filter)
     if(filter == undefined) {
       return  await axios.get(API_URL + "/all/").then(response => {
         return response.data;
@@ -40,9 +32,13 @@ class matchgameService {
       })
     } else {
       return await axios.get(API_URL + "/all/").then(response => {
-        const allmatchgames: MatchGame[] = response.data;
-        return allmatchgames.filter(matchgame => 
-          Object.keys(filter).every(key => filter[key as keyof MatchGame] === matchgame[key as keyof MatchGame])
+        const allmatchgames: MyMatchGame[] = response.data;
+        const matches: MatchGame[] = []
+        allmatchgames.forEach(element => {
+          matches.push(tranformer.to(element))
+        });
+        return matches.filter(matchgame => 
+          matchgame.parent_id == filter.parent_id  
         );
       });
     }

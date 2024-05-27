@@ -31,7 +31,7 @@ import lombok.Setter;
 public class Match {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeq")
     @Column(name = "id")
     private int id;
 

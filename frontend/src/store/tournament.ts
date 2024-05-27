@@ -20,22 +20,22 @@ export class tournamentStorage implements CrudInterface {
         try {
             switch (table) {
                 case "stage":
-                    StageService.create(valuesA as Stage[])
+                    await StageService.create(valuesA as Stage[]).then()
                     break;
                 case "group":
-                    GroupService.create(valuesA as Group[]);
+                    await GroupService.create(valuesA as Group[]).then()
                     break;
                 case "round":
-                    RoundService.create(valuesA as Round[])
+                    await RoundService.create(valuesA as Round[]).then()
                     break;
                 case "match":
-                    MatchService.create(valuesA as Match[])
+                    await MatchService.create(valuesA as Match[]).then()
                     break;
                 case "match_game":
-                    MatchGameService.create(valuesA as MatchGame[]);
+                    await MatchGameService.create(valuesA as MatchGame[]).then()
                     break;
                 case "participant":
-                    ParticipantService.create(valuesA as Participant[])
+                    await ParticipantService.create(valuesA as Participant[]).then()
                     break;
                 default:
                     console.log("Unknown table");
@@ -54,17 +54,17 @@ export class tournamentStorage implements CrudInterface {
         try {
             switch (table) {
                 case "stage":
-                    return StageService.select(filter) as T;
+                    return await StageService.select(filter) as T[];
                 case "group":
-                    return GroupService.select(filter) as T;
+                    return await GroupService.select(filter) as T[];
                 case "round":
-                    return RoundService.select(filter) as T;
+                    return await RoundService.select(filter) as T[];
                 case "match":
-                    return MatchService.select(filter) as T;
+                    return await MatchService.select(filter) as T[];
                 case "match_game":
-                    return MatchGameService.select(filter) as T;
+                    return await MatchGameService.select(filter) as T[];
                 case "participant":
-                    return ParticipantService.select(filter) as T;
+                    return await ParticipantService.select(filter) as T[];
                 default:
                     return null;
             }
@@ -80,19 +80,19 @@ export class tournamentStorage implements CrudInterface {
         try {
             switch (table) {
                 case "stage":
-                    StageService.update(filter, value as Stage)
+                    await StageService.update(filter, value as Stage).then()
                     break;
                 case "group":
-                    GroupService.update(filter, value as Group)
+                    await GroupService.update(filter, value as Group)
                     break;
                 case "round":
-                    RoundService.update(filter, value as Round)
+                    await RoundService.update(filter, value as Round)
                     break;
                 case "match":
-                    MatchService.update(filter, value as Match)
+                    await MatchService.update(filter, value as Match)
                     break;
                 case "match_game":
-                    MatchGameService.update(filter, value as MatchGame)
+                    await MatchGameService.update(filter, value as MatchGame)
                     break;
                 case "participant":
                     break;
@@ -112,22 +112,22 @@ export class tournamentStorage implements CrudInterface {
         try {
             switch (table) {
                 case "stage":
-                    StageService.delete(filter as object)
+                    await StageService.delete(filter as object)
                     break;
                 case "group":
-                    GroupService.delete(filter as object)
+                    await GroupService.delete(filter as object)
                     break;
                 case "round":
-                    RoundService.delete(filter as object)
+                    await RoundService.delete(filter as object)
                     break;
                 case "match":
-                    MatchService.delete(filter as object)
+                    await MatchService.delete(filter as object)
                     break;
                 case "match_game":
-                    MatchGameService.delete(filter as object)
+                    await MatchGameService.delete(filter as object)
                     break;
                 case "participant":
-                    ParticipantService.delete(filter as object)
+                    await ParticipantService.delete(filter as object)
                     break;
                 default:
                     console.log("Unknown table");

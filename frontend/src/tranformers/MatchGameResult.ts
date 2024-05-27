@@ -1,6 +1,6 @@
 import { ParticipantResult } from "brackets-model"
-import MatchResult from "../types/MatchResult"
 import ParticipantMatchGameResult from "../types/ParticipantMatchGameResult";
+import Result from "./Result";
 
 class MatchGameResultT {
     to (value:  ParticipantMatchGameResult | null): ParticipantResult | null {
@@ -10,7 +10,7 @@ class MatchGameResultT {
             position: value.position,
             forfeit: value.forfeit,
             score: value.score,
-            result: value.result
+            result: Result.to(value.result)
         }
     }
 
@@ -23,7 +23,7 @@ class MatchGameResultT {
             position: value.position,
             forfeit: value.forfeit,
             score: value.score,
-            result: value.result as MatchResult,
+            result: Result.from(value.result),
         }
     }
 }
