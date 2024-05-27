@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +28,8 @@ import lombok.Setter;
 public class ParticipantMatchGameResult {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "partmg_seq")
+    @SequenceGenerator(name = "partmg_seq", sequenceName = "partmg_seq", initialValue = 0, allocationSize = 1)
     @Column(name = "id")
     private int id;
 

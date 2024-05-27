@@ -22,8 +22,6 @@ public class Tournament {
     @Column(name = "jugadores")
     private int players;
 
-    @Column(name = "imagen")
-    private String image;
 
     @Column(name = "informacion")
     private String description;
