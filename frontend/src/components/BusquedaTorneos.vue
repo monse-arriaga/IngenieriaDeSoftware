@@ -34,6 +34,9 @@ export default defineComponent({
   setup() {
     const tournamentData = ref<Tournament[]>([]);
     const searchQuery = ref('');
+    const juego = ref<string[]>([]);
+    const modalidad = ref<string[]>([]);
+    const estado = ref<string[]>(['abierto']);
     const route = useRoute();
 
     const loadTournaments = async () => {
@@ -42,40 +45,62 @@ export default defineComponent({
         searchQuery.value = params.get('q') || '';
 
         const tournaments = await TournamentService.getPublicContent();
+
+        let filteredTournaments = tournaments;
+
+        // Filtrar por nombre
         if (searchQuery.value !== '') {
-          const filteredTournaments = tournaments.filter(tournament =>
+          filteredTournaments = filteredTournaments.filter((tournament: { name: string; }) =>
             tournament.name.toLowerCase().includes(searchQuery.value.toLowerCase())
           );
-          tournamentData.value = filteredTournaments;
-        } else {
-          tournamentData.value = tournaments;
         }
+
+        // Filtrar por juego
+        if (juego.value.length > 0) {
+          filteredTournaments = filteredTournaments.filter((tournament: { tournamentGame: string; }) =>
+            juego.value.includes(tournament.tournamentGame)
+          );
+        }
+
+        // Filtrar por modalidad
+        if (modalidad.value.length > 0) {
+          filteredTournaments = filteredTournaments.filter((tournament: { tournamentType: string; }) =>
+            modalidad.value.includes(tournament.tournamentType)
+          );
+        }
+
+        // Filtrar por estado
+        if (estado.value.length > 0) {
+          filteredTournaments = filteredTournaments.filter((tournament: { state: string; }) =>
+            estado.value.includes(tournament.state)
+          );
+        }
+
+        tournamentData.value = filteredTournaments;
       } catch (error) {
         console.error(error);
       }
     };
 
-    // Observar los cambios en searchQuery
-    watch(() => route.query.q, () => {
-      searchQuery.value = route.query.q as string || '';
-      loadTournaments();
-    }, { immediate: true });
+    // Observar los cambios en los filtros
+    watch(
+      () => [route.query.q, juego.value, modalidad.value, estado.value],
+      () => {
+        searchQuery.value = route.query.q as string || '';
+        loadTournaments();
+      },
+      { immediate: true }
+    );
 
     return {
       tournamentData,
-      estado: ref('abierto'),
-      single: ref('Selecciona una'),
-      juego: ref(['Minecraft']),
-      modalidad: ref(['Torneo de Liga']),
-      optionsModalidad: [
-        'Torneo de Liga', 'Eliminación Directa', 'Liga y Eliminatoria'
-      ],
-      optionsJuego: [
-        'Minecraft', 'Valorant', 'Fortnite'
-      ],
-      optionsEstado: [
-        'abierto', 'cerrado'
-      ]
+      searchQuery,
+      juego,
+      modalidad,
+      estado,
+      optionsModalidad: ['Torneo de Liga', 'Eliminación Directa', 'Liga y Eliminatoria'],
+      optionsJuego: ['Minecraft', 'Fall Guys', 'Fortnite'],
+      optionsEstado: ['abierto', 'cerrado']
     };
   }
 });
@@ -84,7 +109,7 @@ export default defineComponent({
 <style scoped>
 .tournament-grid {
   display: grid;
-  grid-template-columns: repeat(3, 2000fr); /* Dos columnas */
+  grid-template-columns: repeat(3, 1fr); /* Tres columnas */
   grid-auto-rows: minmax(100px, auto);
   grid-gap: 20px;
   justify-items: center;
