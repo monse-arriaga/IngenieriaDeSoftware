@@ -50,6 +50,7 @@ import TorneoCarta from './TorneoCarta.vue';
 import Tournament from '../types/Tournament';
 import { defineComponent, ref } from 'vue';
 import TournamentService from '../services/TournamentService';
+import router from '../router';
 
 export default defineComponent ({
   name: 'Torneo',
@@ -58,15 +59,31 @@ export default defineComponent ({
   },
   setup() {
     const tournamentData = ref<Tournament[]>([]);
-    (async () => {
+    const searchQuery = ref('');
+
+   (async () => {
       try {
-        //console.log(TournamentService.getPublicContent())
-        tournamentData.value = (await TournamentService.getPublicContent()) as Tournament[];
-        //console.log(TournamentService.getTournamentByName("conejos"))
+        const params = new URLSearchParams(window.location.search);
+        searchQuery.value = params.get('q') || '';
+
+        if (searchQuery.value !== '') {
+          // Si hay una consulta de búsqueda, filtrar los torneos por nombre
+          const tournaments = await TournamentService.getPublicContent();
+          const filteredTournaments = tournaments.filter((tournament: { name: string; }) =>
+            tournament.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+          );
+          tournamentData.value = filteredTournaments;
+        } else {
+          // Si no hay consulta de búsqueda, cargar todos los torneos
+          tournamentData.value = (await TournamentService.getPublicContent()) as Tournament[];
+        }
+       
       } catch (error) {
         console.error(error);
       }
-    })();
+    }
+    // Falta automatizar el reload!!!!!!!!!!!!
+  )();
 
     return {
       tournamentData,

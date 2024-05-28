@@ -84,7 +84,7 @@
 
   const handleSearch = () => {
     // Aquí puedes poner la lógica para manejar la búsqueda
-    console.log('Realizando búsqueda...');
+    router.push({ path: '/busqueda-torneos', query: { q: searchVal.value }});
   };
 
   const searchVal = ref('')
