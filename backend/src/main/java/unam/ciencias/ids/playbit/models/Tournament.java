@@ -1,15 +1,12 @@
 package unam.ciencias.ids.playbit.models;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name="Torneo")
@@ -21,6 +18,7 @@ public class Tournament {
 
     @Column(name = "jugadores")
     private int players;
+
 
     @Column(name = "informacion")
     private String description;

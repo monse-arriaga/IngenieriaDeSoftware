@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import unam.ciencias.ids.playbit.models.Tournament;
+import unam.ciencias.ids.playbit.models.TournamentAdmin;
+import unam.ciencias.ids.playbit.models.TournamentAdminId;
+import unam.ciencias.ids.playbit.models.User;
+import unam.ciencias.ids.playbit.repositories.TournamentAdminRepository;
 import unam.ciencias.ids.playbit.repositories.TournamentRepository;
 
 @Service
@@ -13,6 +17,8 @@ public class TournamentServices {
     
     @Autowired
     TournamentRepository tournamentRepository;
+    @Autowired
+    TournamentAdminRepository tournamentAdminRepository;
 
     public List<Tournament> findAll(){
         return (List<Tournament>) tournamentRepository.findAll();
@@ -36,6 +42,21 @@ public class TournamentServices {
     public List<Tournament> findTournamentByName(String name){
         List<Tournament> tournaments = tournamentRepository.getTournamentByName(name);
         return tournaments;
+    }
+
+
+    public boolean createTournament2(Tournament tournament, User user){
+        List<Tournament> tournaments = tournamentRepository.getTournamentByName(tournament.getName());
+
+        if (tournaments.size() > 0) {
+            return false;
+        }
+
+        TournamentAdminId tournamentAdminId = new TournamentAdminId(user.getID(),tournament.getName());
+        TournamentAdmin tournamentAdmin = new TournamentAdmin(tournamentAdminId);
+        tournamentAdminRepository.save(tournamentAdmin);
+        tournamentRepository.save(tournament);
+        return true;
     }
 
 
