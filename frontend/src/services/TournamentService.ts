@@ -2,12 +2,19 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080';
 
-class UserService {
+class TournamentService {
   getPublicContent() {
     return axios.get(API_URL + '/tournament/all/')
         .then(response =>  {
           return response.data
         } )
+  }
+
+  getTournamentByName(name: String) {
+      return axios.get(API_URL + "/tournament/find/" + name)
+          .then(response => {
+            return response.data
+          })
   }
 
   tournament(emp : any) {
@@ -18,4 +25,4 @@ class UserService {
 
 }
 
-export default new UserService();
+export default new TournamentService();

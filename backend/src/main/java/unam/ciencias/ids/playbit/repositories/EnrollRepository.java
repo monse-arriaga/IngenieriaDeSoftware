@@ -13,5 +13,10 @@ public interface EnrollRepository  extends CrudRepository<Enroll, Integer>{
     public List<Enroll> getEnrollmentByUser(@Param("idparam") int id);
 
     @Query(nativeQuery = true, value = "SELECT * FROM Inscribir WHERE torneo_id = :idparam")
-    public List<Enroll> getEnrollmentByTournament(@Param("idparam") int id);
+    public List<Enroll> getEnrollmentByTournament(@Param("idparam") String id);
+    
+
+    @Query(nativeQuery = true, value = "SELECT * FROM Inscribir WHERE (usuario_id, torneo_id) IN ((:idparam,:torneoid))")
+    public List<Enroll> getUserEnrollInTournament(@Param("idparam") int id, @Param("torneoid") String name);
+
 }
