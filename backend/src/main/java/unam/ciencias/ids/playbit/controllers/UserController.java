@@ -29,6 +29,7 @@ import unam.ciencias.ids.playbit.models.ERole;
 import unam.ciencias.ids.playbit.models.Role;
 import unam.ciencias.ids.playbit.models.Tournament;
 import unam.ciencias.ids.playbit.models.User;
+import unam.ciencias.ids.playbit.payload.request.EnrollDeleteRequest;
 import unam.ciencias.ids.playbit.payload.request.EnrollRequest;
 import unam.ciencias.ids.playbit.payload.request.LoginRequest;
 import unam.ciencias.ids.playbit.payload.request.SignupRequest;
@@ -115,10 +116,10 @@ public class UserController {
     }
 
     @PostMapping("/delete_enrollment/")
-    public ResponseEntity<?> deleteUserEnrollment(User user, Tournament tournament){
-        if(!enrollServices.deleteEnrollment(user, tournament))
+    public ResponseEntity<?> deleteUserEnrollment(@RequestBody EnrollDeleteRequest enrollDeleteRequest){
+        if(!enrollServices.deleteEnrollment(enrollDeleteRequest.getUser(), enrollDeleteRequest.getTournament()))
             throw new IllegalArgumentException("user not enrolled in tournament");
-        return ResponseEntity.ok(new MessageResponse("enrollemnt deleted."));
+        return ResponseEntity.ok(new MessageResponse("enrollment deleted."));
     }
 
 
