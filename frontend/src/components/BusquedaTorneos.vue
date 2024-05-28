@@ -2,41 +2,15 @@
   <div class="q-pa-md">
     <div class="q-gutter-md row items-start">
       <div style="min-width: 250px; max-width: 300px; margin-top: 45px;">
-
-        <q-select dark
-          filled
-          v-model="juego"
-          multiple
-          :options="optionsJuego"
-          label="Juego"
-          use-chips
-          stack-label
-        />
+        <q-select dark filled v-model="juego" multiple :options="optionsJuego" label="Juego" use-chips stack-label />
       </div>
 
       <div style="min-width: 250px; max-width: 300px; margin-top: 45px;">
-
-        <q-select dark
-          filled
-          label="Modalidad"
-          v-model="modalidad"
-          multiple
-          :options="optionsModalidad"
-          use-chips
-          stack-label
-        />
+        <q-select dark filled label="Modalidad" v-model="modalidad" multiple :options="optionsModalidad" use-chips stack-label />
       </div>
 
       <div style="min-width: 250px; max-width: 300px; margin-top: 45px;">
-
-        <q-select dark
-          filled
-          v-model="estado"
-          :options="optionsEstado"
-          label="Estado"
-          use-chips
-          stack-label
-        />
+        <q-select dark filled v-model="estado" :options="optionsEstado" label="Estado" use-chips stack-label />
       </div>
     </div>
   </div>
@@ -48,11 +22,11 @@
 <script lang="ts">
 import TorneoCarta from './TorneoCarta.vue';
 import Tournament from '../types/Tournament';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import TournamentService from '../services/TournamentService';
-import router from '../router';
+import { useRoute } from 'vue-router';
 
-export default defineComponent ({
+export default defineComponent({
   name: 'Torneo',
   components: {
     TorneoCarta
@@ -60,30 +34,32 @@ export default defineComponent ({
   setup() {
     const tournamentData = ref<Tournament[]>([]);
     const searchQuery = ref('');
+    const route = useRoute();
 
-   (async () => {
+    const loadTournaments = async () => {
       try {
         const params = new URLSearchParams(window.location.search);
         searchQuery.value = params.get('q') || '';
 
+        const tournaments = await TournamentService.getPublicContent();
         if (searchQuery.value !== '') {
-          // Si hay una consulta de búsqueda, filtrar los torneos por nombre
-          const tournaments = await TournamentService.getPublicContent();
-          const filteredTournaments = tournaments.filter((tournament: { name: string; }) =>
+          const filteredTournaments = tournaments.filter(tournament =>
             tournament.name.toLowerCase().includes(searchQuery.value.toLowerCase())
           );
           tournamentData.value = filteredTournaments;
         } else {
-          // Si no hay consulta de búsqueda, cargar todos los torneos
-          tournamentData.value = (await TournamentService.getPublicContent()) as Tournament[];
+          tournamentData.value = tournaments;
         }
-       
       } catch (error) {
         console.error(error);
       }
-    }
-    // Falta automatizar el reload!!!!!!!!!!!!
-  )();
+    };
+
+    // Observar los cambios en searchQuery
+    watch(() => route.query.q, () => {
+      searchQuery.value = route.query.q as string || '';
+      loadTournaments();
+    }, { immediate: true });
 
     return {
       tournamentData,
