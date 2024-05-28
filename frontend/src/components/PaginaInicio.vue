@@ -2,7 +2,7 @@
   
   <div class="carousel-container">
     <Carousel :slides-per-page="5"> <!-- Ajusta el número de slides por página según sea necesario -->
-      <Slide v-for="tournament in tournamentData" :key="tournament.name">
+      <Slide v-for="tournament in lastSevenTournaments" :key="tournament.name">
         <div class="carousel__item">
           <TorneoCarta :tournament="tournament" />
         </div>
@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import TorneoCarta from './torneoCarrusel.vue';
 import Tournament from '../types/Tournament';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
@@ -63,6 +63,10 @@ import TournamentService from '../services/TournamentService';
 import 'vue3-carousel/dist/carousel.css';
 
 const tournamentData = ref<Tournament[]>([]);
+  const lastSevenTournaments = computed(() => {
+      // Assuming `tournamentData` contains all tournaments
+      return tournamentData.value.slice(-7); // Get the last 7 elements
+    });
 
 onMounted(async () => {
   try {

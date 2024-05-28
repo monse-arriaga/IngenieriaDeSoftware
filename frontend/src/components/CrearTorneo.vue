@@ -78,9 +78,9 @@
           :done="step > 2"
         >
           Ahora es momento de que agreguemos la imagen que representará tu torneo. <p></p>
-          1. Escogela en un navegador web, dandole copiar y pegar<p></p>
-          2. Da pegar en el siguiente link: https://es.imgbb.com/<p></p>
-          3. Pegala aquí <p></p>
+          1. Escogela en un navegador web.<p></p>
+          1. Da click izquierddo y selecciona "Copy image address".<p></p>
+          2. Pega lo que copiaste aquí. <p></p>
           <q-input dark filled label-color="white" v-model="tournamentTBC.image" label="Imagen de tu torneo" :input-style="{ color: 'white' }" />
 
         </q-step>
