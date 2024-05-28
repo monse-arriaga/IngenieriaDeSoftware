@@ -5,37 +5,37 @@
     </div>
 
     <div v-else-if="tournamentDetails">
-      <q-tabs class="text-white" active-color="bg-indigo-6" v-model="tab">
-        <q-tab name="details" label="Detalles del Torneo" />
-        <q-tab name="other" label="Clasificatorias" />
-      </q-tabs>
+      <q-img class="col-2"
+      :src="tournamentDetails.image"
+      style="width: 1250px; height: 700px; object-fit: cover;"/>
 
-      <q-tab-panels v-model="tab">
+      <q-tabs class="text-blue" active-color="bg-indigo-6" v-model="tab">
+        <q-tab name="details" label="Detalles del Torneo" />
+        <q-tab name="brackets" label="Clasificatorias" />
+      </q-tabs>
+      <q-tab-panels v-model="tab" dark  >
         <q-tab-panel name="details">
-          <q-img class="col-2"
-            :src="tournamentDetails.image"
-            style="width: 1250px; height: 700px; object-fit: cover;"/>
           <div class="tournament-info">
             <h6 class="text-grey-8 q-gutter-md;">
               <q-icon name="lock_open" />{{ '   '+tournamentDetails.state}}  
               <q-icon name="sports_esports" />{{ '   '+tournamentDetails.tournamentGame}}  
               <q-icon name="sports_kabaddi" />{{ '   '+tournamentDetails.tournamentType}}
             </h6>
-            <h1 class="text-black q-gutter-md;">{{ tournamentDetails.name }}</h1>
-            <h4 class="text-grey-8 q-gutter-md;">{{ tournamentDetails.description }}</h4>
+            <h1 class="text-white q-gutter-md;">{{ tournamentDetails.name }}</h1>
+            <h4 class="text-grey-6 q-gutter-md;">{{ tournamentDetails.description }}</h4>
             <div class="tournament-info">
               <h6 class="text-grey-5 q-gutter-md;">
                 <q-icon name="today" />{{ '   '+tournamentDetails.date}}  
                 <q-icon name="schedule" />{{ '   '+tournamentDetails.time}}  
                 <q-icon name="groups" />{{ '   '+tournamentDetails.inPlayers+'/'+tournamentDetails.players}}
               </h6>
+            <p></p>
             </div>
           </div>
         </q-tab-panel>
 
-        <q-tab-panel name="other">
+        <q-tab-panel name="brackets">
           <div id="brackets-container" style="width: 100%; height: 700px; background-color: #2c3e50;">
-            <!-- Aquí se renderizará la gráfica de brackets -->
           </div>
         </q-tab-panel>
       </q-tab-panels>
@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "vue";
+import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import UserService from "../services/UserService";
 import authHeader from "../services/auth-header";
@@ -110,17 +110,17 @@ export default defineComponent({
       }
     };
 
-    async function render() {
+    async function renderBrackets() {
       const data = await manager.get.tournamentData("3");
-      console.log(data)
+      console.log(data);
       window.bracketsViewer.render({
         stages: data.stage,
         matches: data.match,
         matchGames: data.match_game,
         participants: data.participant,
+        container: '#brackets-container' // Especificar el contenedor donde se renderizarán los brackets
       });
     }   
-
 
     onMounted(async () => {
       await checkEnrolled();
@@ -132,8 +132,19 @@ export default defineComponent({
           type: 'double_elimination',
           seeding: ['Team 1', 'Team 2', 'Team 3', 'Team 4'],
           settings: { grandFinal: 'double' },
-        });
-        await render()
+      });
+
+      // Render brackets if the "brackets" tab is already active on mount
+      if (tab.value === 'brackets') {
+        await renderBrackets();
+      }
+    });
+
+    // Watch for changes in the tab and call renderBrackets when "brackets" tab is selected
+    watch(tab, async (newTab) => {
+      if (newTab === 'brackets') {
+        await renderBrackets();
+      }
     });
 
     const enroll = async () => {
@@ -153,7 +164,7 @@ export default defineComponent({
       tournamentDetails,
       loading,
       tab, // Return the tab ref
-      render,
+      renderBrackets, // Return the render function
     };
   },
 });

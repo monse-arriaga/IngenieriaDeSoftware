@@ -98,7 +98,7 @@
         <template v-slot:navigation>
           <q-stepper-navigation>
             <!-- <q-btn color="primary" @click="{done1 = true; step=3}" label="Finish" /> -->
-            <q-btn color="primary" @click="submit" :label="step === 2 ? 'Finish' : 'boton'"  />
+            <q-btn color="primary" @click="submit" v-if="step === 2" label="Finish" />
             <q-btn v-if="step > 1" flat color="primary" @click="onPrevious" label="Back" class="q-ml-sm" />
           </q-stepper-navigation>
         </template>
