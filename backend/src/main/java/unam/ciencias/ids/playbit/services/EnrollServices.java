@@ -42,6 +42,22 @@ public class EnrollServices {
         return userTournaments;
     }
 
+
+    public boolean deleteEnrollment(User user, Tournament tournament){
+        
+        List<Enroll> userEnrollments = enrollRepository.getUserEnrollInTournament(user.getID(), tournament.getName());
+
+
+        if(userEnrollments.size() == 0)
+            return false;
+
+        enrollRepository.delete(userEnrollments.get(0));
+
+        return true;
+
+
+    }
+
     public boolean enrollUser(User user, Tournament tournament){
         
         List<Enroll> userEnrollments = enrollRepository.getUserEnrollInTournament(user.getID(),tournament.getName());

@@ -26,6 +26,7 @@ import lombok.Setter;
 @Table(name = "participant")
 @JsonIgnoreProperties({"matchResult", "matchGameResults"})
 public class Participant {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "part_seq")
     @SequenceGenerator(name = "part_seq", sequenceName = "part_seq", initialValue = 0, allocationSize = 1)

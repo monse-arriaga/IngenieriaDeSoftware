@@ -99,6 +99,27 @@ public class UserController {
         return ResponseEntity.ok( new MessageResponse("jugador inscrito."));
     }
 
+    @PostMapping("/edit/")
+    public ResponseEntity<?> editUser(@RequestBody User user){
+
+        Optional<User> userToFind = userRepository.findById(user.getID());
+        if (!userToFind.isPresent()) {
+            throw new IllegalArgumentException("User doesn't exists.");
+        }
+        String passwdEncoded = encoder.encode(user.getPassword());
+        user.setPassword(passwdEncoded);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("Usuario editado."));
+
+    }
+
+    @PostMapping("/delete_enrollment/")
+    public ResponseEntity<?> deleteUserEnrollment(User user, Tournament tournament){
+        if(!enrollServices.deleteEnrollment(user, tournament))
+            throw new IllegalArgumentException("user not enrolled in tournament");
+        return ResponseEntity.ok(new MessageResponse("enrollemnt deleted."));
+    }
 
 
     @GetMapping("/tournaments_enrolled/{userid}")
