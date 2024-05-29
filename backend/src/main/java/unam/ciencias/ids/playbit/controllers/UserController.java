@@ -115,6 +115,18 @@ public class UserController {
         return ResponseEntity.ok(new MessageResponse("enrollment deleted."));
     }
 
+
+
+    @GetMapping("/findbyid/{id}")
+    public User findUserById(@PathVariable int id){
+        Optional<User> user = userRepository.findById(id);
+
+        if(!user.isPresent())
+            throw new IllegalArgumentException("User doesn't exists.");
+
+        return user.get();
+    }
+
     @GetMapping("/find/{username}")
     public List<User> findUserByUsername(@PathVariable String username){
         List<User> users = userRepository.existsByUsername(username);

@@ -74,7 +74,7 @@ export default {
           email: newUserMail.value || userDet.value?.email,
           bio: newUserBio.value || userDet.value?.bio,
         };
-        await UserService.update(updatedUser, userStore.user.name);
+        await UserService.update(updatedUser, userStore.user.id);
         console.log("User updated successfully");
         // Optionally, refetch the user details to reflect changes
         fetchUserDetails();

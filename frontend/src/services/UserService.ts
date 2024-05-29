@@ -20,10 +20,18 @@ class UserService {
         })
     }
 
-    async update(user: Partial<User> | User, id: String){
-        const old_user = await this.find(id)
+
+    async findById(user_id: number){
+        return axios.get(API_URL + '/user/findbyid/' + user_id).then(response => {
+            return response.data
+        })
+    }
+    }
+
+    async update(user: Partial<User> | User, id: number){
+        const old_user = await this.findbyid(id)
         const new_user:User = {
-            id:1,
+            id:id,
             bio: user.bio == undefined || old_user.bio == user.bio ? old_user.bio : user.bio,
             bornDate: user.bornDate == undefined || old_user.bornDate == user.bornDate ? old_user.bornDate : user.bornDate,
             email: user.email == undefined || old_user.email == user.email ? old_user.email : user.email,
