@@ -1,15 +1,14 @@
 package unam.ciencias.ids.playbit.controllers;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,16 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-
 import jakarta.validation.Valid;
-import unam.ciencias.ids.playbit.models.ERole;
-import unam.ciencias.ids.playbit.models.Role;
 import unam.ciencias.ids.playbit.models.Tournament;
 import unam.ciencias.ids.playbit.models.User;
 import unam.ciencias.ids.playbit.payload.request.EnrollDeleteRequest;
-import unam.ciencias.ids.playbit.payload.request.EnrollRequest;
 import unam.ciencias.ids.playbit.payload.request.LoginRequest;
 import unam.ciencias.ids.playbit.payload.request.SignupRequest;
 import unam.ciencias.ids.playbit.payload.response.JwtResponse;
@@ -122,6 +115,15 @@ public class UserController {
         return ResponseEntity.ok(new MessageResponse("enrollment deleted."));
     }
 
+    @GetMapping("/find/{username}")
+    public List<User> findUserByUsername(@PathVariable String username){
+        List<User> users = userRepository.existsByUsername(username);
+
+        if(users.size() == 0)
+            throw new IllegalArgumentException("user not found");
+
+        return users;
+    }
 
     @GetMapping("/tournaments_enrolled/{userid}")
     public List<String> getUserTournaments(@PathVariable int userid) {
