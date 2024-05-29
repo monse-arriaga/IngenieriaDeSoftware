@@ -8,14 +8,16 @@ const tranformer = new GroupT;
 
 class GroupService {
   async create(value: Group | Group[]){
-    console.log(value)
     value = Array.isArray(value) ? value : [value]
     const valueT:MyGroup[] = []
     value.forEach(element => {
       valueT.push(tranformer.from(element))
     });
-    await axios.post(API_URL + '/create/', valueT).then()
-
+    return await axios.post(API_URL + '/create/', valueT).then( response =>{
+      if (valueT.length == 1) return response.data
+      return true
+    }
+    )
   }
 
   async select(filter?: number | Partial<Group>): Promise<Group | Group[] | null> {

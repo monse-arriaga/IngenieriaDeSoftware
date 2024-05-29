@@ -46,9 +46,6 @@ public class ParticipantController {
         if(participants.size() == 0)
             throw new IllegalArgumentException("participant does not exist");
 
-
-        participantRepository.delete(participants.get(0));
-
         participantRepository.save(participant);
     }
 

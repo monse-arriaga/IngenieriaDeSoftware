@@ -35,7 +35,7 @@
         </q-tab-panel>
 
         <q-tab-panel name="brackets">
-          <div id="brackets-container" style="width: 100%; height: 700px; background-color: #2c3e50;">
+          <div class="brackets-viewer" id="example" style="width: 100%; height: 700px; background-color: #2c3e50;">
           </div>
         </q-tab-panel>
       </q-tab-panels>
@@ -72,6 +72,8 @@ import TournamentService from "../services/TournamentService";
 import { BracketsManager } from 'brackets-manager';
 import { tournamentStorage } from "../store/tournament";
 import Tournament from "../types/Tournament";
+import ParticipantService from "../services/ParticipantService";
+import { Match, Participant } from "brackets-model";
 
 export default defineComponent({
   name: "Detalles",
@@ -95,7 +97,6 @@ export default defineComponent({
         const enrolledTournaments = await UserService.tournaments_enrolled(authHeader().UserId);
         isEnrolled.value = enrolledTournaments.includes(tournamentName);
       } catch (error) {
-        console.error("Error checking enrollment:", error);
       }
     };
 
@@ -111,28 +112,44 @@ export default defineComponent({
     };
 
     async function renderBrackets() {
-      const data = await manager.get.tournamentData("3");
-      console.log(data);
+      const data = await manager.get.tournamentData(tournamentName);
+      console.log(tournamentName);
       window.bracketsViewer.render({
         stages: data.stage,
         matches: data.match,
         matchGames: data.match_game,
         participants: data.participant,
-        container: '#brackets-container' // Especificar el contenedor donde se renderizarán los brackets
-      });
+      }, {
+          selector: '#example',
+          participantOriginPlacement: 'before',
+          highlightParticipantOnHover: true,
+          onMatchClick: onMatchClick
+        });
     }   
+
+    const onMatchClick = async (match1: Match) => {
+      if(await userOwnsTournament()){
+        const match:number = match1.id as number
+        const torneo = tournamentName
+        router.push({ name: 'ganador', params: {
+          torneo,  match
+      }})
+   
+      }
+    }
+    
+    const userOwnsTournament = async () => {
+      const owning:any[] = await UserService.tournaments_owned(authHeader().UserId)
+      if(owning.filter(tournament => tournament == tournamentName).length > 0) {
+        return true
+      } else {
+        return false
+      }
+    }
 
     onMounted(async () => {
       await checkEnrolled();
       await fetchTournamentDetails();
-
-      await manager.create.stage({
-          tournamentId: 3,
-          name: 'Elimination stage',
-          type: 'double_elimination',
-          seeding: ['Team 1', 'Team 2', 'Team 3', 'Team 4'],
-          settings: { grandFinal: 'double' },
-      });
 
       // Render brackets if the "brackets" tab is already active on mount
       if (tab.value === 'brackets') {
@@ -149,7 +166,13 @@ export default defineComponent({
 
     const enroll = async () => {
       try {
+        const participants:Participant[] = await ParticipantService.select({
+          tournament_id: tournamentName}) as Participant[];
+        const participant = participants.filter(participante =>
+        ("Player " + tournamentName + " " + (tournamentDetails.value?.inPlayers as number)) == participante.name);
+        await ParticipantService.update(participant[0])
         await UserService.enroll(authHeader().UserName, tournamentName);
+        
         window.location.reload();
       } catch (error) {
         console.error("Error enrolling in tournament:", error);

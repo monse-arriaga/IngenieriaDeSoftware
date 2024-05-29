@@ -36,7 +36,7 @@ public class MatchGameController {
 
     @PostMapping("/create/")
     @Transactional
-    public void createMatchGame(@RequestBody MatchGame matchGame){
+    public long createMatchGame(@RequestBody MatchGame matchGame){
         ParticipantMatchGameResult result1 = matchGame.getOpponentOneResult();
         ParticipantMatchGameResult result2 = matchGame.getOpponentTwoResult();
 
@@ -52,6 +52,8 @@ public class MatchGameController {
         participantMatchGameRepository.save(result2);
             
         matchGameRepository.save(matchGame);
+
+        return matchGameRepository.count();
     }
 
 
@@ -62,7 +64,6 @@ public class MatchGameController {
         if(matchgames.size() == 0)
             throw new IllegalArgumentException("match does not exist");
 
-        matchGameRepository.delete(matchgames.get(0));
         matchGameRepository.save(matchGame);
     }
 

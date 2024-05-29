@@ -14,8 +14,10 @@ class matchService {
     value.forEach(element => {
       valueT.push(tranformer.from(element))
     });
-    console.log(valueT)
-    await axios.post(API_URL + '/create/', valueT).then()
+    return await axios.post(API_URL + '/create/', valueT).then(response =>{
+      if (valueT.length == 1) return response.data
+      return true
+    })
   }
 
   async select(filter?: number | Partial<Match>): Promise<Match | Match[] | null> {

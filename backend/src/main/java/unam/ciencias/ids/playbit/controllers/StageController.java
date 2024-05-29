@@ -42,13 +42,14 @@ public class StageController {
 
     @PostMapping("/create/")
     @Transactional
-    public void createStage(@RequestBody Stage[] stages){
+    public long createStage(@RequestBody Stage[] stages){
         for (Stage stage : stages) {
             StageSettings settings = stage.getStageSettings();
             stage.setStageSettings(settings);
             stageSettingsRepository.save(settings);        
         }
         stageRepository.saveAll(Arrays.asList(stages));
+        return stageRepository.count();
 
     }
 

@@ -1,12 +1,11 @@
 import { CrudInterface, Table } from "brackets-manager";
 import StageService from "../services/StageService";
-import { Group, Match, MatchGame, Round, Stage } from "brackets-model";
+import { Group, Match, MatchGame, Round, Stage, Participant } from "brackets-model";
 import GroupService from "../services/GroupService";
 import RoundService from "../services/RoundService";
 import MatchGameService from "../services/MatchGameService";
 import MatchService from "../services/MatchService";
 import ParticipantService from "../services/ParticipantService";
-import Participant from "../types/Participant";
 
 export class tournamentStorage implements CrudInterface {
 
@@ -15,35 +14,30 @@ export class tournamentStorage implements CrudInterface {
     public insert<T>(table: T, values: T[]): Promise<boolean>;
     
     public async insert<T>(table: Table, values: T | T[]): Promise<number | boolean> {
+        console.log("Insert" + " " + table)
+        console.log(values)
         const isArray = Array.isArray(values)
-        const valuesA = isArray ? values : [values]
         try {
             switch (table) {
                 case "stage":
-                    await StageService.create(valuesA as Stage[]).then()
-                    break;
+                    return await StageService.create(values as Stage | Stage[]).then()
                 case "group":
-                    await GroupService.create(valuesA as Group[]).then()
-                    break;
+                    return await GroupService.create(values as Group | Group[]).then()
                 case "round":
-                    await RoundService.create(valuesA as Round[]).then()
-                    break;
+                    return await RoundService.create(values as Round | Round[]).then()
                 case "match":
-                    await MatchService.create(valuesA as Match[]).then()
-                    break;
+                    return await MatchService.create(values as Match | Match[]).then()
                 case "match_game":
-                    await MatchGameService.create(valuesA as MatchGame[]).then()
-                    break;
+                    return await MatchGameService.create(values as MatchGame | MatchGame[]).then()
                 case "participant":
-                    await ParticipantService.create(valuesA as Participant[]).then()
-                    break;
+                    return await ParticipantService.create(values as Participant | Participant[]).then()
                 default:
                     console.log("Unknown table");
             }
         } catch (error) {
             return isArray ? false : -1;
         }
-        return isArray ? true : 1;
+        return isArray ? true : 2;
     }
 
     public select<T>(table: Table): Promise<T[] | null>;
@@ -51,6 +45,8 @@ export class tournamentStorage implements CrudInterface {
     public select<T>(table: Table, filter: Partial<T>): Promise<T[] | null>;
 
     public async select<T>(table: Table, filter?: number | Partial<T>): Promise< T |  T[] | null> {
+        console.log("Select" + " " + table)
+        console.log(filter)
         try {
             switch (table) {
                 case "stage":
@@ -77,6 +73,8 @@ export class tournamentStorage implements CrudInterface {
     public update<T>(table: Table, filter: Partial<T>, value: Partial<T>): Promise<boolean>;
  
     public async update<T>(table: Table, filter: number | Partial<T>, value: T | Partial<T>): Promise<boolean> {
+        console.log("Update" + " " + table)
+        console.log(value)
         try {
             switch (table) {
                 case "stage":

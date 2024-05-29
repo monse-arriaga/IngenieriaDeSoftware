@@ -11,7 +11,6 @@ const tranformer = new StageT()
 class StageService {
 
   async create(value: Stage | Stage[]){
-    
     value = Array.isArray(value) ? value : [value];
     const valueT:MyStage[] = []
 
@@ -31,7 +30,10 @@ class StageService {
         }
         valueT.push(myStage)
   })
-  await axios.post(API_URL + '/create/', valueT).then()
+  return await axios.post(API_URL + '/create/', valueT).then(response =>{
+    if (valueT.length == 1) return response.data
+    return true
+  })
 }
 
   async select(filter?: number | Partial<Stage>): Promise<Stage | Stage[] | null> {
@@ -55,16 +57,16 @@ class StageService {
         allStages.forEach(element => {
           stages.push(tranformer.to(element))
         });
-        return stages.filter(stage => 
+        const stagesf = stages.filter(stage => 
           stage.tournament_id == filter.tournament_id);
+        console.log(stagesf)
+        return stagesf 
       });
     }
   }
 
   async update(filter: number | Partial<Stage>, value: Stage | Partial<Stage>){
-    console.log(value)
     const obj: MyStage = tranformer.from(value as Stage);
-    console.log(obj)
     obj.id = filter as number;
     await axios.post(API_URL + "/edit/", obj)
   }

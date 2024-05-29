@@ -1,5 +1,6 @@
 package unam.ciencias.ids.playbit.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.transaction.Transactional;
+import unam.ciencias.ids.playbit.models.Participant;
 import unam.ciencias.ids.playbit.models.ParticipantMatchResult;
 import unam.ciencias.ids.playbit.repositories.ParticipantMatchRepository;
+import unam.ciencias.ids.playbit.repositories.ParticipantRepository;
 
 @RestController
 @RequestMapping("/participantmatch")
@@ -23,20 +27,33 @@ public class ParticipantMatchResultController {
     @Autowired
     ParticipantMatchRepository participantMatchRepository;
 
+    @Autowired
+    ParticipantRepository participantRepository;
+
     @GetMapping("/all/")
     public List<ParticipantMatchResult> findAll(){
         return (List<ParticipantMatchResult>) participantMatchRepository.findAll();
     }
 
     @PostMapping("/create/")
-    public void createParticipantMatch(@RequestBody ParticipantMatchResult participantMatchResult){
-        List<ParticipantMatchResult> participantmatch = participantMatchRepository
-                .getParticipantMatchById(participantMatchResult.getId());
+    @Transactional
+    public long createParticipantMatch(@RequestBody ParticipantMatchResult[] participantMatchResults){
+        for (ParticipantMatchResult participantMatchResult : participantMatchResults) {            
+            
+            Participant participant = participantRepository.findById(participantMatchResult.getParticipant().getId())
+            .orElseThrow(() -> new IllegalArgumentException("Participant not found"));
+            
+            participantMatchResult.setParticipant(participant);
 
-        if(participantmatch.size() > 0)
-            throw new IllegalArgumentException("participantMatch already exist");
+            List<ParticipantMatchResult> participantmatch = participantMatchRepository
+            .getParticipantMatchById(participantMatchResult.getId());
 
-        participantMatchRepository.save(participantMatchResult);
+            if(participantmatch.size() > 0)
+                throw new IllegalArgumentException("participantMatch already exist");
+
+        }
+        participantMatchRepository.saveAll(Arrays.asList(participantMatchResults));
+        return participantMatchRepository.count() - 1;
     }
 
 
@@ -48,8 +65,6 @@ public class ParticipantMatchResultController {
         if(participantmatch.size() == 0)
             throw new IllegalArgumentException("participantMatch does not exist");
         
-        
-        participantMatchRepository.delete(participantmatch.get(0));
         participantMatchRepository.save(participantMatchResult);
     }
 
