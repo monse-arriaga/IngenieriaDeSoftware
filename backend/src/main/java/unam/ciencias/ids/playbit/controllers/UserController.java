@@ -42,6 +42,7 @@ import unam.ciencias.ids.playbit.security.services.UserDetailsImpl;
 import unam.ciencias.ids.playbit.services.EnrollServices;
 import unam.ciencias.ids.playbit.services.TournamentServices;
 import unam.ciencias.ids.playbit.services.UserServices;
+import java.util.LinkedList;
 
 
 @RestController
@@ -77,6 +78,35 @@ public class UserController {
     @GetMapping("/hola/") 
     public String hello(){
         return "hola";
+    }
+
+
+
+    @GetMapping("/findbyname/{username}")
+    public List<User> findByName(@PathVariable String username){
+        List<User> list = new LinkedList<>();
+
+        Optional<User> usr = userRepository.findByUsername(username);
+
+        if(!usr.isPresent())
+            throw new IllegalArgumentException("user not found");
+        
+        list.add(usr.get());
+
+        return list;
+    }
+
+
+    @GetMapping("/findbyid/{id}")
+    public List<User> findById(@PathVariable int id){
+        List<User> list = new LinkedList<>();
+        Optional<User> usr = userRepository.findById(id);
+        if(!usr.isPresent())
+            throw new IllegalArgumentException("user not found");
+        
+        list.add(usr.get());
+
+        return list;
     }
 
 
