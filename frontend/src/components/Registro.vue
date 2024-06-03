@@ -35,7 +35,7 @@ export default defineComponent({
   name: "RegisterUserView",
   setup() {
     const userToBeSaved = ref<any>({
-      //bio: "not-yet",
+      bio: "not-yet",
       bornDate: "1968-12-18",
       email: "",
       username: "",
@@ -44,8 +44,13 @@ export default defineComponent({
     const router = useRouter();
     const userStore = useUserStore();
     const showPopup = ref(false);
+    if (userStore.isLoggedIn) {
+       router.push({ name: "pagina-de-inicio" });
+    }
+
     const submitForm = () => {
       userStore.register(userToBeSaved.value).then(() => {
+        userStore.login(userToBeSaved.value.username, userToBeSaved.value.password);
         router.push({name: "pagina-de-inicio"});
       }).catch(() => {
         showPopup.value = true;
@@ -55,9 +60,6 @@ export default defineComponent({
     const cancelRegister = () => {
       router.push({ name: "pagina-de-inicio"});
     };
-    if (userStore.isLoggedIn) {
-       router.push({ name: "pagina-de-inicio" });
-    }
     return {
       userToBeSaved,
       cancelRegister,

@@ -1,26 +1,24 @@
 package unam.ciencias.ids.playbit.models;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name="Torneo")
 public class Tournament {
+        
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
     @Column(name = "nombre")
     private String name;
 
     @Column(name = "jugadores")
     private int players;
+
 
     @Column(name = "informacion")
     private String description;
@@ -31,8 +29,14 @@ public class Tournament {
     @Column(name = "tipo_torneo")
     private String tournamentType;
 
+    @Column(name = "tipo_juego")
+    private String tournamentGame;
+
     @Column(name = "jugadores_por_equipo")
     private int playersBT;
+
+    @Column(name = "imagen", length = 8000000)
+    private String image;
 
     @Column(name = "fecha")
     private LocalDate date;
@@ -51,12 +55,13 @@ public class Tournament {
     }
 
     public Tournament(
-        int id,
         String name,
+        String image,
         int players,
         String description,
         String state,
         String tournamentType,
+        String tournamentGame,
         int playersBT,
         LocalDate date,
         int prize,
@@ -64,12 +69,13 @@ public class Tournament {
         LocalTime time){
 
 
-        this.id = id;
         this.name = name;
+        this.image = image;
         this.players = players;
         this.description = description;
         this.state = state;
         this.tournamentType = tournamentType;
+        this.tournamentGame = tournamentGame;
         this.playersBT = playersBT;
         this.date = date;
         this.prize = prize;
@@ -78,13 +84,14 @@ public class Tournament {
 
     }
 
-    public int getID() {
-        return this.id;
 
-    }
 
     public String getName() {
         return this.name;
+    }
+
+    public String getImage() {
+        return this.image;
     }
 
 
@@ -102,6 +109,10 @@ public class Tournament {
 
     public String getTournamentType() {
         return this.tournamentType;
+    }
+
+    public String getTournamentGame() {
+        return this.tournamentGame;
     }
 
     public int getPlayersBT() {
@@ -123,9 +134,7 @@ public class Tournament {
         this.inPlayers = inPlayers;
     }
 
-    public void setID(int id) {
-        this.id = id;
-    }
+ 
 
     public void setPlayers(int players) {
         this.players = players;
@@ -133,6 +142,10 @@ public class Tournament {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setDescription(String description){
@@ -149,6 +162,10 @@ public class Tournament {
 
     public void setTournamentType(String tournamentType) {
         this.tournamentType = tournamentType;
+    }
+
+    public void setTournamentGame(String tournamentGame) {
+        this.tournamentGame = tournamentGame;
     }
 
     public void setPlayersBT(int playersBT) {
