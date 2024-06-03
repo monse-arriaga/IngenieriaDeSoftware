@@ -23,6 +23,13 @@ class TournamentService {
     await axios.post(API_URL + "/tournamentAdmin/create/" + authHeader().UserId + "/" + emp.name)
   }
 
+  getUserTournaments(userId: number) {
+    return axios.get(`${API_URL}/tournamentAdmin/user_tournaments/${userId}`, { headers: authHeader() })
+      .then(response => {
+        return response.data;
+      });
+  }
+
 
 
 }

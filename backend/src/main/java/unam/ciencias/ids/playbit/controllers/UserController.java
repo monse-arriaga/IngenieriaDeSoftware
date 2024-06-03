@@ -1,5 +1,6 @@
 package unam.ciencias.ids.playbit.controllers;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,6 @@ import unam.ciencias.ids.playbit.security.services.UserDetailsImpl;
 import unam.ciencias.ids.playbit.services.EnrollServices;
 import unam.ciencias.ids.playbit.services.TournamentServices;
 import unam.ciencias.ids.playbit.services.UserServices;
-import java.util.LinkedList;
 
 
 @RestController
@@ -146,26 +146,6 @@ public class UserController {
     }
 
 
-
-    @GetMapping("/findbyid/{id}")
-    public User findUserById(@PathVariable int id){
-        Optional<User> user = userRepository.findById(id);
-
-        if(!user.isPresent())
-            throw new IllegalArgumentException("User doesn't exists.");
-
-        return user.get();
-    }
-
-    @GetMapping("/find/{username}")
-    public List<User> findUserByUsername(@PathVariable String username){
-        List<User> users = userRepository.existsByUsername(username);
-
-        if(users.size() == 0)
-            throw new IllegalArgumentException("user not found");
-
-        return users;
-    }
 
     @GetMapping("/tournaments_enrolled/{userid}")
     public List<String> getUserTournaments(@PathVariable int userid) {

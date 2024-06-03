@@ -26,8 +26,8 @@
 
           <q-tab-panel name="Torneos">
             <div class="text-h4 q-mb-md">Torneos</div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+            <p>Selecciona el torneo que quieras modificar y haz los cambios que desees.</p>
+            <q-select filled dark v-model="selectedTournament" :options="tournamentOptions" label="Selecciona un torneo" />
           </q-tab-panel>
         </q-tab-panels>
       </template>
@@ -36,20 +36,22 @@
 </template>
 
 <script lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '../store/user';
 import UserService from '../services/UserService';
 import User from '../types/User';
+import TournamentService from '../services/TournamentService';
 
 export default {
   setup() {
     const userStore = useUserStore();
     const userDet = ref<User | null>(null);
     const loading = ref(true);
-
+    const tournamentOptions = ref([]);
+    const selectedTournament = ref(null);
     const fetchUserDetails = async () => {
       try {
-        const user = await UserService.find(userStore.user.username);
+        const user = await UserService.find(userStore.user.id);
         userDet.value = user[0];
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -58,9 +60,19 @@ export default {
       }
     };
 
+    const fetchUserTournaments = async () => {
+      try {
+        const tournaments = await TournamentService.getUserTournaments(userStore.user.id);
+        tournamentOptions.value = tournaments.map((t: any) => ({ label: t, value: t }));
+      } catch (error) {
+        console.error("Error fetching user tournaments:", error);
+      }
+    };
+    
     onMounted(() => {
       console.log("Component mounted");
       fetchUserDetails();
+      fetchUserTournaments();
     });
 
     const newUserName = ref('');
@@ -70,7 +82,10 @@ export default {
     const updateUserDetails = async () => {
       try {
         const updatedUser = {
+          id: userDet.value?.id,
           name: newUserName.value || userDet.value?.name,
+          password: userDet.value?.password,
+          bornDate: userDet.value?.bornDate,
           email: newUserMail.value || userDet.value?.email,
           bio: newUserBio.value || userDet.value?.bio,
         };
@@ -92,6 +107,8 @@ export default {
       newUserBio,
       dense: ref(false),
       updateUserDetails,
+      selectedTournament,
+      tournamentOptions,
     };
   }
 }
