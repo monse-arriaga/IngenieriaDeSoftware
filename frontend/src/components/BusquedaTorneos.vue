@@ -98,7 +98,7 @@ export default defineComponent({
       juego,
       modalidad,
       estado,
-      optionsModalidad: ['Torneo de Liga', 'Eliminación Directa', 'Liga y Eliminatoria'],
+      optionsModalidad: ['Eliminación Doble', 'Eliminación Directa', 'Liga'],
       optionsJuego: ['Minecraft', 'Fall Guys', 'Fortnite'],
       optionsEstado: ['abierto', 'cerrado']
     };
