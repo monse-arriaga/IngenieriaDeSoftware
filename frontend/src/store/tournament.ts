@@ -74,6 +74,7 @@ export class tournamentStorage implements CrudInterface {
  
     public async update<T>(table: Table, filter: number | Partial<T>, value: T | Partial<T>): Promise<boolean> {
         console.log("Update" + " " + table)
+        console.log(filter)
         console.log(value)
         try {
             switch (table) {
