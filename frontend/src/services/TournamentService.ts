@@ -18,6 +18,10 @@ class TournamentService {
           })
   }
 
+  updateTournament(tournament: any) {
+    return axios.post(`${API_URL}/tournament/edit/`, tournament, { headers: authHeader() });
+  }
+
   async tournament(emp : any) {
     await axios.post(API_URL + '/tournament/create/', emp).then()
     await axios.post(API_URL + "/tournamentAdmin/create/" + authHeader().UserId + "/" + emp.name)

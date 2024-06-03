@@ -72,8 +72,6 @@ public class TournamentServices {
             return false;
         }
 
-        tournamentRepository.delete(tournaments.get(0));
-
         tournamentRepository.save(tournament);
         return true;
 
