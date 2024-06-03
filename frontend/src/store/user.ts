@@ -19,19 +19,25 @@ export const useUserStore = defineStore({
       isLoggedIn(state): boolean {
         return state.status.loggedIn;
       },
+      userName(state): string|null {
+        return state.user ? state.user.name : null;
+      }
     },
     actions: {
       loginSuccess(user: User): void {
         this.status.loggedIn = true;
         this.user = user;
+        localStorage.setItem('user', JSON.stringify(user));
       },
       loginFailure(): void {
         this.status.loggedIn = false;
         this.user = null;
+        localStorage.removeItem('user');
       },
       logout(): void {
         this.status.loggedIn = false;
         this.user = null;
+        localStorage.removeItem('user');
       },
       registerSuccess(): void {
         this.status.loggedIn = false;
@@ -83,4 +89,3 @@ export const useUserStore = defineStore({
       
     },
   });
-  

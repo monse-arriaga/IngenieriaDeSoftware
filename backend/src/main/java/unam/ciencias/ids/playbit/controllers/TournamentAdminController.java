@@ -3,6 +3,8 @@ package unam.ciencias.ids.playbit.controllers;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,19 +25,23 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/tournamentAdmin")
+@CrossOrigin
 public class TournamentAdminController {
     
+    @Autowired
     TournamentAdminRepository tournamentAdminRepository;
 
-    TournamentRepository tournamentRepository;
+    @Autowired
+    TournamentServices tournamentServices;
 
+    @Autowired
     UserRepository userRepository;
 
 
     @PostMapping("/create/{user_id}/{tournament_name}")
     public void addTournament(@PathVariable int user_id, @PathVariable String tournament_name){
 
-        List<Tournament> tournamentList = tournamentRepository.getTournamentByName(tournament_name);
+        List<Tournament> tournamentList = tournamentServices.findTournamentByName(tournament_name);
 
         Optional<User> userToFind = userRepository.findById(user_id);
 
@@ -77,14 +83,14 @@ public class TournamentAdminController {
         if(tournaments.size() == 0)
             throw new IllegalArgumentException("no user tournaments");
         
-        return tournaments;
+        return tournaments; 
         
     }
 
 
     @PostMapping("/delete/{tournament_name}")
     public void deleteTournamentAdminByTournament(@PathVariable String tournament_name){
-        List<Tournament> tournamentList = tournamentRepository.getTournamentByName(tournament_name);
+        List<Tournament> tournamentList = tournamentServices.findTournamentByName(tournament_name);
 
         if(tournamentList.size() == 0)
             throw new IllegalArgumentException("tournament not found");

@@ -2,6 +2,7 @@ import axios from 'axios';
 import MatchT from '../tranformers/Match';
 import { Match } from 'brackets-model';
 import MyMatch from '../types/MyMatch';
+import ResultT from '../tranformers/Result';
 
 const API_URL = 'http://localhost:8080/match';
 const tranformer = new MatchT()
@@ -14,8 +15,10 @@ class matchService {
     value.forEach(element => {
       valueT.push(tranformer.from(element))
     });
-    console.log(valueT)
-    await axios.post(API_URL + '/create/', valueT).then()
+    return await axios.post(API_URL + '/create/', valueT).then(response =>{
+      if (valueT.length == 1) return response.data
+      return true
+    })
   }
 
   async select(filter?: number | Partial<Match>): Promise<Match | Match[] | null> {
@@ -51,10 +54,18 @@ class matchService {
     } else {
       const matchs = await this.select(filter);
       const matchsArray = matchs == null ? [] : Array.isArray(matchs) ? matchs : [matchs];
-
       for (const match of matchsArray) {
-        const updatedmatch = { ...match, ...value };
-        await axios.post(API_URL + "/edit/", tranformer.from(updatedmatch));
+        const myMatch = match as any as MyMatch 
+        const updatedmatch = { ... match , ...value };
+        if (myMatch.opponentOneResult && updatedmatch.opponent1) {
+          myMatch.opponentOneResult.result =  ResultT.from(updatedmatch.opponent1.result);
+      }
+      
+      if (myMatch.opponentTwoResult && updatedmatch.opponent2) {
+          myMatch.opponentTwoResult.result = ResultT.from(updatedmatch.opponent2.result);
+      }
+      console.log(myMatch)
+       await axios.post(API_URL + "/edit/", (myMatch));
       }
     }
   }

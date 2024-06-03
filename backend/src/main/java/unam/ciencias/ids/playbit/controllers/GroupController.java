@@ -33,9 +33,9 @@ public class GroupController {
 
     @PostMapping("/create/")
     @Transactional
-    public int createGroup(@RequestBody Group[] groups){
+    public long createGroup(@RequestBody Group[] groups){
         groupRepository.saveAll(Arrays.asList(groups));
-        return 1;
+        return groupRepository.count();
     }
 
 

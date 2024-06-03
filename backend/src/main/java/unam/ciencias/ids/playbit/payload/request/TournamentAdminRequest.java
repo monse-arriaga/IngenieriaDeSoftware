@@ -16,6 +16,6 @@ public class TournamentAdminRequest {
     private Tournament tournament;
 
     @NotBlank
-    private User user;
+    private int userID;
 
 }

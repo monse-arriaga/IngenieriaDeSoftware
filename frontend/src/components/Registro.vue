@@ -35,7 +35,7 @@ export default defineComponent({
   name: "RegisterUserView",
   setup() {
     const userToBeSaved = ref<any>({
-      //bio: "not-yet",
+      bio: "not-yet",
       bornDate: "1968-12-18",
       email: "",
       username: "",

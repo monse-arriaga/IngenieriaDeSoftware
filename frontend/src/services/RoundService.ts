@@ -8,14 +8,15 @@ const tranformer = new RoundT;
 
 class roundService {
   async create(value: Round | Round[]){
-    
     value = Array.isArray(value) ? value : [value];
-
-    value.forEach( async round => {
-        const myround = tranformer.from(round);
-        await axios.post(API_URL + '/create/', myround)
-    } )
-
+    const valueT:MyRound[] = []
+    value.forEach( round => {
+        valueT.push(tranformer.from(round));
+   } )
+   return await axios.post(API_URL + '/create/', valueT).then( response => {
+    if(valueT.length == 1) return response.data
+    return true
+   })
   }
 
   async select(filter?: number | Partial<Round>): Promise<Round | Round[] | null> {

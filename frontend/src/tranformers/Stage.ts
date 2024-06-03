@@ -25,7 +25,7 @@ class StageT {
             tournament_id: value.tournamentId,
             name: value.name,
             type: value.type  as StageType,
-            number: 1,
+            number: value.number,
             settings: settings
         }
     }
