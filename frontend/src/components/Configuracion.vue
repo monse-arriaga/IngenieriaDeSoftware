@@ -3,8 +3,8 @@
     <q-splitter v-model="splitterModel">
       <template v-slot:before>
         <q-tabs v-model="tab" vertical class="text-teal">
-          <q-tab name="Usuario" icon="mail" label="Usuario" />
-          <q-tab name="Torneos" icon="alarm" label="Torneos" />
+          <q-tab name="Usuario" icon="person" label="Usuario" />
+          <q-tab name="Torneos" icon="emoji_events" label="Torneos" />
         </q-tabs>
       </template>
 
@@ -30,7 +30,7 @@
             <q-select filled dark v-model="selectedTournament" :options="tournamentOptions" label="Selecciona un torneo" @update:model-value="fetchTournamentDetails" />
             <div v-if="selectedTournamentDetails">
               <div style="margin-top: 40px;"></div>
-              <q-input filled clearable dark v-model="newTournamentDescription" :placeholder="selectedTournamentDetails.description" label="Descripción" />
+              <q-input filled clearable autogrow dark v-model="newTournamentDescription" :placeholder="selectedTournamentDetails.description" label="Descripción" />
               <div style="margin-top: 40px;"></div>
               <q-input filled clearable dark v-model="newTournamentDate" type="date" :placeholder="selectedTournamentDetails.date" label="Fecha" />
               <div style="margin-top: 40px;"></div>
