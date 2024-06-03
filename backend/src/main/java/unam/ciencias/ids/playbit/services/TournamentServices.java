@@ -45,14 +45,14 @@ public class TournamentServices {
     }
 
 
-    public boolean createTournament2(Tournament tournament, User user){
+    public boolean createTournament2(Tournament tournament, int userId){
         List<Tournament> tournaments = tournamentRepository.getTournamentByName(tournament.getName());
 
         if (tournaments.size() > 0) {
             return false;
         }
 
-        TournamentAdminId tournamentAdminId = new TournamentAdminId(user.getID(),tournament.getName());
+        TournamentAdminId tournamentAdminId = new TournamentAdminId(userId,tournament.getName());
         TournamentAdmin tournamentAdmin = new TournamentAdmin(tournamentAdminId);
         tournamentAdminRepository.save(tournamentAdmin);
         tournamentRepository.save(tournament);
