@@ -20,9 +20,7 @@
   />
   </div>
 
-
   <q-card-actions>  
-
     <q-btn flat round icon="event" />
     <q-btn flat>
       {{ tournament.date }}

@@ -48,8 +48,6 @@ public class StageSettingsController {
         if(sslist.size() == 0)
             throw new IllegalArgumentException("stage setting does not exist");
 
-        stageSettingsRepository.delete(sslist.get(0));
-
         stageSettingsRepository.save(stageSettings);
     }
 

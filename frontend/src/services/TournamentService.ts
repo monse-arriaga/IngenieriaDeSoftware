@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authHeader from './auth-header';
 
 const API_URL = 'http://localhost:8080';
 
@@ -17,8 +18,9 @@ class TournamentService {
           })
   }
 
-  tournament(emp : any) {
-    return axios.post(API_URL + '/tournament/create/', emp);
+  async tournament(emp : any) {
+    await axios.post(API_URL + '/tournament/create/', emp).then()
+    await axios.post(API_URL + "/tournamentAdmin/create/" + authHeader().UserId + "/" + emp.name)
   }
 
 

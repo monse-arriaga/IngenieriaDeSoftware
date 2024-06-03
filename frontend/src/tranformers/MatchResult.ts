@@ -2,11 +2,11 @@ import { ParticipantResult } from "brackets-model"
 import ParticipantMatchResullt from "../types/ParticipantMatchResult"
 import Result from "./Result";
 
-class MatchGameT {
+class MatchResultT {
     to (value:  ParticipantMatchResullt | null): ParticipantResult | null {
         if (value == null) return null; 
         return {
-            id: value.participant == null ? 0: value.participant.id,
+            id: value.participant == null ? null: value.participant.id,
             position: value.position,
             forfeit: value.forfeit,
             score: value.score,
@@ -28,4 +28,4 @@ class MatchGameT {
     }
 }
 
-export default MatchGameT
+export default MatchResultT

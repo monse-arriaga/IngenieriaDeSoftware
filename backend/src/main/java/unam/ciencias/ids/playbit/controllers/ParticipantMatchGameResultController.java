@@ -47,8 +47,6 @@ public class ParticipantMatchGameResultController {
         if(participantmatchgame.size() == 0)
             throw new IllegalArgumentException("participantMatchGame does not exist");
         
-        
-        participantMatchGameRepository.delete(participantmatchgame.get(0));
         participantMatchGameRepository.save(participantMatchGameResult);
     }
 

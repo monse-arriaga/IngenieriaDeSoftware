@@ -9,7 +9,7 @@ const tranformer = new MatchGameT()
 class matchgameService {
 
   async create(value: MatchGame | MatchGame[]){
-    
+    const toReturn = Array.isArray(value) ? true : value.id
     value = Array.isArray(value) ? value : [value];
 
     value.forEach( async matchgame => {
@@ -17,11 +17,10 @@ class matchgameService {
 
         await axios.post(API_URL + '/create/', mymatchgame)
     } )
-
+    return toReturn
   }
 
   async select(filter?: number | Partial<MatchGame>): Promise<MatchGame | MatchGame[] | null> {
-    console.log(filter)
     if(filter == undefined) {
       return  await axios.get(API_URL + "/all/").then(response => {
         return response.data;

@@ -35,7 +35,7 @@ public class Tournament {
     @Column(name = "jugadores_por_equipo")
     private int playersBT;
 
-    @Column(name = "imagen")
+    @Column(name = "imagen", length = 8000000)
     private String image;
 
     @Column(name = "fecha")
