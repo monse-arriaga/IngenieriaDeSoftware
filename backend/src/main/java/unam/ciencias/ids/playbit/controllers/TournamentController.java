@@ -31,17 +31,17 @@ public class TournamentController {
     @Autowired
     TournamentServices tournamentServices;
 
-    // @PostMapping("/create/")
-    // public void createTournament(@RequestBody Tournament tournament){
-    //     if (!tournamentServices.createTournament(tournament))
-    //         throw new IllegalArgumentException("tournament already created");
-    // }
-
     @PostMapping("/create/")
-    public void createTournament2(@RequestBody TournamentAdminRequest tournamentAdminRequest){
-        if(!tournamentServices.createTournament2(tournamentAdminRequest.getTournament(),tournamentAdminRequest.getUserID()))
+    public void createTournament(@RequestBody Tournament tournament){
+        if (!tournamentServices.createTournament(tournament))
             throw new IllegalArgumentException("tournament already created");
     }
+
+    // @PostMapping("/create/")
+    // public void createTournament2(@RequestBody TournamentAdminRequest tournamentAdminRequest){
+    //     if(!tournamentServices.createTournament2(tournamentAdminRequest.getTournament(),tournamentAdminRequest.getUserID()))
+    //         throw new IllegalArgumentException("tournament already created");
+    // }
 
 
 
