@@ -1,4 +1,4 @@
-import { Stage, StageSettings, StageType } from "brackets-model";
+import { SeedOrdering, Stage, StageSettings, StageType } from "brackets-model";
 import MyStage from "../types/MyStage";
 import MyStageType from "../types/MyStageType";
 import MyStageSettings from "../types/MyStageSettings";
@@ -17,7 +17,8 @@ class StageT {
             roundRobinMode: RoundRobin.to(mySettings.roundRobinMode),
             consolationFinal: mySettings.consolationFinal,
             skipFirstRound: mySettings.skipFirstRound,
-            grandFinal: GrandFinal.to(mySettings.grandFinal)
+            grandFinal: GrandFinal.to(mySettings.grandFinal),
+            seedOrdering: mySettings.seedOrdering as SeedOrdering[]
         }
 
         return {
@@ -39,6 +40,7 @@ class StageT {
             groupCount: bSettings.groupCount,
             roundRobinMode: RoundRobin.from(bSettings.roundRobinMode),
             consolationFinal: bSettings.consolationFinal,
+            seedOrdering: bSettings.seedOrdering,
             skipFirstRound: bSettings.skipFirstRound,
             grandFinal: GrandFinal.from(bSettings.grandFinal),
         }

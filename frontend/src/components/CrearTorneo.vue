@@ -212,7 +212,8 @@
         consolationFinal: false,
         skipFirstRound: false,
         roundRobinMode: optionsRonda.get(ronda.value),
-        grandFinal: optionFinal.get(final.value)
+        grandFinal: optionFinal.get(final.value),
+        seedOrdering: ['natural']
       })
 
       const submit =  () => {

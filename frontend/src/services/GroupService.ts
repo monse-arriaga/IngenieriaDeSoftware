@@ -27,7 +27,7 @@ class GroupService {
       });
     } else if(typeof filter == 'number') {
       return await axios.get(API_URL + "/find/" + filter).then(response => {
-        return response.data;
+        return tranformer.to(response.data[0]);
       })
     } else if (filter.number != undefined) {
         return await this.selectFirst(filter)

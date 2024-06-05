@@ -55,6 +55,9 @@ public class StageSettings {
     @Column(name = "groupCount")
     private Integer groupCount;
 
+    @Column(name = "seedOrdering")
+    private String[] seedOrdering;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "roundRobinMode")
     private RoundRobinMode roundRobinMode;
