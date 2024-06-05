@@ -26,10 +26,10 @@
             <q-input dark filled label-color="white" v-model="tournamentTBC.date" label="Fecha del torneo"  :rules="[val => !isPastDate(val) || 'Selecciona una fecha futura']"  type="date" :input-style="{ color: 'white'}" style="max-width: 3000px" />
             
             <!-- Espacio entre los inputs -->
-            <div style="width: 20px;"></div>
+            <div style="width: 40px;"></div>
             
             <!-- Input para la hora del torneo -->
-            <q-input dark filled label-color="white" v-model="tournamentTBC.time" label="Hora del torneo"  :rules="[val => !isPastTime(val) || 'Selecciona una hora futura']" type="time" :input-style="{ color: 'white'}" style="max-width: 3000px" />
+            <q-input dark filled label-color="white" v-model="tournamentTBC.time" label="Hora del torneo"  type="time" :input-style="{ color: 'white'}" style="max-width: 3000px; margin-top: -20px;" />
           </div>
 
         <!-- Selector de opciones múltiples -->
@@ -81,7 +81,7 @@
         <!-- Espacio entre los inputs -->
         <div style="width: 20px;"></div>
 
-        <q-input dark filled v-model.number="tournamentTBC.playersBT" type="number" label="Personas por equipo"  style="max-width: 350px"/>
+        <q-input dark filled v-model.number="tournamentTBC.playersBT" :rules="[val => val.length <= tournamentTBC.players || 'No pueden haber más personas por equipo que personas totales']" type="number" label="Personas por equipo"  style="max-width: 350px ; margin-top: 18px;"/>
         
 
         </div>
