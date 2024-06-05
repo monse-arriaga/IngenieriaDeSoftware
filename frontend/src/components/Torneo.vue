@@ -59,7 +59,7 @@
         </q-btn>         
       </div>
       <div v-else>
-        Inicia Sesión Por Favor
+        <h1 class="my-3 text-4xl font-bold text-white">Si quieres unirte a la aventura  <a href="#" @click="showRegister">inicia sesión</a> </h1>
       </div>
     </div>
   </div>
@@ -95,6 +95,10 @@ export default defineComponent({
     const tab = ref('details'); // Add ref for the tab
     const storage = new tournamentStorage();
     const manager = new BracketsManager(storage);
+
+    const showRegister = () => {
+      router.push({path: '/iniciar-sesion'});
+    };
 
     const checkEnrolled = async () => {
       try {
@@ -191,6 +195,7 @@ export default defineComponent({
       loading,
       tab, // Return the tab ref
       renderBrackets, // Return the render function
+      showRegister
     };
   },
 });

@@ -17,19 +17,19 @@
 
           <div style="margin-top: 20px;"></div>
              
-          <q-input dark filled label-color="white" v-model="tournamentTBC.name" label="Nombre del torneo" :input-style="{ color: 'white' }" />
+          <q-input dark filled label-color="white" v-model="tournamentTBC.name" :rules="[val => val.length <= 100 || 'Máximo 100 caracteres']" label="Nombre del torneo" :input-style="{ color: 'white' }" />
           
           <div style="margin-top: 20px;"></div>
 
           <div class="input-container">
             <!-- Input para la fecha del torneo -->
-            <q-input dark filled label-color="white" v-model="tournamentTBC.date" label="Fecha del torneo" type="date" :input-style="{ color: 'white'}" style="max-width: 3000px" />
+            <q-input dark filled label-color="white" v-model="tournamentTBC.date" label="Fecha del torneo"  :rules="[val => !isPastDate(val) || 'Selecciona una fecha futura']"  type="date" :input-style="{ color: 'white'}" style="max-width: 3000px" />
             
             <!-- Espacio entre los inputs -->
             <div style="width: 20px;"></div>
             
             <!-- Input para la hora del torneo -->
-            <q-input dark filled label-color="white" v-model="tournamentTBC.time" label="Hora del torneo" type="time" :input-style="{ color: 'white'}" style="max-width: 3000px" />
+            <q-input dark filled label-color="white" v-model="tournamentTBC.time" label="Hora del torneo"  :rules="[val => !isPastTime(val) || 'Selecciona una hora futura']" type="time" :input-style="{ color: 'white'}" style="max-width: 3000px" />
           </div>
 
         <!-- Selector de opciones múltiples -->
@@ -45,6 +45,7 @@
         filled
         clearable
         autogrow
+        :rules="[val => val.length <= 250 || 'Máximo 250 caracteres']"
         label="Da una breve descripción de tu torneo para los futuros participantes"
         />
 
@@ -173,6 +174,19 @@
           stepper.value.next();
         }
       };
+
+      const isPastDate = (dateString: string) => {
+      const selectedDate = new Date(dateString);
+      const currentDate = new Date();
+      return selectedDate < currentDate;
+    };
+
+    const isPastTime = (timeString: string) => {
+      const selectedTime = new Date(`2000-01-01T${timeString}`);
+      const currentTime = new Date();
+      return selectedTime < currentTime;
+    };
+
       const onPrevious = () => {
         if (stepper.value) {
           stepper.value.previous();
@@ -251,6 +265,8 @@
         tournamentTBC,
         bracket,
         ronda,
+        isPastDate,
+        isPastTime,
 
         reset () {
         done1.value = false

@@ -30,12 +30,13 @@
      
 
        <!-- Boton de busqueda, te lleva a la pagina de busqueda y mantiene el input-->
-      <div class="search-bar">
-        <input v-model="searchVal" class="search-input" type="text" placeholder="  Busca un torneo"/>
-        <button class="search-button" @click="handleSearch"> <!-- Agrega un botón con clase "search-button" -->
-          <i class="fas fa-search"></i> <!-- Ícono de lupa de Font Awesome -->
+       <div class="search-bar">
+        <input v-model="searchVal" class="search-input" type="text" placeholder="Busca un torneo" @keyup.enter="handleSearch"/>
+        <button class="search-button" @click="handleSearch">
+          <i class="fas fa-search"></i>
         </button>
       </div>
+      
   
       <button v-if="!isLoggedIn" @click="() => goToPage('/iniciar-sesion')" class="login-button">
         Iniciar Sesión
