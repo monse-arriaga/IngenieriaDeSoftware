@@ -2,7 +2,6 @@ import axios from 'axios';
 import MatchT from '../tranformers/Match';
 import { Match } from 'brackets-model';
 import MyMatch from '../types/MyMatch';
-import ResultT from '../tranformers/Result';
 
 const API_URL = 'http://localhost:8080/match';
 const tranformer = new MatchT()
@@ -28,8 +27,15 @@ class matchService {
       });
     } else if(typeof filter == 'number') {
       return await axios.get(API_URL + "/find/" + filter).then(response => {
-        return response.data;
+        const allmatchs: MyMatch[] = response.data;
+        const matches: Match[] = []
+        allmatchs.forEach(element => {
+          matches.push(tranformer.to(element))
+        });
+        return matches[0]
       })
+    } else if (filter.number != undefined) {
+      return await this.selectFirst(filter)
     } else {
       return await axios.get(API_URL + "/all/").then(response => {
         const allmatchs: MyMatch[] = response.data;
@@ -52,21 +58,7 @@ class matchService {
     if (typeof filter == "number" && ((value: Match): value is Match => !!value.id)) {
       await axios.post(API_URL + "/edit/", tranformer.from(value as Match))
     } else {
-      const matchs = await this.select(filter);
-      const matchsArray = matchs == null ? [] : Array.isArray(matchs) ? matchs : [matchs];
-      for (const match of matchsArray) {
-        const myMatch = match as any as MyMatch 
-        const updatedmatch = { ... match , ...value };
-        if (myMatch.opponentOneResult && updatedmatch.opponent1) {
-          myMatch.opponentOneResult.result =  ResultT.from(updatedmatch.opponent1.result);
-      }
-      
-      if (myMatch.opponentTwoResult && updatedmatch.opponent2) {
-          myMatch.opponentTwoResult.result = ResultT.from(updatedmatch.opponent2.result);
-      }
-      console.log(myMatch)
-       await axios.post(API_URL + "/edit/", (myMatch));
-      }
+      await axios.post(API_URL + "/edit/", tranformer.from(value as Match));
     }
   }
 
@@ -81,6 +73,23 @@ class matchService {
         this.delete(element);
       });
     }
+  }
+
+  async selectFirst(filter: Partial<Match>){
+    return await axios.get(API_URL + "/all/").then(response => {
+      const allmatchs: MyMatch[] = response.data;
+      const matches: Match[] = []
+      allmatchs.forEach(element => {
+        matches.push(tranformer.to(element))
+      });
+      if (filter.group_id != undefined) {
+        const toReturn =  matches.filter(match => match.group_id == filter.group_id)
+        return toReturn.filter(match => match.number == filter.number)
+      } else {
+        const toReturn = matches.filter(match => match.round_id == filter.round_id)
+        return toReturn.filter(match => match.number == filter.number)
+      };
+    });
   }
 
 }

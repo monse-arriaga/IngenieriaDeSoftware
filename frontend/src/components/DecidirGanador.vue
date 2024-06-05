@@ -26,7 +26,7 @@ import MatchService from '../services/MatchService';
 import ParticipantService from '../services/ParticipantService';
 import Participant from '../types/Participant';
 import tournamentStorage from '../store/tournament';
-import { BracketsManager } from 'brackets-manager';
+import { BracketsManager, Storage } from 'brackets-manager';
 
 export default defineComponent({
   name: 'DecidirGanador',
@@ -80,7 +80,7 @@ export default defineComponent({
     },
     async submit() {
       const storage = new tournamentStorage();
-      const manager = new BracketsManager(storage);
+      const manager = new BracketsManager(storage as Storage, true);
       const op1 = {
         score: this.isPlayer1 && this.isPlayer2 ? 1 : (this.isPlayer1 ? 2 : 0),
         result: this.isPlayer1 && this.isPlayer2 ? 'draw' : (this.isPlayer1 ? 'win' : 'loss')
@@ -91,8 +91,8 @@ export default defineComponent({
       }
       await manager.update.match({
         id: parseInt(this.$route.params.match as string), 
-        opponent1: { score: op2.score, result: op1.result as Result },
-        opponent2: { score: op1.score, result: op2.result as Result },
+        opponent1: { score: op1.score as number, result: op1.result as Result },
+        opponent2: { score: op2.score as number, result: op2.result as Result },
       });
     },
   },

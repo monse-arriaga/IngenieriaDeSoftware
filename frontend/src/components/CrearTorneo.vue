@@ -201,15 +201,14 @@
         grandFinal: optionFinal.get(final.value)
       })
 
-      const submit = () => {
+      const submit =  () => {
         const tPlayers:string[] = []
         for (let index = 0; index < tournamentTBC.value.players; index++) {
           tPlayers.push("Player " + tournamentTBC.value.name + " " + index)
         }
 
-        TournamentService.tournament(tournamentTBC.value).then(() => {
-          console.log(new Array(tournamentTBC.value.players).fill(null))
-          manager.create.stage({
+        TournamentService.tournament(tournamentTBC.value).then(async () => {
+          await manager.create.stage({
             tournamentId: tournamentTBC.value.name,
             name: "Fase de Eliminación",
             type: optionsTipo.get(tournamentTBC.value.tournamentType) as StageType,

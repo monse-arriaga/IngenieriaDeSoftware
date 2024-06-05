@@ -59,16 +59,17 @@ export default {
     const userDet = ref<User | null>(null);
     const loading = ref(true);
     const tournamentOptions = ref([]);
-    const selectedTournament = ref(null);
+    const selectedTournament = ref(null );
     const selectedTournamentDetails = ref<Tournament | null>(null);
     const newTournamentName = ref('');
     const newTournamentDescription = ref('');
     const newTournamentDate = ref('');
     const newTournamentTime = ref('');
+    const id = userStore.user?.id != undefined ? userStore.user.id : 0
 
     const fetchUserDetails = async () => {
       try {
-        const user = await UserService.find(userStore.user.id);
+        const user = await UserService.find(id);
         userDet.value = user[0];
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -79,19 +80,21 @@ export default {
 
     const fetchUserTournaments = async () => {
       try {
-        const tournaments = await TournamentService.getUserTournaments(userStore.user.id);
-        tournamentOptions.value = tournaments.map((t: any) => ({ label: t, value: t }));
+        const tournaments = await TournamentService.getUserTournaments(id);
+         tournamentOptions.value = tournaments.map((t: any) => ({ label: t, value: t }));
+      
       } catch (error) {
         console.error("Error fetching user tournaments:", error);
       }
     };
 
-    const fetchTournamentDetails = async (value: any) => {
+    const fetchTournamentDetails = async (value?: any) => {
       console.log("fetchTournamentDetails called with value:", value);
       if (selectedTournament.value) {
         console.log(selectedTournament.value);
         try {
-          const tournament = await TournamentService.getTournamentByName(selectedTournament.value.label);
+          const wrapper = selectedTournament.value as any
+          const tournament = await TournamentService.getTournamentByName(wrapper.label);
           console.log("Fetched tournament details:", tournament);
           selectedTournamentDetails.value = tournament[0];
           newTournamentName.value = tournament[0].name;
@@ -148,7 +151,7 @@ export default {
           email: newUserMail.value || userDet.value?.email,
           bio: newUserBio.value || userDet.value?.bio,
         };
-        await UserService.update(updatedUser, userStore.user.id);
+        await UserService.update(updatedUser, id);
         console.log("User updated successfully");
         // Optionally, refetch the user details to reflect changes
         fetchUserDetails();

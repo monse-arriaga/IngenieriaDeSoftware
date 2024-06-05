@@ -43,6 +43,7 @@ public class StageController {
     @PostMapping("/create/")
     @Transactional
     public long createStage(@RequestBody Stage[] stages){
+        System.out.println("soy yo");
         for (Stage stage : stages) {
             StageSettings settings = stage.getStageSettings();
             stage.setStageSettings(settings);

@@ -170,6 +170,7 @@ export default defineComponent({
           tournament_id: tournamentName}) as Participant[];
         const participant = participants.filter(participante =>
         ("Player " + tournamentName + " " + (tournamentDetails.value?.inPlayers as number)) == participante.name);
+        console.log(participant)
         await ParticipantService.update(participant[0])
         await UserService.enroll(authHeader().UserName, tournamentName);
         

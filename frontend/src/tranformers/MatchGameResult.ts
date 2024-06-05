@@ -1,8 +1,10 @@
 import { ParticipantResult } from "brackets-model"
 import ParticipantMatchGameResult from "../types/ParticipantMatchGameResult";
-import Result from "./Result";
+import ResultT from "./Result";
 
 class MatchGameResultT {
+    transformer = new ResultT()
+
     to (value:  ParticipantMatchGameResult | null): ParticipantResult | null {
         if (value == null) return null; 
         return {
@@ -10,7 +12,7 @@ class MatchGameResultT {
             position: value.position,
             forfeit: value.forfeit,
             score: value.score,
-            result: Result.to(value.result)
+            result: this.transformer.to(value.result)
         }
     }
 
@@ -23,7 +25,7 @@ class MatchGameResultT {
             position: value.position,
             forfeit: value.forfeit,
             score: value.score,
-            result: Result.from(value.result),
+            result: this.transformer.from(value.result),
         }
     }
 }

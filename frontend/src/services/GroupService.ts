@@ -69,6 +69,21 @@ class GroupService {
       });
     }
   }
+
+  async selectFirst(filter: Partial<Group>): Promise<Group | null> {
+    return await axios.get(API_URL + "/all/").then(response => {
+        const allGroups: MyGroup[] = response.data;
+        var groups: Group[] = []
+        allGroups.forEach(element => {
+          groups.push(tranformer.to(element))
+        });
+        groups = groups.filter(group => 
+          group.stage_id == filter.stage_id
+        );
+        return groups.filter(group =>
+          filter.number == group.number)[0]
+      });
+  }
 }
 
 export default new GroupService();

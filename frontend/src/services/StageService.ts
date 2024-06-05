@@ -47,8 +47,13 @@ class StageService {
          return toReturn;
       });
     } else if(typeof filter == 'number') {
-      return await axios.get(API_URL + "/find/" + filter).then(response => {
-        return tranformer.to(response.data[0]);
+      return  await axios.get(API_URL + "/all/").then(response => {
+         const data:MyStage[] = response.data; 
+         const toReturn:Stage[] = []; 
+         data.forEach(element => {
+          toReturn.push(tranformer.to(element))
+         });
+         return toReturn.filter(stage => stage.id == filter)[0];
       })
     } else {
       return await axios.get(API_URL + "/all/").then(response => {
@@ -59,7 +64,6 @@ class StageService {
         });
         const stagesf = stages.filter(stage => 
           stage.tournament_id == filter.tournament_id);
-        console.log(stagesf)
         return stagesf 
       });
     }

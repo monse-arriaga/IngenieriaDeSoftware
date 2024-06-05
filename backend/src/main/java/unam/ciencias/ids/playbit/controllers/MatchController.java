@@ -93,12 +93,11 @@ public class MatchController {
 
 
     @PostMapping("/edit/")
+    @Transactional
     public void editMatch(@RequestBody Match match){
         List<Match> matches = matchRepository.getMatchById(match.getId());
-
         if(matches.size() == 0)
             throw new IllegalArgumentException("match does not exist");
-        
         
             ParticipantMatchResult result1 = match.getOpponentOneResult();
             ParticipantMatchResult result2 = match.getOpponentTwoResult();
@@ -132,8 +131,6 @@ public class MatchController {
             }
 
             participantMatchRepository.saveAll(results);
-
-       
         matchRepository.save(match);
     }
 
