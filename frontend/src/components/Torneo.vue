@@ -42,7 +42,11 @@
     </div>
 
     <div v-else>
-      <h1>No carga lol</h1>
+      <h2 class="mb-8 font-extrabold text-9xl dark:text-gray-400">
+        <span class="sr-only">Error</span>404
+      </h2>
+      <p class="text-2xl font-semibold md:text-3xl">Lo siento, no pudimos encontrar esta página.</p>
+      <p class="mt-4 mb-8 dark:text-gray-600">Pero no te preocupes, puedes encontrar más aventuras en nuestra página principal.</p>
     </div>
 
     <div class="tournament-info">
