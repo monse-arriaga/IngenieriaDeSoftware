@@ -11,8 +11,8 @@
         <!-- Campo de correo -->
         <div class="input-wrapper">
 				<div>
-					<label for="email" class="block mb-2 text-sm text-white">Dirección de correo</label>
-					<input type="email"  placeholder="correo@gmail.com" v-model="userToLogIn.username" required class="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800">
+					<label for="email" class="block mb-2 text-sm text-white">Nombre de usuario</label>
+					<input type="text"  placeholder="Nombre de Usuario" v-model="userToLogIn.username" required class="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800">
 				</div>
         </div>
         <!-- Campo de contraseña -->
