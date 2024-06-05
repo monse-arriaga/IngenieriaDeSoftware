@@ -26,8 +26,10 @@ class roundService {
       });
     } else if(typeof filter == 'number') {
       return await axios.get(API_URL + "/find/" + filter).then(response => {
-        return response.data;
+        return tranformer.to(response.data[0]);
       })
+    } else if (filter.number != undefined) {
+      return await this.selectFirst(filter)
     } else {
       return await axios.get(API_URL + "/all/").then(response => {
         const allrounds: MyRound[] = response.data;
@@ -70,6 +72,36 @@ class roundService {
       });
     }
   }
+
+  async selectFirst(filter: Partial<Round>){
+    return await axios.get(API_URL + "/all/").then(response => {
+      const allrounds: MyRound[] = response.data;
+      const rounds: Round[] = []
+      allrounds.forEach(element => {
+        rounds.push(tranformer.to(element))
+      });
+      if (filter.group_id == undefined) {
+        const toReturn = rounds.filter(round => round.stage_id == filter.stage_id)
+        return toReturn.filter(round => round.number == filter.number)
+      } else {
+        const toReturn = rounds.filter(round => round.group_id == filter.group_id)
+        return toReturn.filter(round => round.number == filter.number)
+      }
+    });
+  }
+
+  async selectLast(filter: Partial<Round>) : Promise<Round | null>{
+    return await axios.get(API_URL + "/all/").then(response => {
+      const allrounds: MyRound[] = response.data;
+      const rounds: Round[] = []
+      allrounds.forEach(element => {
+        rounds.push(tranformer.to(element))
+      });
+      const toReturn = rounds.filter(round => round.group_id == filter.group_id)
+      return toReturn[toReturn.length-1]
+    });
+  }
+
 }
 
 export default new roundService();

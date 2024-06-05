@@ -1,5 +1,6 @@
 package unam.ciencias.ids.playbit.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.transaction.Transactional;
 import unam.ciencias.ids.playbit.models.MatchGame;
+import unam.ciencias.ids.playbit.models.Participant;
 import unam.ciencias.ids.playbit.models.ParticipantMatchGameResult;
 import unam.ciencias.ids.playbit.repositories.MatchGameRepository;
 import unam.ciencias.ids.playbit.repositories.ParticipantMatchGameRepository;
+import unam.ciencias.ids.playbit.repositories.ParticipantRepository;
 
 @RestController
 @RequestMapping("/matchgame")
@@ -28,6 +31,8 @@ public class MatchGameController {
     @Autowired
     ParticipantMatchGameRepository participantMatchGameRepository;
 
+    @Autowired
+    ParticipantRepository participantRepository;
 
     @GetMapping("/all/")
     public List<MatchGame> findAll(){
@@ -36,23 +41,42 @@ public class MatchGameController {
 
     @PostMapping("/create/")
     @Transactional
-    public long createMatchGame(@RequestBody MatchGame matchGame){
-        ParticipantMatchGameResult result1 = matchGame.getOpponentOneResult();
-        ParticipantMatchGameResult result2 = matchGame.getOpponentTwoResult();
-
-        List<MatchGame> matchgames = matchGameRepository.getMatchGameById(matchGame.getId());
-
-        if(matchgames.size() > 0)
-            throw new IllegalArgumentException("match game already exists");
-        
-        matchGame.setOpponentOneResult(result1);
-        matchGame.setOpponentTwoResult(result2);
-
-        participantMatchGameRepository.save(result1);
-        participantMatchGameRepository.save(result2);
+    public long createMatchGame(@RequestBody MatchGame[] matchGames){
+        for (MatchGame match : matchGames) {
+            ParticipantMatchGameResult result1 = match.getOpponentOneResult();
+            ParticipantMatchGameResult result2 = match.getOpponentTwoResult();
+            Participant participant1;
+            Participant participant2;
+            try {
+                Participant participant1id = result1.getParticipant();
+                participant1 = participantRepository.findById(participant1id.getId()).orElseThrow(
+                    () -> new IllegalArgumentException("paricipant not found"));
+            } catch (Exception e) {
+                participant1 = null;
+            }
+            try {
+                Participant participant2id = result2.getParticipant();
+                participant2 = participantRepository.findById(participant2id.getId()).orElseThrow(
+                    () -> new IllegalArgumentException("paricipant not found"));
+            } catch (Exception e) {
+                participant2 = null;
+            }
             
-        matchGameRepository.save(matchGame);
+            ArrayList<ParticipantMatchGameResult> results = new ArrayList<>();
 
+            if (result1 != null) {
+                result1.setParticipant(participant1);
+                results.add(result1);    
+            }
+
+            if (result2 != null) {
+                result2.setParticipant(participant2);    
+                results.add(result2);
+            }
+
+            participantMatchGameRepository.saveAll(results);
+        }
+        matchGameRepository.saveAll(java.util.Arrays.asList(matchGames));
         return matchGameRepository.count();
     }
 

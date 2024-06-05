@@ -42,7 +42,11 @@
     </div>
 
     <div v-else>
-      <h1>No carga lol</h1>
+      <h2 class="mb-8 font-extrabold text-9xl dark:text-gray-400">
+        <span class="sr-only">Error</span>404
+      </h2>
+      <p class="text-2xl font-semibold md:text-3xl">Lo siento, no pudimos encontrar esta página.</p>
+      <p class="mt-4 mb-8 dark:text-gray-600">Pero no te preocupes, puedes encontrar más aventuras en nuestra página principal.</p>
     </div>
 
     <div class="tournament-info">
@@ -55,7 +59,7 @@
         </q-btn>         
       </div>
       <div v-else>
-        Inicia Sesión Por Favor
+        <h1 class="my-3 text-4xl font-bold text-white">Si quieres unirte a la aventura  <a href="#" @click="showRegister">inicia sesión</a> </h1>
       </div>
     </div>
   </div>
@@ -92,6 +96,10 @@ export default defineComponent({
     const storage = new tournamentStorage();
     const manager = new BracketsManager(storage);
 
+    const showRegister = () => {
+      router.push({path: '/iniciar-sesion'});
+    };
+
     const checkEnrolled = async () => {
       try {
         const enrolledTournaments = await UserService.tournaments_enrolled(authHeader().UserId);
@@ -113,7 +121,6 @@ export default defineComponent({
 
     async function renderBrackets() {
       const data = await manager.get.tournamentData(tournamentName);
-      console.log(tournamentName);
       window.bracketsViewer.render({
         stages: data.stage,
         matches: data.match,
@@ -188,6 +195,7 @@ export default defineComponent({
       loading,
       tab, // Return the tab ref
       renderBrackets, // Return the render function
+      showRegister
     };
   },
 });

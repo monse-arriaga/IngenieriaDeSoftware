@@ -9,15 +9,15 @@ const tranformer = new MatchGameT()
 class matchgameService {
 
   async create(value: MatchGame | MatchGame[]){
-    const toReturn = Array.isArray(value) ? true : value.id
     value = Array.isArray(value) ? value : [value];
-
+    const valueT:MyMatchGame[] = []
     value.forEach( async matchgame => {
-        const mymatchgame = tranformer.from(matchgame);
-
-        await axios.post(API_URL + '/create/', mymatchgame)
+        valueT.push(tranformer.from(matchgame));
     } )
-    return toReturn
+    return await axios.post(API_URL + '/create/', valueT).then(responde =>{
+      if (valueT.length != 1) return true
+      return responde.data
+    })
   }
 
   async select(filter?: number | Partial<MatchGame>): Promise<MatchGame | MatchGame[] | null> {
@@ -68,6 +68,20 @@ class matchgameService {
         this.delete(element);
       });
     }
+  }
+
+  async selectFirst(filter: Partial<MatchGame>): Promise<MatchGame | null>{
+    return await axios.get(API_URL + "/all/").then(response => {
+      const allmatchgames: MyMatchGame[] = response.data;
+      const matches: MatchGame[] = []
+      allmatchgames.forEach(element => {
+        matches.push(tranformer.to(element))
+      });
+      const toReturn = matches.filter(matchgame => 
+        matchgame.parent_id == filter.parent_id  
+      );
+      return toReturn.filter(matchGame => matchGame.number == filter.number)[0]
+    });
   }
 
 }

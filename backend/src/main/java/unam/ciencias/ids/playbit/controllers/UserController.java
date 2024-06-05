@@ -130,8 +130,7 @@ public class UserController {
         if (!userToFind.isPresent()) {
             throw new IllegalArgumentException("User doesn't exists.");
         }
-        String passwdEncoded = encoder.encode(user.getPassword());
-        user.setPassword(passwdEncoded);
+        user.setPassword(userToFind.get().getPassword());
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("Usuario editado."));
