@@ -27,6 +27,7 @@ import ParticipantService from '../services/ParticipantService';
 import Participant from '../types/Participant';
 import tournamentStorage from '../store/tournament';
 import { BracketsManager, Storage } from 'brackets-manager';
+import router from '../router';
 
 export default defineComponent({
   name: 'DecidirGanador',
@@ -94,6 +95,7 @@ export default defineComponent({
         opponent1: { score: op1.score as number, result: op1.result as Result },
         opponent2: { score: op2.score as number, result: op2.result as Result },
       });
+      router.back();
     },
   },
 });

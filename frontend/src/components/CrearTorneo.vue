@@ -163,7 +163,7 @@
       const step = ref(1)
       const done1 = ref(false)
       const final = ref("Simple");
-      const ronda = ref("Eliminación Directa")
+      const ronda = ref("Doble")
       const done2 = ref(false)
       const router = useRouter();
       const storage = new tournamentStorage();
@@ -202,11 +202,26 @@
       })
 
       const submit =  () => {
-        const tPlayers:string[] = []
-        for (let index = 0; index < tournamentTBC.value.players; index++) {
-          tPlayers.push("Player " + tournamentTBC.value.name + " " + index)
+        const tPlayers:(string | null)[] = []
+        if ((tournamentTBC.value.players & (tournamentTBC.value.players - 1)) === 0) {
+          for (let index = 0; index < tournamentTBC.value.players; index++) {
+            tPlayers.push("Player " + tournamentTBC.value.name + " " + index)
+          }
+        } else {
+          let players = tournamentTBC.value.players;
+          let count = 0;
+          while (players > 0) {
+              players >>= 1;
+              count++;
+          }
+          players = 1 << count
+          for (let index = 0; index < tournamentTBC.value.players; index++) {
+            tPlayers.push("Player " + tournamentTBC.value.name + " " + index)
+          }
+          for (let index = tournamentTBC.value.players; index < players; index++) {
+            tPlayers.push(null)
+          }
         }
-
         TournamentService.tournament(tournamentTBC.value).then(async () => {
           await manager.create.stage({
             tournamentId: tournamentTBC.value.name,
@@ -224,7 +239,7 @@
         step: ref(1),
         done1,
         done2,
-        optionsTipo: ["Eliminación Directa", "Eliminación Doble", "Liga"],
+        optionsTipo: ["Eliminación Directa", "Eliminación Doble"],
         optionsFinal:["Simple", "Reinicio"],
         optionsGame: [
         'Fall Guys', 'Fortnite', 'Minecraft'],

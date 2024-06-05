@@ -42,7 +42,6 @@ public class MatchGameController {
     @PostMapping("/create/")
     @Transactional
     public long createMatchGame(@RequestBody MatchGame[] matchGames){
-        System.out.println("soy matchgame");
         for (MatchGame match : matchGames) {
             ParticipantMatchGameResult result1 = match.getOpponentOneResult();
             ParticipantMatchGameResult result2 = match.getOpponentTwoResult();
@@ -76,11 +75,8 @@ public class MatchGameController {
             }
 
             participantMatchGameRepository.saveAll(results);
-            System.out.println(1);
         }
-        System.out.println(2);
         matchGameRepository.saveAll(java.util.Arrays.asList(matchGames));
-    System.out.println(3);
         return matchGameRepository.count();
     }
 

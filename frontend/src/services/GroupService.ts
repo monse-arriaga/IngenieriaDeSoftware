@@ -29,7 +29,9 @@ class GroupService {
       return await axios.get(API_URL + "/find/" + filter).then(response => {
         return response.data;
       })
-    } else {
+    } else if (filter.number != undefined) {
+        return await this.selectFirst(filter)
+    } else  {
       return await axios.get(API_URL + "/all/").then(response => {
         const allGroups: MyGroup[] = response.data;
         const groups: Group[] = []
@@ -70,7 +72,7 @@ class GroupService {
     }
   }
 
-  async selectFirst(filter: Partial<Group>): Promise<Group | null> {
+  async selectFirst(filter: Partial<Group>){
     return await axios.get(API_URL + "/all/").then(response => {
         const allGroups: MyGroup[] = response.data;
         var groups: Group[] = []
@@ -81,7 +83,7 @@ class GroupService {
           group.stage_id == filter.stage_id
         );
         return groups.filter(group =>
-          filter.number == group.number)[0]
+          filter.number == group.number)
       });
   }
 }
