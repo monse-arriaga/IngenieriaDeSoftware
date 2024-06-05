@@ -29,6 +29,7 @@
             <p>Selecciona el torneo que quieras modificar y haz los cambios que desees.</p>
             <q-select filled dark v-model="selectedTournament" :options="tournamentOptions" label="Selecciona un torneo" @update:model-value="fetchTournamentDetails" />
             <div v-if="selectedTournamentDetails">
+              <img :src="selectedTournamentDetails.image" alt="Imagen del torneo" style="width: 200px; height: 130px; margin-top: 40px; margin-left: 180px;">
               <div style="margin-top: 40px;"></div>
               <q-input filled clearable autogrow dark v-model="newTournamentDescription" :placeholder="selectedTournamentDetails.description" label="Descripción" />
               <div style="margin-top: 40px;"></div>
@@ -36,7 +37,8 @@
               <div style="margin-top: 40px;"></div>
               <q-input filled clearable dark v-model="newTournamentTime" type="time" :placeholder="selectedTournamentDetails.time" label="Hora" />
               <div style="margin-top: 40px;"></div>
-              <q-btn color="secondary" label="Guardar Cambios" @click="updateTournamentDetails" />
+              <q-btn color="secondary" label="Guardar Cambios" @click="updateTournamentDetails"style="margin-right: 10px;" />
+              <q-btn  color="primary" label="Ir al Torneo" @click="goToTournament" />
             </div>
           </q-tab-panel>
         </q-tab-panels>
@@ -52,6 +54,7 @@ import UserService from '../services/UserService';
 import TournamentService from '../services/TournamentService';
 import User from '../types/User';
 import Tournament from '../types/Tournament';
+import router from '../router';
 
 export default {
   setup() {
@@ -66,6 +69,15 @@ export default {
     const newTournamentDate = ref('');
     const newTournamentTime = ref('');
     const id = userStore.user?.id != undefined ? userStore.user.id : 0
+
+    const goToTournament = () => {
+      if (selectedTournamentDetails.value) {
+        const tournamentName = selectedTournamentDetails.value.name;
+        router.push(`/torneo/${tournamentName}`);
+      } else {
+        console.error("No se ha seleccionado ningún torneo.");
+      }
+    };
 
     const fetchUserDetails = async () => {
       try {
@@ -179,6 +191,7 @@ export default {
       fetchTournamentDetails,
       updateTournamentDetails,
       tournamentOptions,
+      goToTournament
     };
   }
 }
@@ -188,6 +201,7 @@ export default {
 <style scoped>
 .q-splitter {
   margin-top: 75px; /* Baja el splitter */
-  height: 4000000px; /* Ajusta la altura del splitter */
+  height: auto; /* Ajusta la altura del splitter */
+  width: 750px; /* Ajusta la altura del splitter */
 }
 </style>

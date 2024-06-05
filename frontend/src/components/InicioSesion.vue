@@ -3,16 +3,23 @@
       <div class="modal-content">
       <!-- Contenido del formulario de inicio de sesión -->
       <button class="close-button" @click="cancelLogIn">x</button>
-      <h2 class="title">Inicia Sesion:</h2>
+      <div class="mb-8 text-center">
+        <h1 class="my-3 text-4xl font-bold text-white">Inicia Sesión</h1>
+        <p class="text-sm text-white">Inicia sesión para acceder a tu cuenta</p>
+      </div>
       <form @submit.prevent="submitForm">
         <!-- Campo de correo -->
         <div class="input-wrapper">
-          <input type="text" placeholder="Nombre de Usuario" v-model="userToLogIn.username" required>
+				<div>
+					<label for="email" class="block mb-2 text-sm text-white">Dirección de correo</label>
+					<input type="email"  placeholder="correo@gmail.com" v-model="userToLogIn.username" required class="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800">
+				</div>
         </div>
         <!-- Campo de contraseña -->
-        <div class="input-wrapper">
-          <input type="password" placeholder="Contraseña" v-model="userToLogIn.password" required>
-        </div>
+          <label for="password" class=" block mb-2 text-sm text-white">Contraseña</label>
+         
+          <input type="password" placeholder="Contraseña" v-model="userToLogIn.password" required class="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800">
+   
         <div v-if="showPopup" class="popup">
           <p>
           Contraseña o usuario equivocados.
@@ -20,7 +27,8 @@
           Vuelva a intentar.  
           </p>
         </div>
-        <button type="submit">Iniciar Sesión</button>
+        
+        <button type="submit" style="margin: 15px;">Iniciar Sesión</button>
       </form>
       <p style="color: white;">¿No tienes una cuenta? <a href="#" @click="showRegister">Regístrate</a></p>
     </div>
