@@ -9,13 +9,10 @@ import ParticipantService from "../services/ParticipantService";
 
 export class tournamentStorage implements CrudInterface {
 
-
-    public insert<T>(table: Table, value: T): Promise<number>;
-    public insert<T>(table: T, values: T[]): Promise<boolean>;
+    async insert<T>(table: Table, value: T): Promise<number>;
+    async insert<T>(table: T, values: T[]): Promise<boolean>;
     
-    public async insert<T>(table: Table, values: T | T[]): Promise<number | boolean> {
-        console.log("Insert" + " " + table)
-        console.log(values)
+    async insert<T>(table: Table, values: T | T[]): Promise<number | boolean> {
         const isArray = Array.isArray(values)
         try {
             switch (table) {
@@ -33,34 +30,32 @@ export class tournamentStorage implements CrudInterface {
                     return await ParticipantService.create(values as Participant | Participant[]).then()
                 default:
                     console.log("Unknown table");
+                    return 0
             }
         } catch (error) {
             return isArray ? false : -1;
         }
-        return isArray ? true : 2;
     }
 
-    public select<T>(table: Table): Promise<T[] | null>;
-    public select<T>(table: Table, id: number): Promise<T | null>;
-    public select<T>(table: Table, filter: Partial<T>): Promise<T[] | null>;
+    async select<T>(table: Table): Promise<T[] | null>;
+    async select<T>(table: Table, id: number): Promise<T | null>;
+    async select<T>(table: Table, filter: Partial<T>): Promise<T[] | null>;
 
-    public async select<T>(table: Table, filter?: number | Partial<T>): Promise< T |  T[] | null> {
-        console.log("Select" + " " + table)
-        console.log(filter)
+    async select<T>(table: Table, filter?: number | Partial<T>): Promise<T | T[] | null> {
         try {
             switch (table) {
                 case "stage":
-                    return await StageService.select(filter) as T[];
+                    return await StageService.select(filter) as any;
                 case "group":
-                    return await GroupService.select(filter) as T[];
+                    return await GroupService.select(filter) as any;
                 case "round":
-                    return await RoundService.select(filter) as T[];
+                    return RoundService.select(filter) as any;
                 case "match":
-                    return await MatchService.select(filter) as T[];
+                    return await MatchService.select(filter) as any;
                 case "match_game":
-                    return await MatchGameService.select(filter) as T[];
+                    return await MatchGameService.select(filter) as any;
                 case "participant":
-                    return await ParticipantService.select(filter) as T[];
+                    return await ParticipantService.select(filter) as any;
                 default:
                     return null;
             }
@@ -69,13 +64,10 @@ export class tournamentStorage implements CrudInterface {
         }
     }
 
-    public update<T>(table: Table, id: number, value: T): Promise<boolean>;
-    public update<T>(table: Table, filter: Partial<T>, value: Partial<T>): Promise<boolean>;
+    async update<T>(table: Table, id: number, value: T): Promise<boolean>;
+    async update<T>(table: Table, filter: Partial<T>, value: Partial<T>): Promise<boolean>;
  
-    public async update<T>(table: Table, filter: number | Partial<T>, value: T | Partial<T>): Promise<boolean> {
-        console.log("Update" + " " + table)
-        console.log(filter)
-        console.log(value)
+    async update<T>(table: Table, filter: number | Partial<T>, value: T | Partial<T>): Promise<boolean> {
         try {
             switch (table) {
                 case "stage":
@@ -104,10 +96,10 @@ export class tournamentStorage implements CrudInterface {
         return true;    
     }
 
-    public delete<T>(table: Table): Promise<boolean>;
-    public delete<T>(table: Table, filter: Partial<T>): Promise<boolean>;
+    async delete<T>(table: Table): Promise<boolean>;
+    async delete<T>(table: Table, filter: Partial<T>): Promise<boolean>;
     
-    public async delete<T>(table: Table, filter?: T | Partial<T>): Promise<boolean> {
+    async delete<T>(table: Table, filter?: T | Partial<T>): Promise<boolean> {
         try {
             switch (table) {
                 case "stage":
@@ -136,6 +128,7 @@ export class tournamentStorage implements CrudInterface {
         }
         return true;  
     }
+
 
 }
 

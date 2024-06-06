@@ -3,8 +3,8 @@
     <q-splitter v-model="splitterModel">
       <template v-slot:before>
         <q-tabs v-model="tab" vertical class="text-teal">
-          <q-tab name="Usuario" icon="mail" label="Usuario" />
-          <q-tab name="Torneos" icon="alarm" label="Torneos" />
+          <q-tab name="Usuario" icon="person" label="Usuario" />
+          <q-tab name="Torneos" icon="emoji_events" label="Torneos" />
         </q-tabs>
       </template>
 
@@ -29,14 +29,16 @@
             <p>Selecciona el torneo que quieras modificar y haz los cambios que desees.</p>
             <q-select filled dark v-model="selectedTournament" :options="tournamentOptions" label="Selecciona un torneo" @update:model-value="fetchTournamentDetails" />
             <div v-if="selectedTournamentDetails">
+              <img :src="selectedTournamentDetails.image" alt="Imagen del torneo" style="width: 200px; height: 130px; margin-top: 40px; margin-left: 180px;">
               <div style="margin-top: 40px;"></div>
-              <q-input filled clearable dark v-model="newTournamentDescription" :placeholder="selectedTournamentDetails.description" label="Descripción" />
+              <q-input filled clearable autogrow dark v-model="newTournamentDescription" :placeholder="selectedTournamentDetails.description" label="Descripción" />
               <div style="margin-top: 40px;"></div>
               <q-input filled clearable dark v-model="newTournamentDate" type="date" :placeholder="selectedTournamentDetails.date" label="Fecha" />
               <div style="margin-top: 40px;"></div>
               <q-input filled clearable dark v-model="newTournamentTime" type="time" :placeholder="selectedTournamentDetails.time" label="Hora" />
               <div style="margin-top: 40px;"></div>
-              <q-btn color="secondary" label="Guardar Cambios" @click="updateTournamentDetails" />
+              <q-btn color="secondary" label="Guardar Cambios" @click="updateTournamentDetails"style="margin-right: 10px;" />
+              <q-btn  color="primary" label="Ir al Torneo" @click="goToTournament" />
             </div>
           </q-tab-panel>
         </q-tab-panels>
@@ -52,6 +54,7 @@ import UserService from '../services/UserService';
 import TournamentService from '../services/TournamentService';
 import User from '../types/User';
 import Tournament from '../types/Tournament';
+import router from '../router';
 
 export default {
   setup() {
@@ -59,16 +62,26 @@ export default {
     const userDet = ref<User | null>(null);
     const loading = ref(true);
     const tournamentOptions = ref([]);
-    const selectedTournament = ref(null);
+    const selectedTournament = ref(null );
     const selectedTournamentDetails = ref<Tournament | null>(null);
     const newTournamentName = ref('');
     const newTournamentDescription = ref('');
     const newTournamentDate = ref('');
     const newTournamentTime = ref('');
+    const id = userStore.user?.id != undefined ? userStore.user.id : 0
+
+    const goToTournament = () => {
+      if (selectedTournamentDetails.value) {
+        const tournamentName = selectedTournamentDetails.value.name;
+        router.push(`/torneo/${tournamentName}`);
+      } else {
+        console.error("No se ha seleccionado ningún torneo.");
+      }
+    };
 
     const fetchUserDetails = async () => {
       try {
-        const user = await UserService.find(userStore.user.id);
+        const user = await UserService.find(id);
         userDet.value = user[0];
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -79,19 +92,21 @@ export default {
 
     const fetchUserTournaments = async () => {
       try {
-        const tournaments = await TournamentService.getUserTournaments(userStore.user.id);
-        tournamentOptions.value = tournaments.map((t: any) => ({ label: t, value: t }));
+        const tournaments = await TournamentService.getUserTournaments(id);
+         tournamentOptions.value = tournaments.map((t: any) => ({ label: t, value: t }));
+      
       } catch (error) {
         console.error("Error fetching user tournaments:", error);
       }
     };
 
-    const fetchTournamentDetails = async (value: any) => {
+    const fetchTournamentDetails = async (value?: any) => {
       console.log("fetchTournamentDetails called with value:", value);
       if (selectedTournament.value) {
         console.log(selectedTournament.value);
         try {
-          const tournament = await TournamentService.getTournamentByName(selectedTournament.value.label);
+          const wrapper = selectedTournament.value as any
+          const tournament = await TournamentService.getTournamentByName(wrapper.label);
           console.log("Fetched tournament details:", tournament);
           selectedTournamentDetails.value = tournament[0];
           newTournamentName.value = tournament[0].name;
@@ -148,7 +163,7 @@ export default {
           email: newUserMail.value || userDet.value?.email,
           bio: newUserBio.value || userDet.value?.bio,
         };
-        await UserService.update(updatedUser, userStore.user.id);
+        await UserService.update(updatedUser, id);
         console.log("User updated successfully");
         // Optionally, refetch the user details to reflect changes
         fetchUserDetails();
@@ -176,6 +191,7 @@ export default {
       fetchTournamentDetails,
       updateTournamentDetails,
       tournamentOptions,
+      goToTournament
     };
   }
 }
@@ -185,6 +201,7 @@ export default {
 <style scoped>
 .q-splitter {
   margin-top: 75px; /* Baja el splitter */
-  height: 4000000px; /* Ajusta la altura del splitter */
+  height: auto; /* Ajusta la altura del splitter */
+  width: 750px; /* Ajusta la altura del splitter */
 }
 </style>

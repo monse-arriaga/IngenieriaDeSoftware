@@ -27,9 +27,11 @@ class GroupService {
       });
     } else if(typeof filter == 'number') {
       return await axios.get(API_URL + "/find/" + filter).then(response => {
-        return response.data;
+        return tranformer.to(response.data[0]);
       })
-    } else {
+    } else if (filter.number != undefined) {
+        return await this.selectFirst(filter)
+    } else  {
       return await axios.get(API_URL + "/all/").then(response => {
         const allGroups: MyGroup[] = response.data;
         const groups: Group[] = []
@@ -68,6 +70,21 @@ class GroupService {
         this.delete(element);
       });
     }
+  }
+
+  async selectFirst(filter: Partial<Group>){
+    return await axios.get(API_URL + "/all/").then(response => {
+        const allGroups: MyGroup[] = response.data;
+        var groups: Group[] = []
+        allGroups.forEach(element => {
+          groups.push(tranformer.to(element))
+        });
+        groups = groups.filter(group => 
+          group.stage_id == filter.stage_id
+        );
+        return groups.filter(group =>
+          filter.number == group.number)
+      });
   }
 }
 

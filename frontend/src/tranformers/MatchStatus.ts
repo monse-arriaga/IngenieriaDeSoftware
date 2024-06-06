@@ -3,7 +3,7 @@ import MatchStatus from "../types/MatchStatus";
 
 class MatchStatusT {
 
-    to (value?:  MatchStatus): Status {
+    to (value?:  MatchStatus | string): Status {
         switch (value) {
             case MatchStatus.WAITING:
                 return 1;
@@ -14,7 +14,17 @@ class MatchStatusT {
             case MatchStatus.COMPLETED:
                 return 4;     
             case MatchStatus.ARCHIVED:
-                return 5;           
+                return 5; 
+            case "WAITING":
+                return 1;
+            case "READY":
+                return 2;     
+            case "RUNNING":
+                return  3;     
+            case "COMPLETED":
+                return 4;     
+            case "ARCHIVED":
+                return 5;                   
             default:
                 return 0;
         }

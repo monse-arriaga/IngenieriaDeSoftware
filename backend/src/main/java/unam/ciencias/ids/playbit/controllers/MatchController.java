@@ -76,11 +76,13 @@ public class MatchController {
 
             if (result1 != null) {
                 result1.setParticipant(participant1);
+                match.setOpponentOneResult(result1);
                 results.add(result1);    
             }
 
             if (result2 != null) {
-                result2.setParticipant(participant2);    
+                result2.setParticipant(participant2);
+                match.setOpponentTwoResult(result2);    
                 results.add(result2);
             }
 
@@ -93,15 +95,18 @@ public class MatchController {
 
 
     @PostMapping("/edit/")
+    @Transactional
     public void editMatch(@RequestBody Match match){
         List<Match> matches = matchRepository.getMatchById(match.getId());
-
         if(matches.size() == 0)
             throw new IllegalArgumentException("match does not exist");
         
-        
             ParticipantMatchResult result1 = match.getOpponentOneResult();
             ParticipantMatchResult result2 = match.getOpponentTwoResult();
+            result1.setId(matches.get(0).getOpponentOneResult().getId());
+            System.out.println(result1.getId());
+            result2.setId(matches.get(0).getOpponentTwoResult().getId());
+            System.out.println(result2.getId());
             Participant participant1;
             Participant participant2;
             try {
@@ -123,17 +128,17 @@ public class MatchController {
 
             if (result1 != null) {
                 result1.setParticipant(participant1);
+                match.setOpponentOneResult(result1);
                 results.add(result1);    
             }
 
             if (result2 != null) {
-                result2.setParticipant(participant2);    
+                result2.setParticipant(participant2);
+                match.setOpponentTwoResult(result2);    
                 results.add(result2);
             }
 
             participantMatchRepository.saveAll(results);
-
-       
         matchRepository.save(match);
     }
 

@@ -17,19 +17,19 @@
 
           <div style="margin-top: 20px;"></div>
              
-          <q-input dark filled label-color="white" v-model="tournamentTBC.name" label="Nombre del torneo" :input-style="{ color: 'white' }" />
+          <q-input dark filled label-color="white" v-model="tournamentTBC.name" :rules="[val => val.length <= 100 || 'Máximo 100 caracteres']" label="Nombre del torneo" :input-style="{ color: 'white' }" />
           
           <div style="margin-top: 20px;"></div>
 
           <div class="input-container">
             <!-- Input para la fecha del torneo -->
-            <q-input dark filled label-color="white" v-model="tournamentTBC.date" label="Fecha del torneo" type="date" :input-style="{ color: 'white'}" style="max-width: 3000px" />
+            <q-input dark filled label-color="white" v-model="tournamentTBC.date" label="Fecha del torneo"  :rules="[val => !isPastDate(val) || 'Selecciona una fecha futura']"  type="date" :input-style="{ color: 'white'}" style="max-width: 3000px" />
             
             <!-- Espacio entre los inputs -->
-            <div style="width: 20px;"></div>
+            <div style="width: 40px;"></div>
             
             <!-- Input para la hora del torneo -->
-            <q-input dark filled label-color="white" v-model="tournamentTBC.time" label="Hora del torneo" type="time" :input-style="{ color: 'white'}" style="max-width: 3000px" />
+            <q-input dark filled label-color="white" v-model="tournamentTBC.time" label="Hora del torneo"  type="time" :input-style="{ color: 'white'}" style="max-width: 3000px; margin-top: -20px;" />
           </div>
 
         <!-- Selector de opciones múltiples -->
@@ -45,6 +45,7 @@
         filled
         clearable
         autogrow
+        :rules="[val => val.length <= 250 || 'Máximo 250 caracteres']"
         label="Da una breve descripción de tu torneo para los futuros participantes"
         />
 
@@ -80,7 +81,7 @@
         <!-- Espacio entre los inputs -->
         <div style="width: 20px;"></div>
 
-        <q-input dark filled v-model.number="tournamentTBC.playersBT" type="number" label="Personas por equipo"  style="max-width: 350px"/>
+        <q-input dark filled v-model.number="tournamentTBC.playersBT" :rules="[val => val.length <= tournamentTBC.players || 'No pueden haber más personas por equipo que personas totales']" type="number" label="Personas por equipo"  style="max-width: 350px ; margin-top: 18px;"/>
         
 
         </div>
@@ -163,7 +164,7 @@
       const step = ref(1)
       const done1 = ref(false)
       const final = ref("Simple");
-      const ronda = ref("Eliminación Directa")
+      const ronda = ref("Doble")
       const done2 = ref(false)
       const router = useRouter();
       const storage = new tournamentStorage();
@@ -173,6 +174,19 @@
           stepper.value.next();
         }
       };
+
+      const isPastDate = (dateString: string) => {
+      const selectedDate = new Date(dateString);
+      const currentDate = new Date();
+      return selectedDate < currentDate;
+    };
+
+    const isPastTime = (timeString: string) => {
+      const selectedTime = new Date(`2000-01-01T${timeString}`);
+      const currentTime = new Date();
+      return selectedTime < currentTime;
+    };
+
       const onPrevious = () => {
         if (stepper.value) {
           stepper.value.previous();
@@ -198,18 +212,33 @@
         consolationFinal: false,
         skipFirstRound: false,
         roundRobinMode: optionsRonda.get(ronda.value),
-        grandFinal: optionFinal.get(final.value)
+        grandFinal: optionFinal.get(final.value),
+        seedOrdering: ['natural']
       })
 
-      const submit = () => {
-        const tPlayers:string[] = []
-        for (let index = 0; index < tournamentTBC.value.players; index++) {
-          tPlayers.push("Player " + tournamentTBC.value.name + " " + index)
+      const submit =  () => {
+        const tPlayers:(string | null)[] = []
+        if ((tournamentTBC.value.players & (tournamentTBC.value.players - 1)) === 0) {
+          for (let index = 0; index < tournamentTBC.value.players; index++) {
+            tPlayers.push("Player " + tournamentTBC.value.name + " " + index)
+          }
+        } else {
+          let players = tournamentTBC.value.players;
+          let count = 0;
+          while (players > 0) {
+              players >>= 1;
+              count++;
+          }
+          players = 1 << count
+          for (let index = 0; index < tournamentTBC.value.players; index++) {
+            tPlayers.push("Player " + tournamentTBC.value.name + " " + index)
+          }
+          for (let index = tournamentTBC.value.players; index < players; index++) {
+            tPlayers.push(null)
+          }
         }
-
-        TournamentService.tournament(tournamentTBC.value).then(() => {
-          console.log(new Array(tournamentTBC.value.players).fill(null))
-          manager.create.stage({
+        TournamentService.tournament(tournamentTBC.value).then(async () => {
+          await manager.create.stage({
             tournamentId: tournamentTBC.value.name,
             name: "Fase de Eliminación",
             type: optionsTipo.get(tournamentTBC.value.tournamentType) as StageType,
@@ -225,7 +254,7 @@
         step: ref(1),
         done1,
         done2,
-        optionsTipo: ["Eliminación Directa", "Eliminación Doble", "Liga"],
+        optionsTipo: ["Eliminación Directa", "Eliminación Doble"],
         optionsFinal:["Simple", "Reinicio"],
         optionsGame: [
         'Fall Guys', 'Fortnite', 'Minecraft'],
@@ -237,6 +266,8 @@
         tournamentTBC,
         bracket,
         ronda,
+        isPastDate,
+        isPastTime,
 
         reset () {
         done1.value = false
