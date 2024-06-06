@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import unam.ciencias.ids.playbit.models.Tournament;
+import unam.ciencias.ids.playbit.models.User;
+import unam.ciencias.ids.playbit.payload.request.TournamentAdminRequest;
 import unam.ciencias.ids.playbit.services.TournamentServices;
 
 @RestController
@@ -29,16 +31,18 @@ public class TournamentController {
     @Autowired
     TournamentServices tournamentServices;
 
-    @GetMapping("/all/")
-    public List<Tournament> findAll(){
-        return tournamentServices.findAll();
-    }
-
     @PostMapping("/create/")
     public void createTournament(@RequestBody Tournament tournament){
         if (!tournamentServices.createTournament(tournament))
             throw new IllegalArgumentException("tournament already created");
     }
+
+    // @PostMapping("/create/")
+    // public void createTournament2(@RequestBody TournamentAdminRequest tournamentAdminRequest){
+    //     if(!tournamentServices.createTournament2(tournamentAdminRequest.getTournament(),tournamentAdminRequest.getUserID()))
+    //         throw new IllegalArgumentException("tournament already created");
+    // }
+
 
 
     @GetMapping("/all/")

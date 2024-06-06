@@ -1,7 +1,7 @@
 enum MatchResult {
-    WIN = 'win',
-    DRAW = 'draw',
-    LOSS = 'loss'
+    WIN,
+    DRAW,
+    LOSS
 }
 
 export default MatchResult

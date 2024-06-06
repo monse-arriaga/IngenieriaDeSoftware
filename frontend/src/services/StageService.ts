@@ -1,70 +1,93 @@
 import axios from 'axios';
 import StageT from '../tranformers/Stage';
 import { Stage } from 'brackets-model';
+import MyStage from '../types/MyStage';
+import MyRoundRobinMode from '../types/MyRoundRobinMode';
+import MyGrandFinalType from '../types/MyGrandFinalType';
 
-const API_URL = 'http://localhost:8080/group';
+const API_URL = 'http://localhost:8080/stage';
 const tranformer = new StageT()
 
-class UserService {
+class StageService {
+
   async create(value: Stage | Stage[]){
-    
     value = Array.isArray(value) ? value : [value];
+    const valueT:MyStage[] = []
 
-    value.forEach( async stage => {
+    value.forEach( stage => {
         const myStage = tranformer.from(stage);
+        const settings = myStage.stageSettings;
+        myStage.stageSettings =
+        {
+          size: settings.size != undefined ? settings.size : 0,
+          balanceByes: settings.balanceByes != undefined ? settings.balanceByes :  false,
+          matchesChildCount: settings.matchesChildCount != undefined ? settings.matchesChildCount : 0,
+          groupCount: settings.groupCount != undefined ? settings.groupCount : 0,
+          roundRobinMode: settings.roundRobinMode != undefined ? settings.roundRobinMode : MyRoundRobinMode.SIMPLE,
+          consolationFinal: settings.consolationFinal != undefined ? settings.consolationFinal : false,
+          skipFirstRound: settings.skipFirstRound != undefined ? settings.skipFirstRound : false,
+          grandFinal: settings.grandFinal != undefined ? settings.grandFinal : MyGrandFinalType.NONE,
+        }
+        valueT.push(myStage)
+  })
+  return await axios.post(API_URL + '/create/', valueT).then(response =>{
+    if (valueT.length == 1) return response.data
+    return true
+  })
+}
 
-        await axios.post(API_URL + 'create', {
-          stage: {
-            id: myStage.id,
-            tournamentId: myStage.tournamentId,
-            name: myStage.name,
-            type: myStage.type,
-            number: myStage.number
-          },
-          settings: myStage.stageSettings
-        })
-    } )
-
+  async select(filter?: number | Partial<Stage>): Promise<Stage | Stage[] | null> {
+    if(filter == undefined) {
+      return  await axios.get(API_URL + "/all/").then(response => {
+         const data:MyStage[] = response.data; 
+         const toReturn:Stage[] = []; 
+         data.forEach(element => {
+          toReturn.push(tranformer.to(element))
+         });
+         return toReturn;
+      });
+    } else if(typeof filter == 'number') {
+      return  await axios.get(API_URL + "/all/").then(response => {
+         const data:MyStage[] = response.data; 
+         const toReturn:Stage[] = []; 
+         data.forEach(element => {
+          toReturn.push(tranformer.to(element))
+         });
+         return toReturn.filter(stage => stage.id == filter)[0];
+      })
+    } else {
+      return await axios.get(API_URL + "/all/").then(response => {
+        const allStages: MyStage[] = response.data;
+        const stages: Stage[] = []
+        allStages.forEach(element => {
+          stages.push(tranformer.to(element))
+        });
+        const stagesf = stages.filter(stage => 
+          stage.tournament_id == filter.tournament_id);
+        return stagesf 
+      });
+    }
   }
 
-  async select(name: string) {
-      return axios.get(API_URL + "/tournament/find/" + name)
-          .then(response => {
-            return response.data
-          })
+  async update(filter: number | Partial<Stage>, value: Stage | Partial<Stage>){
+    const obj: MyStage = tranformer.from(value as Stage);
+    obj.id = filter as number;
+    await axios.post(API_URL + "/edit/", obj)
   }
 
-  async update(){
-
+  async delete(filter?: Stage | Partial<Stage>){
+    if (filter == undefined) return;
+    if(((value: Stage): value is Stage => !!value.id)) {
+      return await axios.post(API_URL + "/delete/", filter)
+    } else {
+      let stages = await this.select(filter);
+      stages = stages == null ? [] : Array.isArray(stages) ? stages : [stages] 
+      stages.forEach(element => {
+        this.delete(element);
+      });
+    }
   }
-
-  async delete(){
-
-  }
-
 
 }
 
-export default new UserService();
-
-/*
-
-curl -X POST http://localhost:8080/stage/create/ \
-     -H "Content-Type: application/json" \
-     -d '{
-           "stage": {
-              "tournamentId": 1,
-              "name": "1",
-              "type": "ROUND_ROBIN",
-              "number": "1"
-           },
-           "settings": {
-             "size": 2,
-                  "balanceByes": false,
-                  "matchesChildCount": 2,
-                  "groupCount": 2,
-                  "roundRobinMode": "SIMPLE"
-           }
-         }'
-
-*/
+export default new StageService();

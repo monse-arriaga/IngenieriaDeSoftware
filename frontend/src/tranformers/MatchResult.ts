@@ -1,31 +1,33 @@
 import { ParticipantResult } from "brackets-model"
 import ParticipantMatchResullt from "../types/ParticipantMatchResult"
-import MatchResult from "../types/MatchResult"
+import ResultT from "./Result";
 
-class MatchGameT {
+class MatchResultT {
+    tranformer = new ResultT()
+
     to (value:  ParticipantMatchResullt | null): ParticipantResult | null {
         if (value == null) return null; 
         return {
-            id: value.participant.id,
+            id: value.participant == null ? null: value.participant.id,
             position: value.position,
             forfeit: value.forfeit,
             score: value.score,
-            result: value.result
+            result: this.tranformer.to(value.result)
         }
     }
 
     from (value: ParticipantResult | null): ParticipantMatchResullt | null{
         if (value == null) return null; 
         return {
-            participant: {
-                id: value.id as number
+            participant: value.id == null ? null : {
+                id: value.id as unknown as number
             },
             position: value.position,
             forfeit: value.forfeit,
             score: value.score,
-            result: value.result as MatchResult,
+            result: this.tranformer.from(value.result),
         }
     }
 }
 
-export default MatchGameT
+export default MatchResultT

@@ -11,6 +11,7 @@ interface MyStageSettings {
     consolationFinal?: boolean,
     skipFirstRound?: boolean,
     grandFinal?: MyGrandFinalType,
+    seedOrdering?: string[]
 }
 
 export default MyStageSettings

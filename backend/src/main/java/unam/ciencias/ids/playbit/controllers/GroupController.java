@@ -3,6 +3,7 @@ package unam.ciencias.ids.playbit.controllers;
 import unam.ciencias.ids.playbit.models.*;
 import unam.ciencias.ids.playbit.repositories.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/group")
@@ -29,13 +32,10 @@ public class GroupController {
 
 
     @PostMapping("/create/")
-    public void createGroup(@RequestBody Group group){
-        List<Group> groups = groupRepository.getGroupById(group.getId());
-            
-        if(groups.size() > 0)
-            throw new IllegalArgumentException("Group already exists");
-        
-        groupRepository.save(group);
+    @Transactional
+    public long createGroup(@RequestBody Group[] groups){
+        groupRepository.saveAll(Arrays.asList(groups));
+        return groupRepository.count();
     }
 
 
@@ -45,8 +45,6 @@ public class GroupController {
 
         if(groups.size() == 0)
             throw new IllegalArgumentException("Group does not exist");
-
-        groupRepository.delete(groups.get(0));
         groupRepository.save(group);
     }
 

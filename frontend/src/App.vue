@@ -5,20 +5,7 @@
   <div class = "container">
   
     <div class="corner-buttons">
-      <div @click="() => goToPage('/')"  class="corner-button">
-        <img src="./assets/ImagenesMenuPrincipal/Home.png"alt="Botón 1" class="button-image" />
-      </div>
-  
-      <!-- Espacio entre botones -->
-      <div style="margin-bottom: 10px;"></div> 
-  
-      <div @click="() => goToPage('/busqueda-torneos')"  class="corner-button">
-        <img src="./assets/ImagenesMenuPrincipal/Trofeo.png" alt="Botón 2" class="button-image" />
-      </div>
-  
-      <!-- Espacio entre botones -->
-      <div style="margin-bottom: 10px;"></div> 
-  
+     
       <div v-if="isLoggedIn" @click="() => goToPage('/configuracion')"  class="corner-button">
         <img src="./assets/ImagenesMenuPrincipal/configuracion.png" alt="Botón 3" class="button-image" />
       </div>
@@ -36,13 +23,20 @@
 
       </div>
 
-       <!-- BOTON DE BUSQUEDA, FALTA IMPLEMENTAR LA LOGICA DETRAS DE ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO -->
-      <div class="search-bar">
-        <input v-model="searchVal" class="search-input" type="text" placeholder="  Busca un torneo"/>
-        <button class="search-button" @click="handleSearch"> <!-- Agrega un botón con clase "search-button" -->
-          <i class="fas fa-search"></i> <!-- Ícono de lupa de Font Awesome -->
+      <!-- Imagen en la esquina derecha -->
+      <div @click="() => goToPage('/')"  class="corner-button">
+        <img src="./assets/ImagenesMenuPrincipal/playbit.png" alt="Botón 2" class="right-corner-image" />
+      </div>
+     
+
+       <!-- Boton de busqueda, te lleva a la pagina de busqueda y mantiene el input-->
+       <div class="search-bar">
+        <input v-model="searchVal" class="search-input" type="text" placeholder="Busca un torneo" @keyup.enter="handleSearch"/>
+        <button class="search-button" @click="handleSearch">
+          <i class="fas fa-search"></i>
         </button>
       </div>
+      
   
       <button v-if="!isLoggedIn" @click="() => goToPage('/iniciar-sesion')" class="login-button">
         Iniciar Sesión
@@ -84,7 +78,7 @@
 
   const handleSearch = () => {
     // Aquí puedes poner la lógica para manejar la búsqueda
-    console.log('Realizando búsqueda...');
+    router.push({ path: '/busqueda-torneos', query: { q: searchVal.value }});
   };
 
   const searchVal = ref('')
@@ -121,11 +115,19 @@
     flex-direction: column;
     align-items: center; /* Centra horizontalmente */
   }
+
+  .right-corner-image {
+    position: fixed; /* Posicionamiento fijo */
+    height: 100px; /* Set a fixed height */
+    width: 150px; /* Set a fixed width */
+    top: 20px; /* Distancia desde la parte superior */
+    left: 25px; /* Distancia desde la derecha */
+  }
   
   .corner-buttons {
     position: fixed; /* Posicionamiento fijo */
-    top: 180px; /* Distancia desde la parte superior */
-    left: 20px; /* Distancia desde la derecha */
+    top: 85px; /* Distancia desde la parte superior */
+    right: 25px; /* Distancia desde la derecha */
   }
   
   .corner-button {

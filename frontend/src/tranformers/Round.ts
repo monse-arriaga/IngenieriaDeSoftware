@@ -4,7 +4,7 @@ import MyRound from "../types/Round"
 class RoundT {
     to (value:  MyRound): Round {
         return {
-            id: value.id,
+            id: value.id != undefined ? value.id : 0,
             stage_id: value.stage.id,
             group_id: value.group.id,
             number: value.number
@@ -13,12 +13,11 @@ class RoundT {
 
     from (value: Round): MyRound {
         return {
-            id: value.id as number,
             stage: {
-                id: value.id as number
+                id: value.stage_id as number
             },
             group: {
-                id: value.id as number
+                id: value.group_id as number
             },
             number: value.number
         }
