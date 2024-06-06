@@ -1,6 +1,6 @@
 enum MyRoundRobinMode {
-    SIMPLE = "simple",
-    DOUBLE = "double"
+    SIMPLE,
+    DOUBLE
 }
 
 export default MyRoundRobinMode

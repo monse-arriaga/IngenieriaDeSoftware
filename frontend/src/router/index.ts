@@ -7,6 +7,7 @@ import Configuracion from '../components/Configuracion.vue';
 import Torneo from '../components/Torneo.vue';
 import CrearTorneo from '../components/CrearTorneo.vue';
 import MisParticipacions from '../components/MisParticipacions.vue';
+import DecidirGanador from '../components/DecidirGanador.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -39,6 +40,11 @@ const routes: Array<RouteRecordRaw> = [
       path: '/torneo/:tournament',
       name: 'torneo',
       component: Torneo
+    },
+    {
+      path: '/ganador/:torneo/:match',
+      name: 'ganador',
+      component: DecidirGanador
     },
     {
       path: '/crear-torneo',

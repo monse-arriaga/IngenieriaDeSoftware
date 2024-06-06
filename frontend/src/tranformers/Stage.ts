@@ -1,9 +1,10 @@
-import { GrandFinalType, RoundRobinMode, Stage, StageSettings, StageType } from "brackets-model";
+import { SeedOrdering, Stage, StageSettings, StageType } from "brackets-model";
 import MyStage from "../types/MyStage";
 import MyStageType from "../types/MyStageType";
 import MyStageSettings from "../types/MyStageSettings";
-import MyRoundRobinMode from "../types/MyRoundRobinMode";
-import MyGrandFinalType from "../types/MyGrandFinalType";
+import RoundRobin from "./RoundRobin";
+import GrandFinal from "./GrandFinal";
+
 
 class StageT {
     to (value:  MyStage): Stage {
@@ -13,10 +14,11 @@ class StageT {
             balanceByes: mySettings.balanceByes,
             matchesChildCount: mySettings.matchesChildCount,
             groupCount: mySettings.groupCount,
-            roundRobinMode: mySettings.roundRobinMode as RoundRobinMode,
+            roundRobinMode: RoundRobin.to(mySettings.roundRobinMode),
             consolationFinal: mySettings.consolationFinal,
             skipFirstRound: mySettings.skipFirstRound,
-            grandFinal: mySettings.grandFinal as GrandFinalType
+            grandFinal: GrandFinal.to(mySettings.grandFinal),
+            seedOrdering: mySettings.seedOrdering as SeedOrdering[]
         }
 
         return {
@@ -24,7 +26,7 @@ class StageT {
             tournament_id: value.tournamentId,
             name: value.name,
             type: value.type  as StageType,
-            number: 1,
+            number: value.number,
             settings: settings
         }
     }
@@ -36,10 +38,11 @@ class StageT {
             balanceByes: bSettings.balanceByes,
             matchesChildCount: bSettings.matchesChildCount,
             groupCount: bSettings.groupCount,
-            roundRobinMode: bSettings.roundRobinMode as MyRoundRobinMode,
+            roundRobinMode: RoundRobin.from(bSettings.roundRobinMode),
             consolationFinal: bSettings.consolationFinal,
+            seedOrdering: bSettings.seedOrdering,
             skipFirstRound: bSettings.skipFirstRound,
-            grandFinal: bSettings.grandFinal as MyGrandFinalType,
+            grandFinal: GrandFinal.from(bSettings.grandFinal),
         }
 
         return {

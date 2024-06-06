@@ -3,19 +3,25 @@
     <div class="modal-content">
         <!-- Contenido del formulario de inicio de sesión -->
         <button class="close-button" @click="cancelRegister">x</button>
-        <h2 class="title">Empieza tu aventura ahora:</h2>
+        <div class="mb-8 text-center">
+          <h1 class="my-3 text-4xl font-bold text-white">Regístrate</h1>
+          <p class="text-sm text-white">¡Regístrate e inicia tu aventura!</p>
+        </div>
         <form @submit.prevent="submitForm">
           <!-- Campo de correo -->
           <div class="input-wrapper">
-            <input type="text" placeholder="Correo" v-model="userToBeSaved.email" required>
+            <label for="email" class="block mb-2 text-sm text-white">Dirección de correo</label>
+            <input type="email" placeholder="Correo" v-model="userToBeSaved.email" required class="w-full md:w-96 px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800">
           </div>
           <!-- Campo de nombre de usuario -->
           <div class="input-wrapper">
-            <input type="text" placeholder="Nombre de usuario" v-model="userToBeSaved.username" required>
+            <label for="email" class="block mb-2 text-sm text-white">Nombre de usuario</label>
+            <input type="text" placeholder="Nombre de usuario" v-model="userToBeSaved.username" required class="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800">
           </div>
           <!-- Campo de contraseña -->
           <div class="input-wrapper">
-            <input type="password" placeholder="Contraseña" v-model="userToBeSaved.password" required>
+            <label for="email" class="block mb-2 text-sm text-white">Contraseña</label>
+            <input type="password" placeholder="Contraseña" v-model="userToBeSaved.password" required class="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800">
           </div>
           <div v-if="showPopup" class="popup">
             Ocurrio un error. Vuelva a intentar.
@@ -35,7 +41,7 @@ export default defineComponent({
   name: "RegisterUserView",
   setup() {
     const userToBeSaved = ref<any>({
-      //bio: "not-yet",
+      bio: "not-yet",
       bornDate: "1968-12-18",
       email: "",
       username: "",
@@ -85,7 +91,7 @@ export default defineComponent({
 
 .modal-content {
   background-color: rgb(36, 28, 46);
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
   position: relative;
 }

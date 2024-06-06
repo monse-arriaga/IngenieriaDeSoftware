@@ -29,9 +29,8 @@ public class Stage {
     @Column(name = "name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private StageType type;
+    private String type;
 
     // @Column(name = "settingsId")
     // private int settingsId;

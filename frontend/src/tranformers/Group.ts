@@ -14,7 +14,7 @@ class GroupT {
         return {
             id: value.id as number,
             stage: {
-                id: value.id as number
+                id: value.stage_id as number
             },
             number: value.number
         }

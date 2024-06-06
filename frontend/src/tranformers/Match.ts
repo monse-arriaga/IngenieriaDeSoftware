@@ -1,6 +1,7 @@
 import { Match} from "brackets-model"
 import MyMatch from "../types/MyMatch"
 import MatchResultT from "./MatchResult"
+import MatchStatus from "./MatchStatus";
 
 class MatchT {
 
@@ -13,7 +14,7 @@ class MatchT {
             stage_id: value.stage.id,
             round_id: value.round.id,
             child_count: value.childCount,
-            status: value.matchStatus as number,
+            status: MatchStatus.to(value.matchStatus),
             opponent1: this.resultT.to(value.opponentOneResult),
             opponent2: this.resultT.to(value.opponentTwoResult),
             number: value.number
@@ -23,7 +24,7 @@ class MatchT {
     from (value: Match): MyMatch {
         return {
             id: value.id as number,
-            matchStatus: value.status as number,
+            matchStatus: MatchStatus.from(value.status),
             opponentOneResult: this.resultT.from(value.opponent1),
             opponentTwoResult: this.resultT.from(value.opponent2),
             stage: {

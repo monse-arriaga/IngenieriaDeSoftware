@@ -1,11 +1,7 @@
-import ParticipantMatchGameResult from "./ParticipantMatchGameResult"
-import ParticipantMatchResullt from "./ParticipantMatchResult"
-
 interface Participant {
     id: number,
+    name: string,
     tournamentId: string,
-    matchResult: Array<ParticipantMatchResullt>
-    matchGameResults: Array<ParticipantMatchGameResult>
 }
 
 export default Participant

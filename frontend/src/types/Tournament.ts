@@ -1,6 +1,7 @@
 interface Tournament {
     name: string,
     players: number, 
+    image: string,
     description: string,
     state: string,
     tournamentType: string,

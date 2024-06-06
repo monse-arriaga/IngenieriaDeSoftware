@@ -1,15 +1,12 @@
 package unam.ciencias.ids.playbit.models;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name="Torneo")
@@ -21,6 +18,7 @@ public class Tournament {
 
     @Column(name = "jugadores")
     private int players;
+
 
     @Column(name = "informacion")
     private String description;
@@ -37,7 +35,7 @@ public class Tournament {
     @Column(name = "jugadores_por_equipo")
     private int playersBT;
 
-    @Column(name = "imagen")
+    @Column(name = "imagen", length = 8000000)
     private String image;
 
     @Column(name = "fecha")
@@ -58,6 +56,7 @@ public class Tournament {
 
     public Tournament(
         String name,
+        String image,
         int players,
         String description,
         String state,
@@ -71,6 +70,7 @@ public class Tournament {
 
 
         this.name = name;
+        this.image = image;
         this.players = players;
         this.description = description;
         this.state = state;
@@ -88,6 +88,10 @@ public class Tournament {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getImage() {
+        return this.image;
     }
 
 
@@ -138,6 +142,10 @@ public class Tournament {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setDescription(String description){

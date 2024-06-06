@@ -1,7 +1,7 @@
 enum MyGrandFinalType {
-    NONE = 'none',
-    SIMPLE = 'simpe',
-    DOUBLE = 'double'
+    NONE,
+    SIMPLE,
+    DOUBLE
 }
 
 export default MyGrandFinalType

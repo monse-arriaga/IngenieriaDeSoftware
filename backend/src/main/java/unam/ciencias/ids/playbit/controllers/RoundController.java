@@ -1,5 +1,6 @@
 package unam.ciencias.ids.playbit.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.transaction.Transactional;
 import unam.ciencias.ids.playbit.models.Round;
 import unam.ciencias.ids.playbit.repositories.RoundRepository;
 
@@ -29,13 +31,17 @@ public class RoundController {
     
 
     @PostMapping("/create/")
-    public void createRound(@RequestBody Round round){
-        List<Round> rounds = roundRepository.getRoundById(round.getId());
+    @Transactional
+    public long createRound(@RequestBody Round[] rounds){
 
-        if(rounds.size() > 0)
-            throw new IllegalArgumentException("Round already created");
+        for (Round round : rounds) {
+            List<Round> rounds2 = roundRepository.getRoundById(round.getId());
 
-        roundRepository.save(round);
+            if(rounds2.size() > 0)
+                throw new IllegalArgumentException("Round already created");
+        }
+        roundRepository.saveAll(Arrays.asList(rounds));
+        return roundRepository.count();
     }
 
 
@@ -45,8 +51,6 @@ public class RoundController {
 
         if(rounds.size() == 0)
             throw new IllegalArgumentException("Round does not exist");
-
-        roundRepository.delete(rounds.get(0));
         roundRepository.save(round);
     }
 
