@@ -118,8 +118,8 @@
 
   .right-corner-image {
     position: fixed; /* Posicionamiento fijo */
-    height: 100px; /* Set a fixed height */
-    width: 150px; /* Set a fixed width */
+    height: 100px; 
+    width: 150px; 
     top: 20px; /* Distancia desde la parte superior */
     left: 25px; /* Distancia desde la derecha */
   }

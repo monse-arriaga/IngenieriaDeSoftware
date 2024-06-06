@@ -134,7 +134,7 @@ export default defineComponent({
     background-color: red; 
     color: white;
     padding: 10px;
-    margin-top: 20px; /* Adjust as needed */
+    margin-top: 20px; 
   }  
 
   .close-button:hover {

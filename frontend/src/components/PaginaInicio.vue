@@ -64,8 +64,8 @@ import 'vue3-carousel/dist/carousel.css';
 
 const tournamentData = ref<Tournament[]>([]);
   const lastSevenTournaments = computed(() => {
-      // Assuming `tournamentData` contains all tournaments
-      return tournamentData.value.slice(-7); // Get the last 7 elements
+      //Suponiendo que `tournamentData` contiene todos los torneos 
+      return tournamentData.value.slice(-7); // Consigue los últimos 7 elementos
     });
 
 onMounted(async () => {

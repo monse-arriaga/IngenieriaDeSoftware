@@ -94,14 +94,14 @@ export default defineComponent({
       }
     };
 
-    // Computed property to calculate paginated tournaments
+    //Propiedad calculada para calcular torneos paginados
     const paginatedTournaments = computed(() => {
       const start = (currentPage.value - 1) * itemsPerPage;
       const end = start + itemsPerPage;
       return tournamentData.value.slice(start, end);
     });
 
-    // Computed property to calculate total pages
+    // Propiedad calculada para calcular el total de páginas
     const totalPages = computed(() => {
       return Math.ceil(tournamentData.value.length / itemsPerPage);
     });
@@ -112,7 +112,7 @@ export default defineComponent({
       () => {
         searchQuery.value = route.query.q as string || '';
         loadTournaments();
-        currentPage.value = 1; // Reset to the first page when filters change
+        currentPage.value = 1; //Restablecer a la primera página cuando cambian los filtros
       },
       { immediate: true }
     );

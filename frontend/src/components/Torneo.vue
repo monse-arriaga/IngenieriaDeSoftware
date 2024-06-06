@@ -91,8 +91,8 @@ export default defineComponent({
     const isLoggedIn = computed(() => userStore.isLoggedIn);
     const isEnrolled = ref(false);
     const tournamentDetails = ref<Tournament | null>(null);
-    const loading = ref(true); // Add loading state
-    const tab = ref('details'); // Add ref for the tab
+    const loading = ref(true); // Agregar estado de carga
+    const tab = ref('details'); 
     const storage = new tournamentStorage();
     const manager = new BracketsManager(storage);
 
@@ -115,7 +115,7 @@ export default defineComponent({
       } catch (error) {
         console.error("Error fetching tournament details:", error);
       } finally {
-        loading.value = false; // Set loading to false regardless of success or failure
+        loading.value = false; // Establecer la carga en falso independientemente del éxito o el fracaso
       }
     };
 
@@ -158,13 +158,13 @@ export default defineComponent({
       await checkEnrolled();
       await fetchTournamentDetails();
 
-      // Render brackets if the "brackets" tab is already active on mount
+      //Representar corchetes si la pestaña "corchetes" ya está activa en el montaje
       if (tab.value === 'brackets') {
         await renderBrackets();
       }
     });
 
-    // Watch for changes in the tab and call renderBrackets when "brackets" tab is selected
+    // Esta atento a los cambios en la pestaña y llama a renderBrackets cuando se selecciona la pestaña "corchetes"
     watch(tab, async (newTab) => {
       if (newTab === 'brackets') {
         await renderBrackets();
@@ -193,8 +193,8 @@ export default defineComponent({
       enroll,
       tournamentDetails,
       loading,
-      tab, // Return the tab ref
-      renderBrackets, // Return the render function
+      tab, 
+      renderBrackets, 
       showRegister
     };
   },
@@ -203,6 +203,6 @@ export default defineComponent({
 
 <style scoped>
 .tournament-info {
-  margin-top: 55px; /* Adjust the margin-top as needed */
+  margin-top: 55px; /*  Ajuste el margen superior según sea necesario */
 }
 </style>

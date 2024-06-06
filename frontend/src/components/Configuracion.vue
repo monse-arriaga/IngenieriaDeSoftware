@@ -135,7 +135,7 @@ export default {
           };
           await TournamentService.updateTournament(updatedTournament);
           console.log("Tournament updated successfully");
-          // Optionally, refetch the tournament details to reflect changes
+          // Refresca para ver los cambios
           fetchTournamentDetails();
           location.reload();
         } catch (error) {
@@ -165,7 +165,7 @@ export default {
         };
         await UserService.update(updatedUser, id);
         console.log("User updated successfully");
-        // Optionally, refetch the user details to reflect changes
+        // Refresca para ver los cambios
         fetchUserDetails();
         location.reload();
       } catch (error) {
