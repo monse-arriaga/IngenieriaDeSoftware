@@ -1,4 +1,4 @@
-# [Model-View-ViewModel (ie MVVM)](https://github.com/ahmedeltaher/Android-MVVM-architecture)
+# [Model-View-ViewModel (MVVM)](https://github.com/ahmedeltaher/Android-MVVM-architecture)
 
 
  [![kotlin](https://img.shields.io/badge/Kotlin-1.9.xxx-brightgreen.svg)](https://kotlinlang.org/)  [![Retrofit](https://img.shields.io/badge/Retrofit-2.9.xxx-yellow.svg)](https://square.github.io/retrofit/) [![Lottie Animation](https://img.shields.io/badge/Lottie-3.4.xxx-purple.svg)](https://lottiefiles.com/es/)
