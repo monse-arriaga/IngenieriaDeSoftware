@@ -72,6 +72,25 @@ Kotlin coroutines allow you to perform asynchronous tasks in a sequential manner
 - **Simplicity**: Avoid unnecessary complexity by using coroutines instead of patterns like observables when they are not needed.
 - **Lifecycle Management**: Parent coroutines can automatically manage the lifecycle of their child coroutines, simplifying resource management.
 
+## What is Kotlin Symbol Processing (KSP)?
+------------------------
+
+**KSP:**
+Kotlin Symbol Processing (KSP) is a powerful tool for creating lightweight compiler plugins. It provides a simple and efficient way to handle Kotlin code generation tasks.
+
+----------
+
+**How Does KSP Work?**
+------------
+KSP allows you to process Kotlin programs at the source level. It reads and analyzes the Kotlin code, generating new code or other outputs based on that analysis. This makes it easier to create annotations and other compile-time features.
+
+**Benefits of KSP**
+-----------------------------
+
+- **Performance**: KSP is designed to be faster and more efficient than traditional annotation processors.
+- **Integration with Kotlin**: KSP works seamlessly with Kotlin, providing a more idiomatic way to perform code generation tasks.
+- **Ease of Use**: KSP simplifies the process of writing compiler plugins, reducing the complexity and boilerplate code needed.
+- **Scalability**: KSP can handle large codebases more efficiently than traditional annotation processors.
 
 
 **Keep your code clean according to MVVM**
