@@ -7,9 +7,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import mx.ids.playbit.databinding.CardGamesBinding
-import mx.ids.playbit.databinding.CardTournamentBinding
 import mx.ids.playbit.viewmodel.CustomCardViewModel
-
+/**
+ * CustomHorizontalCardView used to handle data of the custom view for games
+ * @author Leonardo Aguilar Rodríguez
+ *  */
 class CustomHorizontalCardView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

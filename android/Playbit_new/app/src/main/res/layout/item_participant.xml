@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/ivTournamentImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+
+        <TextView
+            android:id="@+id/tvTournamentName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Tournament Name"
+            android:textSize="18sp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@android:color/white"
+            app:layout_constraintStart_toEndOf="@id/ivTournamentImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTournamentParticipant"
+            android:layout_width="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Players: 0"
+            android:textColor="@color/electric_blue_light"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/ivTournamentImage"
+            app:layout_constraintTop_toBottomOf="@id/tvTournamentName" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Tipo: 0"
+            android:textColor="@color/electric_blue_light"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/tvTournamentParticipant"
+            app:layout_constraintTop_toBottomOf="@id/tvTournamentName" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

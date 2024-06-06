@@ -9,6 +9,10 @@ import androidx.lifecycle.Observer
 import mx.ids.playbit.databinding.CardTournamentBinding
 import mx.ids.playbit.viewmodel.CustomCardViewModel
 
+/**
+ * CustomVerticalCardView used to handle data of the custom view for tournaments and participants
+ * @author Leonardo Aguilar Rodríguez
+ *  */
 class CustomVerticalCardView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

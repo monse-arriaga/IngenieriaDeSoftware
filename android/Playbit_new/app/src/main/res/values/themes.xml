@@ -13,6 +13,9 @@
 
         <item name="colorPrimary">#0B1352</item>
     </style>
+    <style name="Home.Theme.Playbit.TitleFragments" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#000</item>
+    </style>
 
     <style name="Theme.Playbit" parent="Base.Theme.Playbit" />
 

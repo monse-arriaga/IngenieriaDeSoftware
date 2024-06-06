@@ -22,9 +22,9 @@
         app:cnb_iconColor="@color/white"
         app:cnb_backgroundColor="@color/blue"/>
     <item
-        android:id="@+id/chat"
-        android:icon="@drawable/ic_chat"
-        android:title="Chat"
+        android:id="@+id/games"
+        android:icon="@drawable/ic_game"
+        android:title="Juegos"
         app:cnb_iconColor="@color/white"
         app:cnb_backgroundColor="@color/blue"/>
 

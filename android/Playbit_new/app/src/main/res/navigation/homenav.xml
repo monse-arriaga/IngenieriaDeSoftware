@@ -12,7 +12,58 @@
         tools:layout="@layout/fragment_home_new" >
         <action
             android:id="@+id/action_homeFragment_to_createTournamentFragment"
-            app:destination="@id/createTournamentFragment" />
+            app:destination="@id/createTournamentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_homeFragment_to_viewTournamentsFragment"
+            app:destination="@id/viewTournamentsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/viewTournamentsFragment"
+        android:name="mx.ids.playbit.ui.home.tournaments.TournamentFragment"
+        android:label="fragment_view_tournaments"
+        tools:layout="@layout/fragment_view_tournaments" >
+        <action
+            android:id="@+id/action_viewTournamentsFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_viewTournamentsFragment_to_tournamentDetailFragment"
+            app:destination="@id/tournamentDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/tournamentDetailsFragment"
+        android:name="mx.ids.playbit.ui.home.tournamentDetails.TournamentDetailsFragment"
+        android:label="fragment_tournament_details"
+        tools:layout="@layout/fragment_tournament_detail" >
+        <action
+            android:id="@+id/action_tournamentDetailFragment_to_viewTournamentsFragment"
+            app:destination="@id/viewTournamentsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/createTournamentFragment"
@@ -21,6 +72,23 @@
         tools:layout="@layout/fragment_create_tournament" >
         <action
             android:id="@+id/action_createTournamentFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="mx.ids.playbit.ui.home.user.UserFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profile_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 </navigation>

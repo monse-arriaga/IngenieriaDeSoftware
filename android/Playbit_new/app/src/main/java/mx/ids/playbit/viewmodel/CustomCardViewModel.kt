@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import mx.ids.playbit.R
 
+/**
+ * CustomCardViewmodel created to handle custom card view data
+ * @author Leonardo Aguilar Rodríguez
+ *  */
 class CustomCardViewModel : BaseViewModel() {
     private val _text = MutableLiveData<String>().apply {
         value = "Crear Torneo"

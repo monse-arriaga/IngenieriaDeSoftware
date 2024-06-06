@@ -6,10 +6,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import mx.ids.playbit.R
-
+/**
+ * BaseViewmodel it has basic functionality that child viewmodels won't need to create
+ * @author Leonardo Aguilar Rodríguez
+ *  */
 open class BaseViewModel : ViewModel() {
     private val _hideKeyboardEvent = MutableLiveData<Unit>()
     val hideKeyboardEvent: LiveData<Unit> = _hideKeyboardEvent
+
+
+    private val _theme = MutableLiveData(R.style.Home_Theme_Playbit)
+    val theme: LiveData<Int> get() = _theme
 
     private val _isPasswordVisible = MutableLiveData<Boolean>().apply {
         value = false
@@ -43,6 +50,11 @@ open class BaseViewModel : ViewModel() {
             }
         }
         return false
+    }
+
+
+    fun setTheme(themeResId: Int) {
+        _theme.value = themeResId
     }
 
 }

@@ -5,7 +5,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import mx.ids.playbit.databinding.ActivityLandingBinding
 import mx.ids.playbit.ui.base.BaseActivity
-
+/**
+ * LandingActivity used to sign in or signup
+ * @author Leonardo Aguilar Rodríguez
+ *  */
 @AndroidEntryPoint
 class LandingActivity : BaseActivity<ActivityLandingBinding>() {
 
@@ -13,11 +16,13 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
         Thread.sleep(1000)
-        splash.setKeepOnScreenCondition{ false
+        splash.setKeepOnScreenCondition {
+            false
         }
     }
 
-    override fun getViewBinding(): ActivityLandingBinding = ActivityLandingBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ActivityLandingBinding =
+        ActivityLandingBinding.inflate(layoutInflater)
 
 
 }
